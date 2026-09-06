@@ -23,6 +23,7 @@
             align-items: center;
             justify-content: center;
             position: relative;
+            padding: 10px;
         }
 
         @keyframes gradientShift {
@@ -83,73 +84,21 @@
             75% { transform: translate(-50px, -20px) scale(1.05); }
         }
 
-        /* ===== CAR SCENE ===== */
+        /* ===== CAR SCENE - HIDDEN ON MOBILE ===== */
         .car-scene {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            z-index: 1;
-        }
-
-        .road {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 35%;
-            background: linear-gradient(180deg, transparent 0%, #1a1a2e 30%, #0f0f1a 100%);
-        }
-
-        .road-line {
-            position: absolute;
-            bottom: 30%;
-            left: 0;
-            width: 200%;
-            height: 3px;
-            background: repeating-linear-gradient(90deg, rgba(255,255,255,0.12) 0px, rgba(255,255,255,0.12) 40px, transparent 40px, transparent 80px);
-            animation: roadMove 2s linear infinite;
-        }
-
-        @keyframes roadMove {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-
-        .car-wrapper {
-            position: absolute;
-            bottom: 22%;
-            left: -200px;
-            animation: carDrive 6s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
-            filter: drop-shadow(0 20px 60px rgba(162, 155, 254, 0.12));
-        }
-
-        @keyframes carDrive {
-            0% { left: -200px; transform: scale(0.8) rotate(-2deg); }
-            30% { left: 20%; transform: scale(1) rotate(0deg); }
-            50% { left: 40%; transform: scale(1.05) rotate(0deg); }
-            70% { left: 50%; transform: scale(1) rotate(0deg); }
-            85% { left: 55%; transform: scale(0.95) rotate(0.5deg); }
-            100% { left: 58%; transform: scale(0.9) rotate(0deg); }
-        }
-
-        .car-wrapper svg {
-            width: 300px;
-            height: auto;
-            display: block;
+            display: none;
         }
 
         /* ===== HERO TEXT ===== */
         .hero-text {
             position: absolute;
-            top: 12%;
+            top: 6%;
             left: 50%;
             transform: translateX(-50%);
             z-index: 10;
             text-align: center;
             animation: fadeInDown 1.5s ease 0.5s both;
+            width: 90%;
         }
 
         @keyframes fadeInDown {
@@ -158,13 +107,13 @@
         }
 
         .hero-text h1 {
-            font-size: 4.5rem;
+            font-size: 3.5rem;
             font-weight: 900;
             background: linear-gradient(135deg, #a29bfe, #ff6b6b, #4ecdc4);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            letter-spacing: 6px;
+            letter-spacing: 4px;
             text-shadow: 0 0 60px rgba(162, 155, 254, 0.12);
             animation: gradientText 4s ease-in-out infinite;
             background-size: 300% 300%;
@@ -178,30 +127,32 @@
 
         .hero-text .sub {
             color: #8888aa;
-            font-size: 0.85rem;
-            letter-spacing: 5px;
+            font-size: 0.7rem;
+            letter-spacing: 4px;
             text-transform: uppercase;
-            margin-top: 6px;
+            margin-top: 4px;
             font-weight: 300;
         }
 
-        /* ===== GLASS CARD ===== */
+        /* ===== GLASS CARD - FULL SCREEN ON MOBILE ===== */
         .glass-card {
             position: absolute;
-            bottom: 30%;
+            bottom: 2%;
             left: 50%;
             transform: translateX(-50%);
             z-index: 20;
-            width: 92%;
+            width: 96%;
             max-width: 480px;
             background: rgba(16, 16, 30, 0.92);
             backdrop-filter: blur(25px);
             -webkit-backdrop-filter: blur(25px);
-            border-radius: 40px;
+            border-radius: 30px;
             border: 1px solid rgba(255, 255, 255, 0.05);
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
-            padding: 22px 26px;
+            padding: 16px 18px 18px;
             animation: slideUp 1s ease 1.5s both;
+            max-height: 78vh;
+            overflow-y: auto;
         }
 
         @keyframes slideUp {
@@ -213,17 +164,17 @@
         .step-indicator {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 16px;
+            margin-bottom: 12px;
             gap: 4px;
         }
 
         .step-dot {
             flex: 1;
             text-align: center;
-            padding: 6px 0;
+            padding: 4px 0;
             background: rgba(30, 30, 48, 0.4);
-            border-radius: 30px;
-            font-size: 0.55rem;
+            border-radius: 20px;
+            font-size: 0.5rem;
             font-weight: 700;
             color: #5a5a72;
             transition: all 0.5s ease;
@@ -262,32 +213,27 @@
             display: block;
         }
 
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
         .form-step label {
             display: block;
             font-weight: 700;
-            margin-bottom: 8px;
+            margin-bottom: 5px;
             color: #c0c0dd;
-            font-size: 0.75rem;
+            font-size: 0.65rem;
             letter-spacing: 0.5px;
             text-transform: uppercase;
         }
 
         .form-step input {
             width: 100%;
-            padding: 13px 18px;
+            padding: 10px 14px;
             background: rgba(10, 10, 20, 0.6);
             border: 1.5px solid rgba(255, 255, 255, 0.05);
-            border-radius: 30px;
+            border-radius: 25px;
             color: #f0f0ff;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             outline: none;
             transition: all 0.4s ease;
-            margin-bottom: 14px;
+            margin-bottom: 10px;
         }
 
         .form-step input:focus {
@@ -313,13 +259,13 @@
         /* ===== PROFILE PREVIEW ===== */
         .profile-preview {
             background: linear-gradient(135deg, rgba(30, 20, 48, 0.7), rgba(20, 20, 36, 0.8));
-            border-radius: 32px;
-            padding: 14px 18px;
-            margin-bottom: 14px;
+            border-radius: 25px;
+            padding: 10px 14px;
+            margin-bottom: 10px;
             border: 1px solid rgba(255, 255, 255, 0.03);
             display: none;
             align-items: center;
-            gap: 14px;
+            gap: 12px;
             backdrop-filter: blur(8px);
             transition: all 0.4s ease;
         }
@@ -335,11 +281,11 @@
         }
 
         .profile-preview img {
-            width: 50px;
-            height: 50px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             border: 2px solid rgba(162, 155, 254, 0.3);
-            box-shadow: 0 0 30px rgba(162, 155, 254, 0.15);
+            box-shadow: 0 0 20px rgba(162, 155, 254, 0.15);
             object-fit: cover;
             background: #1a1a2e;
         }
@@ -349,20 +295,20 @@
         }
 
         .profile-name {
-            font-size: 0.95rem;
+            font-size: 0.8rem;
             font-weight: 700;
             color: #fff;
         }
 
         .profile-id {
             color: #8888aa;
-            font-size: 0.65rem;
+            font-size: 0.55rem;
             margin-top: 1px;
         }
 
         .profile-stats {
             color: #666688;
-            font-size: 0.6rem;
+            font-size: 0.5rem;
             margin-top: 1px;
         }
 
@@ -370,9 +316,9 @@
             display: inline-block;
             background: rgba(78, 205, 196, 0.15);
             color: #4ecdc4;
-            padding: 1px 10px;
-            border-radius: 20px;
-            font-size: 0.55rem;
+            padding: 1px 8px;
+            border-radius: 15px;
+            font-size: 0.45rem;
             font-weight: 600;
             margin-top: 2px;
             border: 1px solid rgba(78, 205, 196, 0.1);
@@ -381,12 +327,12 @@
         /* ===== BUTTONS ===== */
         .btn-primary {
             width: 100%;
-            padding: 13px;
+            padding: 11px;
             background: linear-gradient(135deg, #a29bfe, #ff6b6b);
             border: none;
-            border-radius: 30px;
+            border-radius: 25px;
             font-weight: 700;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             color: white;
             cursor: pointer;
             transition: all 0.4s ease;
@@ -407,16 +353,16 @@
 
         .btn-secondary {
             width: 100%;
-            padding: 11px;
+            padding: 9px;
             background: rgba(50, 50, 74, 0.25);
             border: 1px solid rgba(255, 255, 255, 0.04);
-            border-radius: 30px;
+            border-radius: 25px;
             font-weight: 600;
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             color: #8888aa;
             cursor: pointer;
             transition: all 0.3s;
-            margin-top: 8px;
+            margin-top: 6px;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
@@ -427,12 +373,12 @@
         }
 
         .btn-instagram {
-            padding: 13px;
+            padding: 11px;
             background: linear-gradient(135deg, #f58529, #dd2a7b);
             border: none;
-            border-radius: 30px;
+            border-radius: 25px;
             font-weight: 700;
-            font-size: 0.85rem;
+            font-size: 0.7rem;
             color: white;
             cursor: pointer;
             transition: all 0.4s;
@@ -440,7 +386,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 6px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
@@ -451,14 +397,14 @@
         }
 
         .btn-instagram svg {
-            width: 16px;
-            height: 16px;
+            width: 14px;
+            height: 14px;
             fill: currentColor;
         }
 
         .btn-group {
             display: flex;
-            gap: 8px;
+            gap: 6px;
             margin-top: 4px;
         }
 
@@ -474,7 +420,7 @@
         .loader-container {
             display: none;
             text-align: center;
-            padding: 10px 0;
+            padding: 8px 0;
         }
 
         .loader-container.show {
@@ -488,14 +434,14 @@
         }
 
         .spinner {
-            width: 40px;
-            height: 40px;
+            width: 35px;
+            height: 35px;
             border: 3px solid rgba(162, 155, 254, 0.08);
             border-top-color: #a29bfe;
             border-right-color: #ff6b6b;
             border-radius: 50%;
             animation: spin 0.8s ease infinite;
-            margin: 0 auto 10px;
+            margin: 0 auto 8px;
         }
 
         @keyframes spin {
@@ -504,7 +450,7 @@
 
         .loader-text {
             color: #8888aa;
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             font-weight: 300;
         }
 
@@ -519,12 +465,12 @@
             background: rgba(78, 205, 196, 0.06);
             border: 1px solid rgba(78, 205, 196, 0.12);
             color: #4ecdc4;
-            padding: 12px 16px;
-            border-radius: 24px;
+            padding: 10px 14px;
+            border-radius: 20px;
             text-align: center;
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             font-weight: 600;
-            margin-top: 12px;
+            margin-top: 10px;
             animation: fadeIn 0.4s ease;
         }
 
@@ -533,9 +479,9 @@
         }
 
         .result-message .big {
-            font-size: 2rem;
+            font-size: 1.8rem;
             display: block;
-            margin-bottom: 4px;
+            margin-bottom: 3px;
         }
 
         .error-message {
@@ -543,12 +489,12 @@
             background: rgba(255, 107, 107, 0.08);
             border: 1px solid rgba(255, 107, 107, 0.15);
             color: #ff6b6b;
-            padding: 10px 14px;
-            border-radius: 20px;
-            font-size: 0.8rem;
+            padding: 8px 12px;
+            border-radius: 18px;
+            font-size: 0.7rem;
             font-weight: 500;
             text-align: center;
-            margin-top: 10px;
+            margin-top: 8px;
             animation: fadeIn 0.4s ease;
         }
 
@@ -559,45 +505,109 @@
         .footer {
             text-align: center;
             color: #3a3a52;
-            font-size: 0.55rem;
-            margin-top: 16px;
+            font-size: 0.45rem;
+            margin-top: 12px;
             border-top: 1px solid rgba(255, 255, 255, 0.02);
-            padding-top: 12px;
+            padding-top: 10px;
             letter-spacing: 1.5px;
             text-transform: uppercase;
         }
 
-        @media (max-width: 768px) {
-            .hero-text h1 { font-size: 3.2rem; letter-spacing: 4px; }
-            .hero-text .sub { font-size: 0.7rem; letter-spacing: 4px; }
-            .car-wrapper svg { width: 200px; }
-            .car-wrapper { bottom: 18%; }
-            .glass-card { bottom: 28%; padding: 18px 20px; max-width: 96%; }
-            .btn-group { flex-direction: column; gap: 6px; }
+        /* ===== SCROLLBAR ===== */
+        .glass-card::-webkit-scrollbar {
+            width: 3px;
         }
 
+        .glass-card::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .glass-card::-webkit-scrollbar-thumb {
+            background: rgba(162, 155, 254, 0.3);
+            border-radius: 10px;
+        }
+
+        /* ===== RESPONSIVE ===== */
         @media (max-width: 480px) {
-            .hero-text h1 { font-size: 2.5rem; letter-spacing: 2px; }
-            .car-wrapper svg { width: 150px; }
-            .glass-card { bottom: 25%; padding: 14px 16px; }
-            .step-dot { font-size: 0.5rem; padding: 4px 0; }
-            .form-step input { font-size: 0.8rem; padding: 10px 14px; }
-            .btn-primary { font-size: 0.8rem; padding: 10px; }
-            .btn-instagram { font-size: 0.7rem; padding: 10px; }
-            .profile-preview { flex-direction: column; text-align: center; }
-            .profile-preview img { width: 56px; height: 56px; }
+            .hero-text h1 { font-size: 2.8rem; letter-spacing: 2px; }
+            .hero-text .sub { font-size: 0.6rem; letter-spacing: 3px; }
+            .glass-card { padding: 14px 14px 16px; border-radius: 24px; bottom: 1%; max-height: 80vh; }
+            .step-dot { font-size: 0.45rem; padding: 3px 0; }
+            .form-step input { font-size: 0.75rem; padding: 9px 12px; margin-bottom: 8px; }
+            .btn-primary { font-size: 0.7rem; padding: 10px; }
+            .btn-instagram { font-size: 0.65rem; padding: 10px; }
+            .profile-preview img { width: 35px; height: 35px; }
+            .profile-name { font-size: 0.7rem; }
         }
 
         @media (max-height: 700px) {
-            .hero-text { top: 8%; }
-            .hero-text h1 { font-size: 2.8rem; }
-            .car-wrapper svg { width: 160px; }
-            .car-wrapper { bottom: 16%; }
-            .glass-card { bottom: 22%; padding: 14px 16px; max-width: 94%; }
-            .step-indicator { margin-bottom: 10px; }
-            .form-step input { padding: 8px 14px; font-size: 0.8rem; margin-bottom: 10px; }
-            .btn-primary { padding: 10px; font-size: 0.8rem; }
-            .profile-preview { padding: 10px 14px; }
+            .hero-text { top: 4%; }
+            .hero-text h1 { font-size: 2.5rem; }
+            .glass-card { padding: 12px 12px 14px; max-height: 75vh; }
+            .step-indicator { margin-bottom: 8px; }
+            .form-step input { padding: 8px 12px; font-size: 0.7rem; margin-bottom: 6px; }
+            .btn-primary { padding: 8px; font-size: 0.65rem; }
+            .profile-preview { padding: 8px 12px; }
+        }
+
+        @media (min-width: 768px) {
+            .car-scene {
+                display: block;
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+                z-index: 1;
+            }
+
+            .road {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: 35%;
+                background: linear-gradient(180deg, transparent 0%, #1a1a2e 30%, #0f0f1a 100%);
+            }
+
+            .road-line {
+                position: absolute;
+                bottom: 30%;
+                left: 0;
+                width: 200%;
+                height: 3px;
+                background: repeating-linear-gradient(90deg, rgba(255,255,255,0.12) 0px, rgba(255,255,255,0.12) 40px, transparent 40px, transparent 80px);
+                animation: roadMove 2s linear infinite;
+            }
+
+            @keyframes roadMove {
+                0% { transform: translateX(0); }
+                100% { transform: translateX(-50%); }
+            }
+
+            .car-wrapper {
+                position: absolute;
+                bottom: 22%;
+                left: -200px;
+                animation: carDrive 6s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+                filter: drop-shadow(0 20px 60px rgba(162, 155, 254, 0.12));
+            }
+
+            @keyframes carDrive {
+                0% { left: -200px; transform: scale(0.8) rotate(-2deg); }
+                30% { left: 20%; transform: scale(1) rotate(0deg); }
+                50% { left: 40%; transform: scale(1.05) rotate(0deg); }
+                70% { left: 50%; transform: scale(1) rotate(0deg); }
+                85% { left: 55%; transform: scale(0.95) rotate(0.5deg); }
+                100% { left: 58%; transform: scale(0.9) rotate(0deg); }
+            }
+
+            .car-wrapper svg {
+                width: 300px;
+                height: auto;
+                display: block;
+            }
         }
     </style>
 </head>
@@ -608,7 +618,7 @@
     <div class="shape"></div>
     <div class="shape"></div>
 
-    <!-- ===== CAR SCENE ===== -->
+    <!-- ===== CAR SCENE (Desktop only) ===== -->
     <div class="car-scene">
         <div class="road">
             <div class="road-line"></div>
@@ -700,8 +710,8 @@
 
             <div id="resultMessage" class="result-message">
                 <span class="big">🎉</span>
-                <div style="font-size:0.95rem; margin-bottom:2px;">AGE EXCEEDED!</div>
-                <div style="font-size:0.7rem; font-weight:400; color:#8888aa;">
+                <div style="font-size:0.85rem; margin-bottom:2px;">AGE EXCEEDED!</div>
+                <div style="font-size:0.65rem; font-weight:400; color:#8888aa;">
                     Age restriction removed from account.
                 </div>
             </div>
@@ -1058,4 +1068,4 @@
         });
     </script>
 </body>
-    </html>
+</html>
