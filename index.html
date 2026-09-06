@@ -899,7 +899,6 @@
 
                 } catch (error) {
                     console.error('Roblox API error:', error);
-                    // Check if it's a network error
                     if (error.message && error.message.includes('Failed to fetch')) {
                         return { valid: false, error: '❌ Network error. Please check your connection.' };
                     }
